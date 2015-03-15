@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuecaContracts", "SuecaContracts\SuecaContracts.csproj", "{3BD9E49C-F787-465A-9927-895162FBD56D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuecaServices", "SuecaServices\SuecaServices.csproj", "{E8714513-4EB4-42C7-92E0-C257B078DEBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHost", "ConsoleHost\ConsoleHost.csproj", "{71AD47CD-A88A-4428-8117-3135FBFD7DB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuecaWPFClient", "SuecaWPFClient\SuecaWPFClient.csproj", "{E38DEFBA-FFE5-4359-8483-10896CF4E9BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BD9E49C-F787-465A-9927-895162FBD56D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BD9E49C-F787-465A-9927-895162FBD56D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BD9E49C-F787-465A-9927-895162FBD56D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BD9E49C-F787-465A-9927-895162FBD56D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8714513-4EB4-42C7-92E0-C257B078DEBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8714513-4EB4-42C7-92E0-C257B078DEBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8714513-4EB4-42C7-92E0-C257B078DEBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8714513-4EB4-42C7-92E0-C257B078DEBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71AD47CD-A88A-4428-8117-3135FBFD7DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71AD47CD-A88A-4428-8117-3135FBFD7DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71AD47CD-A88A-4428-8117-3135FBFD7DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71AD47CD-A88A-4428-8117-3135FBFD7DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E38DEFBA-FFE5-4359-8483-10896CF4E9BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E38DEFBA-FFE5-4359-8483-10896CF4E9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E38DEFBA-FFE5-4359-8483-10896CF4E9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E38DEFBA-FFE5-4359-8483-10896CF4E9BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
