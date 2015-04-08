@@ -3,26 +3,31 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.Text;
 using System.Windows;
-using SuecaContracts;
+using suecaWPFClient.ServiceReference1;
 
 namespace suecaWPFClient
 {
     // callback freezes if true
     [CallbackBehavior(UseSynchronizationContext = false)]
-    public partial class MainWindow : Window, ISuecaCallbackContract
+    public partial class MainWindow : Window, SuecaCallback
     {
-        DuplexChannelFactory<ISuecaContract> _channelFactory;
-        ISuecaContract _suecaClient;
+        //DuplexChannelFactory<ISuecaContract> _channelFactory;
+        //ISuecaContract _suecaClient;
+
+        private Sueca _suecaClient;
+
+        
         public MainWindow()
         {
             InitializeComponent();
+            _suecaClient = new SuecaClient(new InstanceContext(this));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // create instance
-            _channelFactory = new DuplexChannelFactory<ISuecaContract>(this, "configClient");
-            _suecaClient = _channelFactory.CreateChannel();
+            //_channelFactory = new DuplexChannelFactory<ISuecaContract>(this, "configClient");
+            //_suecaClient = _channelFactory.CreateChannel();
             Console.WriteLine("Client started");
 
             // create room
@@ -34,13 +39,17 @@ namespace suecaWPFClient
             Console.WriteLine("Join room");
             String playerToken = _suecaClient.JoinRoom(roomName, "other_password_that_fail");
             Console.WriteLine("[client] playerToken: " + playerToken);
+
+
+            
+
         }
 
 
 
         private void btnListRoom_Click(object sender, RoutedEventArgs e)
         {
-            List<Room> listRoom = _suecaClient.ListRoom();
+            var listRoom = _suecaClient.ListRoom();
 
             StringBuilder builder = new StringBuilder();
 
