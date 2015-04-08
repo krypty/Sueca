@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="59260df9-9d98-4124-81f8-aae57f84475f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8731/SuecaServices/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="ba4cac05-fcd5-483f-b911-239367266769" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="77bed899-1e47-45ed-be8f-86072906d612" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="e6cd6d2e-c504-4b88-99cf-772d2e466f02" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+    <MetadataFile FileName="SuecaContracts1.xsd" MetadataType="Schema" ID="0bda9083-195c-444c-bba2-93f4fd6f2534" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="3f2f5fde-f72d-4109-a412-891c7f601e6f" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
