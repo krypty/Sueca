@@ -13,12 +13,15 @@ namespace SuecaServices
         private Dictionary<String, Room> _dictRoom; // <roomName, Room>
         private Dictionary<String, String> _dictPlayers; // <playerToken, Player>
 
-        private ISuecaCallbackContract _callback = null;
+        private Dictionary<String, ISuecaCallbackContract> _dictCallbacks;
+        //private ISuecaCallbackContract _callback = null;
 
         public ServiceSueca()
         {
             this._dictRoom = new Dictionary<string, Room>();
             this._dictPlayers = new Dictionary<string, string>();
+            this._dictCallbacks = new Dictionary<string, ISuecaCallbackContract>();
+            
         }
 
         public string CreateRoom(string password = "")
@@ -32,8 +35,8 @@ namespace SuecaServices
         public String JoinRoom(string roomName, string password = "")
         {
             Console.WriteLine("[server] joinRoom");
-            _callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
-
+            ISuecaCallbackContract _callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+            
             if (!_dictRoom.ContainsKey(roomName))
             {
                 throw new Exception("room with name [" + roomName + "] doesn't exist");
@@ -46,11 +49,25 @@ namespace SuecaServices
             String player = "toto"; // TODO: String -> Player
             this._dictPlayers.Add(playerToken, player);
             room.AddPlayer(player);
-
+            _dictCallbacks.Add(playerToken, _callback);
             Console.WriteLine("[server] call callback");
-            _callback.GameStarted("[server] " + player + " has been added to a room");
-            Console.WriteLine("[server] callback called");
+
+            sendGameStarted(playerToken);
+            //_callback.GameStarted("[server] " + player + " has been added to a room");
+            //Console.WriteLine("[server] callback called");
             return playerToken;
+        }
+
+
+        public void sendGameStarted(string playerToken)
+        {
+            foreach (KeyValuePair<string, ISuecaCallbackContract> callback in _dictCallbacks)
+            {
+                callback.Value.GameStarted("YO Y'A TA GAME QUI EST LANCEE VIEUX BIDET de " + callback.Key);
+
+
+            }
+            //_dictCallbacks[playerToken].GameStarted("YOLO IT'S UP BITCHES");
         }
 
         public List<Room> ListRoom()

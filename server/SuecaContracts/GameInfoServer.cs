@@ -2,5 +2,11 @@
 {
     class GameInfoServer
     {
+
+        //
+        //
+        //getPlayerGameInfo(string playerToken)
+
+
     }
 }
