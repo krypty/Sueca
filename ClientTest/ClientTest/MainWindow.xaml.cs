@@ -20,43 +20,53 @@ namespace ClientTest
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
-    /// </summary>
+    /// </summary> 
+    [CallbackBehavior(UseSynchronizationContext = false)]
     public partial class MainWindow : Window, SuecaCallback
     {
 
-
         private Sueca _suecaClient;
-        private string myToken;
+        private string myToken, roomName, password;
 
         public MainWindow()
         {
             InitializeComponent();
 
             _suecaClient = new SuecaClient(new InstanceContext(this));
+
         }
+
 
 
         public void GameStarted(string message)
         {
-            MessageBox.Show("CALLBACK: \n" + message);
-            Console.WriteLine("[Client] server says: " + message);
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                labelCallback.Content = message;
+
+            }));
         }
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
-            // create instance
-            //_channelFactory = new DuplexChannelFactory<ISuecaContract>(this, "configClient");
-            //_suecaClient = _channelFactory.CreateChannel();
             Console.WriteLine("Client started");
 
+            password = textboxPassword.Text;
             // create room
             Console.WriteLine("create room...");
-            String roomName = _suecaClient.CreateRoom("no_password");
-            MessageBox.Show("roomName: " + roomName);
+            roomName = _suecaClient.CreateRoom(password);
 
+            textboxName.Text = roomName;
+            MessageBox.Show("roomName: " + roomName);
+        }
+
+        private void Join_Click(object sender, RoutedEventArgs e)
+        {
+            roomName = textboxName.Text;
+            password = textboxPassword.Text;
             // join it 
             Console.WriteLine("Join room");
-            myToken = _suecaClient.JoinRoom(roomName, "no_password");
+            myToken = _suecaClient.JoinRoom(roomName, password);
             Console.WriteLine("[client] playerToken: " + myToken);
         }
 
@@ -67,16 +77,15 @@ namespace ClientTest
 
         private void List_Click(object sender, RoutedEventArgs e)
         {
-            var listRoom = _suecaClient.ListRoom();
+            var roomList = _suecaClient.ListRoom();
 
-            StringBuilder builder = new StringBuilder();
+            listRoom.Items.Clear();
 
-            foreach (var room in listRoom)
+            foreach (var room in roomList)
             {
-                builder.AppendLine(room.ToString());
+                listRoom.Items.Add(room.Name);
             }
 
-            MessageBox.Show(builder.ToString());
         }
     }
 }
