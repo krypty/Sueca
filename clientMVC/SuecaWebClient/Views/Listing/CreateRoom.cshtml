@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Création de la chambre";
+}
+
+<h2>Créer ma chambre</h2>
+<p>Cette page vous permet de générer une clé de chambre pour commencer la partie avec vos amis, vous avez ensuite la possibilité de générer un lien direct ou de leur fournir la clé</p>
+
+<div class="form-horizontal">
+    <center>
+        <div class="form-group" id="requestButtonGroup">
+            <div class="input-group text-center">
+                @Ajax.ActionLink("Demander une chambre", "getNewRoom", null, new AjaxOptions
+    {
+        OnSuccess = "onSuccessGetKey",
+        OnFailure = "onFailureGetKey",
+        LoadingElementId = "loading",
+        OnBegin = "onAjaxBegin",
+        OnComplete = "onAjaxComplete",
+    }, new { @class = "btn btn-default", @id = "requestButton" })
+
+                <span id="loading" class="hidden">
+                    <img src="~/Images/tools/ajax-loader.gif" class="img-loading" />
+                </span>
+            </div>
+
+        </div>
+    </center>
+    <div id="keyArea" class="hidden form-group">
+        <label class="control-label col-md-2" for="keyField">Clé de la chambre</label>
+        <div class="col-md-8">
+            <input type="text" id="keyField" class="form-control" />
+        </div>
+    </div>
+    <div id="keyLinkArea" class="hidden form-group">
+        <label class="control-label col-md-2" for="keyField">Lien direct de la chambre</label>
+        <div class="col-md-8">
+            <input type="text" id="keyLinkField" class="form-control" value="" />
+        </div>
+    </div>
+    <div id="roomJoinArea" class="hidden form-group">
+        <center>
+            <a class="btn btn-primary" id="joinRoomLink">Rejoindre la chambre !</a>
+        </center>
+    </div>
+</div>
+
+
+
+@Scripts.Render("~/bundles/Listing")

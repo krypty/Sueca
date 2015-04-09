@@ -1,0 +1,17 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Rejoindre ou créer une chambre</h2>
+
+<p>Afin de lancer une partie du jeu de carte traditionel portuguais Sueca il vous faudra rejoindre une chambre avec 3 de vos amis !</p>
+<p>Choisisez une des options suivantes :</p>
+
+<center>
+    <div class="btn-group">
+        @Html.ActionLink("Créer une chambre", "CreateRoom", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Rejoindre une chambre", "RoomList", null, new { @class = "btn btn-default" })
+    </div>
+</center>

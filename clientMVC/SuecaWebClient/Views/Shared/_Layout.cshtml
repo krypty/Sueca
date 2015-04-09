@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/themes/bootstrap/bootstrap.min.css")
+    @Styles.Render("~/Content/css")
+
+    <script>
+        var roomPath = "@Url.Action("Join", "Room", new { roomId = "" }, Request.Url.Scheme)";
+    </script>
+</head>
+<body>
+    @Html.Partial("_navbar");
+
+    <div class="container">
+        <div class="alert alert-danger" id="alert-area"></div>
+        <div class="alert alert-info" id="notice-area"></div>
+        <div class="row">
+            @RenderBody()
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/microsoftAjax")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

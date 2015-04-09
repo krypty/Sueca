@@ -10,63 +10,90 @@ namespace SuecaServices
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
     public class ServiceSueca : ISuecaContract
     {
-        private Dictionary<String, Room> _dictRoom; // <roomName, Room>
-        private Dictionary<String, String> _dictPlayers; // <playerToken, Player>
-        private Dictionary<String, ISuecaCallbackContract> _dictCallbacks;
+        private List<Room> _listRooms;
 
         public ServiceSueca()
         {
-            this._dictRoom = new Dictionary<string, Room>();
-            this._dictPlayers = new Dictionary<string, string>();
-            this._dictCallbacks = new Dictionary<string, ISuecaCallbackContract>();
+            this._listRooms = new List<Room>();
         }
 
         public string CreateRoom(string password = "")
         {
             Console.WriteLine("[server] createRoom");
             Room room = new Room(password);
-            _dictRoom.Add(room.Name, room);
+            _listRooms.Add(room);
             return room.Name;
         }
 
         public String JoinRoom(string roomName, string password = "")
         {
             Console.WriteLine("[server] joinRoom");
-            
-            if (!_dictRoom.ContainsKey(roomName))
+
+            if (!_listRooms.Exists(r => r.Name == roomName))
             {
                 throw new Exception("room with name [" + roomName + "] doesn't exist");
             }
 
-            Room room = this._dictRoom[roomName];
+            Room room = this._listRooms.Find(r => r.Name == roomName);
 
-            
+            if (password != "" && password != room.Password)
+            {
+                throw new Exception("room with name [" + roomName + "] has not this password");
+            }
+
             String playerToken = Guid.NewGuid().ToString();
-            _dictCallbacks.Add(playerToken, OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>());
-            
-            
-            String player = "toto"; // TODO: String -> Player
-            this._dictPlayers.Add(playerToken, player);
-            room.AddPlayer(player);
 
-            Console.WriteLine("[server] call callback");
-            //_callback.GameStarted("[server] " + player + " has been added to a room");
-            Console.WriteLine("[server] callback called");
+            Player newPlayer = new Player(playerToken);
+            newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+            room.AddPlayer(newPlayer);
+
             return playerToken;
         }
 
+
         public List<Room> ListRoom()
         {
-            return this._dictRoom.Values.ToList();
+            return this._listRooms;
         }
 
         public void SendReady(string playerToken, bool isReady)
         {
-            var currentCallback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+            Console.WriteLine("[server] Start ready");
 
-            var playerToken = _dictCallbacks.FirstOrDefault(x => x.Value == currentCallback).Key;
+            IEnumerable<Room> room = _listRooms.Where<Room>(r => r.ListPlayers.Exists(p => p.Token == playerToken));
+            
+            if(room.Count() < 1)
+            {
+                throw new Exception("Player with token [" + playerToken + "] doesn't exist");
+            }
 
-            throw new NotImplementedException();
+
+            Console.WriteLine("[server] Get room ok");
+            Room currentRoom = room.First();
+
+            Player currentPlayer = currentRoom.ListPlayers.Find(p => p.Token == playerToken);
+            
+            if(isReady)
+            {
+
+                Console.WriteLine("[server] player is ready");
+                currentPlayer.IsReady = true;
+
+                int nbPlayersReady = currentRoom.ListPlayers.Count<Player>(p => p.IsReady);
+
+                if(nbPlayersReady >= 4)
+                {
+                    foreach(Player p in currentRoom.ListPlayers)
+                    {
+                        p.Callback.GameStarted("Game Started");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("[server] Not enough player");
+                }
+            }
+
         }
     }
 }
