@@ -31,7 +31,7 @@ namespace SuecaContracts
         /// </summary>
         /// <param name="isReady"></param>
         [OperationContract(IsTerminating = false, IsOneWay = false)]
-        void SendReady(bool isReady);
+        void SendReady(string playerToken, bool isReady);
 
         [OperationContract(IsTerminating = false, IsOneWay = false)]
         List<Room> ListRoom();

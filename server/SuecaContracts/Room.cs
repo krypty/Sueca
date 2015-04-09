@@ -28,6 +28,11 @@ namespace SuecaContracts
             _listPlayers.Add(name);
         }
 
+        public int CountPlayers()
+        {
+            return _listPlayers.Count();
+        }
+
         public void RemovePlayer(String name)
         {
             _listPlayers.Remove(name);

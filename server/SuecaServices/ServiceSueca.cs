@@ -12,13 +12,13 @@ namespace SuecaServices
     {
         private Dictionary<String, Room> _dictRoom; // <roomName, Room>
         private Dictionary<String, String> _dictPlayers; // <playerToken, Player>
-
-        private ISuecaCallbackContract _callback = null;
+        private Dictionary<String, ISuecaCallbackContract> _dictCallbacks;
 
         public ServiceSueca()
         {
             this._dictRoom = new Dictionary<string, Room>();
             this._dictPlayers = new Dictionary<string, string>();
+            this._dictCallbacks = new Dictionary<string, ISuecaCallbackContract>();
         }
 
         public string CreateRoom(string password = "")
@@ -32,8 +32,7 @@ namespace SuecaServices
         public String JoinRoom(string roomName, string password = "")
         {
             Console.WriteLine("[server] joinRoom");
-            _callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
-
+            
             if (!_dictRoom.ContainsKey(roomName))
             {
                 throw new Exception("room with name [" + roomName + "] doesn't exist");
@@ -41,14 +40,17 @@ namespace SuecaServices
 
             Room room = this._dictRoom[roomName];
 
-            // TODO: Check that playerToken is unique
+            
             String playerToken = Guid.NewGuid().ToString();
+            _dictCallbacks.Add(playerToken, OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>());
+            
+            
             String player = "toto"; // TODO: String -> Player
             this._dictPlayers.Add(playerToken, player);
             room.AddPlayer(player);
 
             Console.WriteLine("[server] call callback");
-            _callback.GameStarted("[server] " + player + " has been added to a room");
+            //_callback.GameStarted("[server] " + player + " has been added to a room");
             Console.WriteLine("[server] callback called");
             return playerToken;
         }
@@ -58,8 +60,12 @@ namespace SuecaServices
             return this._dictRoom.Values.ToList();
         }
 
-        public void SendReady(bool isReady)
+        public void SendReady(string playerToken, bool isReady)
         {
+            var currentCallback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+
+            var playerToken = _dictCallbacks.FirstOrDefault(x => x.Value == currentCallback).Key;
+
             throw new NotImplementedException();
         }
     }
