@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CardImageFactory.cs" />
+    <Compile Include="CardType.cs" />
+    <Compile Include="Card.cs" />
     <Compile Include="Service References\ServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,18 +99,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\ServiceReference1\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference1\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference1\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference1\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ServiceReference1\ServiceSueca.wsdl" />
     <None Include="Service References\ServiceReference1\suecaWPFClient.ServiceReference1.Room.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -123,9 +114,6 @@
     <WCFMetadataStorage Include="Service References\ServiceReference1\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ServiceReference1\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +124,62 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\GameBoard.png" />
+    <Resource Include="Images\GameBoardWithCards.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cartes\DosCarte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cartes\Clubs\2.png" />
+    <Resource Include="Images\Cartes\Clubs\3.png" />
+    <Resource Include="Images\Cartes\Clubs\4.png" />
+    <Resource Include="Images\Cartes\Clubs\5.png" />
+    <Resource Include="Images\Cartes\Clubs\6.png" />
+    <Resource Include="Images\Cartes\Clubs\7.png" />
+    <Resource Include="Images\Cartes\Clubs\As.png" />
+    <Resource Include="Images\Cartes\Clubs\J.png" />
+    <Resource Include="Images\Cartes\Clubs\K.png" />
+    <Resource Include="Images\Cartes\Clubs\Q.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cartes\Diamonds\2.png" />
+    <Resource Include="Images\Cartes\Diamonds\3.png" />
+    <Resource Include="Images\Cartes\Diamonds\4.png" />
+    <Resource Include="Images\Cartes\Diamonds\5.png" />
+    <Resource Include="Images\Cartes\Diamonds\6.png" />
+    <Resource Include="Images\Cartes\Diamonds\7.png" />
+    <Resource Include="Images\Cartes\Diamonds\As.png" />
+    <Resource Include="Images\Cartes\Diamonds\J.png" />
+    <Resource Include="Images\Cartes\Diamonds\K.png" />
+    <Resource Include="Images\Cartes\Diamonds\Q.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Cartes\Hearts\2.png" />
+    <Resource Include="Images\Cartes\Hearts\3.png" />
+    <Resource Include="Images\Cartes\Hearts\4.png" />
+    <Resource Include="Images\Cartes\Hearts\5.png" />
+    <Resource Include="Images\Cartes\Hearts\6.png" />
+    <Resource Include="Images\Cartes\Hearts\7.png" />
+    <Resource Include="Images\Cartes\Hearts\As.png" />
+    <Resource Include="Images\Cartes\Hearts\J.png" />
+    <Resource Include="Images\Cartes\Hearts\K.png" />
+    <Resource Include="Images\Cartes\Hearts\Q.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cartes\Spades\2.png" />
+    <Resource Include="Images\Cartes\Spades\3.png" />
+    <Resource Include="Images\Cartes\Spades\4.png" />
+    <Resource Include="Images\Cartes\Spades\5.png" />
+    <Resource Include="Images\Cartes\Spades\6.png" />
+    <Resource Include="Images\Cartes\Spades\7.png" />
+    <Resource Include="Images\Cartes\Spades\As.png" />
+    <Resource Include="Images\Cartes\Spades\J.png" />
+    <Resource Include="Images\Cartes\Spades\K.png" />
+    <Resource Include="Images\Cartes\Spades\Q.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

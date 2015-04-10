@@ -13,21 +13,16 @@
     <GenerateSerializableTypes>true</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
-    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
     <ReferencedAssemblies />
     <ReferencedDataContractTypes />
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8731/SuecaServices/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8731/SuecaServices/?singleWsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="77dd38ff-b124-42e2-a0a1-5f1348e41429" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/?xsd=xsd0" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="3e4df320-6936-4913-99c7-004f949e1d84" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/?xsd=xsd3" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="2d99241c-d08a-4273-998a-b56fe91e6185" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/?disco" />
-    <MetadataFile FileName="ServiceSueca.wsdl" MetadataType="Wsdl" ID="990e9293-6e91-4c3c-9be1-7077add8cee9" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/?wsdl" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="b2e6af69-a175-4c02-b87a-ecb7b42cf074" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/?xsd=xsd2" />
-    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="1f73c35e-ac03-453d-93fb-1bceddd377d2" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/?xsd=xsd1" />
+    <MetadataFile FileName="ServiceSueca.wsdl" MetadataType="Wsdl" ID="16625c05-6572-4588-abc4-9aaa3bc4d384" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/?singleWsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
