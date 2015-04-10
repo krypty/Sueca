@@ -16,23 +16,32 @@ namespace suecaWPFClient
 
         public CardColor CardColor { get; private set; }
         public CardValue CardValue { get; private set; }
+        public int OriginalZIndex { get; private set; }
 
         private readonly String _imagePath;
 
-        public Card(CardColor cardColor, CardValue cardValue, String imagePath) : this()
+        public Card(CardColor cardColor, CardValue cardValue, String imagePath)
+            : this()
         {
             CardColor = cardColor;
             CardValue = cardValue;
             _imagePath = imagePath;
+            OriginalZIndex = (int)GetValue(Panel.ZIndexProperty);
         }
-            
+
+
 
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
-            drawingContext.DrawRectangle(null, new Pen(Brushes.Black, 2), new Rect(0, 0, 150, 220));
             var image = new BitmapImage(new Uri(_imagePath));
             drawingContext.DrawImage(image, new Rect(new Size(Width, Height)));
+        }
+
+
+        public override string ToString()
+        {
+            return CardValue + " of " + CardColor;
         }
     }
 }
