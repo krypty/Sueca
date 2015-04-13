@@ -300,6 +300,12 @@
     <TypeScriptCompile Include="TypeScript\CardDefinition.ts" />
     <TypeScriptCompile Include="TypeScript\CardEnums.ts" />
     <TypeScriptCompile Include="TypeScript\CardManager.ts" />
+    <TypeScriptCompile Include="TypeScript\GameDefinition.ts" />
+    <TypeScriptCompile Include="TypeScript\GameEnum.ts" />
+    <TypeScriptCompile Include="TypeScript\PlayerDefinition.ts" />
+    <TypeScriptCompile Include="TypeScript\RoomDefinition.ts" />
+    <TypeScriptCompile Include="TypeScript\RoomEnums.ts" />
+    <TypeScriptCompile Include="TypeScript\RoomManager.ts" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
