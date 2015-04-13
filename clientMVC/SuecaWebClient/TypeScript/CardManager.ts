@@ -37,7 +37,7 @@ var manager = new SuecaCard.CardManager();
 
 var card = manager.getCard();
 
-$("#myCardArea").append(manager.getCardTemplate(card));
+//$("#myCardArea").append(manager.getCardTemplate(card));
 
 
 

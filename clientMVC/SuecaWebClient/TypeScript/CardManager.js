@@ -6,12 +6,12 @@ var SuecaCard;
         function CardManager() {
             this.cardArray = new Array();
             this.addCard(new SuecaCard.Card(4 /* Hearts */, 1 /* Two */, "Images/Cards/Hearts/2.png"));
+            this.addCard(new SuecaCard.Card(4 /* Hearts */, 2 /* Three */, "Images/Cards/Hearts/2.png"));
         }
-        CardManager.prototype.addCard = function (Card) {
-            this.cardArray.push(Card);
+        CardManager.prototype.addCard = function (card) {
+            this.cardArray.push(card);
         };
-        CardManager.prototype.getCardTemplate = function (Card) {
-            return "<img src='" + Card.image + "'/>";
+        CardManager.prototype.drawCard = function (canevas) {
         };
         CardManager.prototype.getCard = function () {
             return this.cardArray[0];
@@ -22,5 +22,5 @@ var SuecaCard;
 })(SuecaCard || (SuecaCard = {}));
 var manager = new SuecaCard.CardManager();
 var card = manager.getCard();
-$("#myCardArea").append(manager.getCardTemplate(card));
+//$("#myCardArea").append(manager.getCardTemplate(card));
 //# sourceMappingURL=CardManager.js.map
