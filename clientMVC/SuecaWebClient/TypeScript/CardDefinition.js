@@ -1,4 +1,4 @@
-///<reference path="CardEnums" />
+///<reference path="CardEnums.ts" />
 var SuecaCard;
 (function (SuecaCard) {
     var Card = (function () {

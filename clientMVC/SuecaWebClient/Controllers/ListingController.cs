@@ -69,6 +69,7 @@ namespace SuecaWebClient.Controllers
             {
                 serviceHelper = new SuecaServiceHelper();
                 string roomId = serviceHelper.createRoom();
+                
                 return Json(roomId, JsonRequestBehavior.AllowGet);
             }
             catch(Exception e)

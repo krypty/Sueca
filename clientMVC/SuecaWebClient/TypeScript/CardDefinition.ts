@@ -1,4 +1,5 @@
-﻿///<reference path="CardEnums" />
+﻿///<reference path="CardEnums.ts" />
+
 module SuecaCard {
     export class Card {
         color: CardColor;
