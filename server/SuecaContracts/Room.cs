@@ -13,24 +13,35 @@ namespace SuecaContracts
         public string Password { get; set; }
 
         [DataMember]
-        private List<String> _listPlayers;
+        private List<Player> listPlayers;
+
+        public List<Player> ListPlayers
+        {
+            get { return listPlayers; }
+            set { listPlayers = value; }
+        }
 
         public Room(string password = "")
         {
             Password = password;
             Name = GenerateName();
 
-            _listPlayers = new List<string>();
+            listPlayers = new List<Player>();
         }
 
-        public void AddPlayer(String name)
+        public void AddPlayer(Player player)
         {
-            _listPlayers.Add(name);
+            listPlayers.Add(player);
         }
 
-        public void RemovePlayer(String name)
+        public int CountPlayers()
         {
-            _listPlayers.Remove(name);
+            return listPlayers.Count;
+        }
+
+        public void RemovePlayer(Player player)
+        {
+            listPlayers.Remove(player);
         }
 
 

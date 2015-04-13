@@ -1,0 +1,28 @@
+﻿<Window x:Class="ClientTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Label x:Name="labelCallback" Grid.Row="1" Content="Callbacks" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBox x:Name="textboxName" Height="30" Text="NameRoom" Margin="0,10,0,40"/>
+        <TextBox x:Name="textboxPassword" Height="30" Text="Password" Margin="0,50,0,0"/>
+        <Button Content="Create Room" Click="Create_Click" Grid.Column="1"/>
+        <Button Content="Join Room" Click="Join_Click" Grid.Column="2" Margin="1,0,0,0"/>
+        <Button Content="Send Ready" Grid.Column="1" Click="Send_Click" Grid.Row="1"/>
+        <Button Grid.Column="1" Content="List Room" Click="List_Click" Grid.ColumnSpan="2" Margin="0,0,172,0" Grid.Row="3"/>
+        
+        <ListView x:Name="listRoom" Grid.Column="2" Margin="0,0,1,0" Grid.Row="3" />
+    </Grid>
+</Window>

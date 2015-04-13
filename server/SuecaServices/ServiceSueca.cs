@@ -4,80 +4,128 @@ using System.Linq;
 using System.ServiceModel;
 using SuecaContracts;
 
+using System.Timers;
+using System.Threading;
+
 namespace SuecaServices
 {
     // Only one instance of the service is running. Only one call by client at a time but multiple clients allowed 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
     public class ServiceSueca : ISuecaContract
     {
-        private Dictionary<String, Room> _dictRoom; // <roomName, Room>
-        private Dictionary<String, String> _dictPlayers; // <playerToken, Player>
-
-        private Dictionary<String, ISuecaCallbackContract> _dictCallbacks;
-        //private ISuecaCallbackContract _callback = null;
+        private List<Room> _listRooms;
+        delegate void delegateCallbacks(ISuecaCallbackContract callback);
 
         public ServiceSueca()
         {
-            this._dictRoom = new Dictionary<string, Room>();
-            this._dictPlayers = new Dictionary<string, string>();
-            this._dictCallbacks = new Dictionary<string, ISuecaCallbackContract>();
-            
+            this._listRooms = new List<Room>();
+
         }
 
         public string CreateRoom(string password = "")
         {
             Console.WriteLine("[server] createRoom");
             Room room = new Room(password);
-            _dictRoom.Add(room.Name, room);
+            _listRooms.Add(room);
             return room.Name;
         }
 
         public String JoinRoom(string roomName, string password = "")
         {
-            Console.WriteLine("[server] joinRoom");
-            ISuecaCallbackContract _callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
-            
-            if (!_dictRoom.ContainsKey(roomName))
+            try
             {
-                throw new Exception("room with name [" + roomName + "] doesn't exist");
+                Console.WriteLine("[server] joinRoom");
+
+                if (!_listRooms.Exists(r => r.Name == roomName))
+                {
+                    throw new Exception("room with name [" + roomName + "] doesn't exist");
+                }
+
+                Room room = this._listRooms.Find(r => r.Name == roomName);
+
+                if (password != "" && password != room.Password)
+                {
+                    throw new Exception("room with name [" + roomName + "] has not this password");
+                }
+
+                String playerToken = Guid.NewGuid().ToString();
+
+                Player newPlayer = new Player(playerToken);
+                newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+                room.AddPlayer(newPlayer);
+
+                return playerToken;
+                
             }
-
-            Room room = this._dictRoom[roomName];
-
-            // TODO: Check that playerToken is unique
-            String playerToken = Guid.NewGuid().ToString();
-            String player = "toto"; // TODO: String -> Player
-            this._dictPlayers.Add(playerToken, player);
-            room.AddPlayer(player);
-            _dictCallbacks.Add(playerToken, _callback);
-            Console.WriteLine("[server] call callback");
-
-            sendGameStarted(playerToken);
-            //_callback.GameStarted("[server] " + player + " has been added to a room");
-            //Console.WriteLine("[server] callback called");
-            return playerToken;
+            catch
+            {
+                return "";
+            }
         }
 
-
-        public void sendGameStarted(string playerToken)
-        {
-            foreach (KeyValuePair<string, ISuecaCallbackContract> callback in _dictCallbacks)
-            {
-                callback.Value.GameStarted("YO Y'A TA GAME QUI EST LANCEE VIEUX BIDET de " + callback.Key);
-
-
-            }
-            //_dictCallbacks[playerToken].GameStarted("YOLO IT'S UP BITCHES");
-        }
 
         public List<Room> ListRoom()
         {
-            return this._dictRoom.Values.ToList();
+            return this._listRooms;
         }
 
-        public void SendReady(bool isReady)
+        public void SendReady(string playerToken, bool isReady)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("[server] Player with token " + playerToken + " send ready");
+
+            IEnumerable<Room> room = _listRooms.Where<Room>(r => r.ListPlayers.Exists(p => p.Token == playerToken));
+            
+            if(room.Count() < 1)
+            {
+                throw new Exception("Player with token [" + playerToken + "] doesn't exist");
+            }
+
+            Room currentRoom = room.First();
+
+            Player currentPlayer = currentRoom.ListPlayers.Find(p => p.Token == playerToken);
+
+            if(isReady)
+            {
+                currentPlayer.IsReady = true;
+
+                int nbPlayersReady = currentRoom.ListPlayers.Count<Player>(p => p.IsReady);
+
+                if(nbPlayersReady >= 4)
+                {
+                    delegateCallbacks delCallbacks = delegate(ISuecaCallbackContract callback)
+                        {
+                            callback.GameStarted("game started");
+                        };
+
+                    Console.WriteLine("[server] Send callback to players");
+                    
+                   // currentRoom.ListPlayers.ForEach(p => delCallbacks(p.Callback));
+                    foreach(Player p in currentRoom.ListPlayers)
+                    {
+                        if(p.Token != playerToken)
+                        {
+                            delCallbacks(p.Callback);
+                        }
+                        else
+                        {
+                            delCallbacks(OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>());
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("[server] Not enough player to send callback");
+                }
+            }
+
         }
+
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
+        }
+
     }
 }

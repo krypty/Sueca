@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E38DEFBA-FFE5-4359-8483-10896CF4E9BF}</ProjectGuid>
+    <ProjectGuid>{FF5EA6C8-DF67-49AB-9344-654511B91D18}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>suecaWPFClient</RootNamespace>
-    <AssemblyName>suecaWPFClient</AssemblyName>
+    <RootNamespace>ClientTest</RootNamespace>
+    <AssemblyName>ClientTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,9 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CardImageFactory.cs" />
-    <Compile Include="CardType.cs" />
-    <Compile Include="Card.cs" />
     <Compile Include="Service References\ServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,9 +96,18 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\ServiceReference1\ServiceSueca.wsdl" />
-    <None Include="Service References\ServiceReference1\suecaWPFClient.ServiceReference1.Room.datasource">
+    <None Include="Service References\ServiceReference1\ClientTest.ServiceReference1.Room.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference1\service.wsdl" />
+    <None Include="Service References\ServiceReference1\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\SuecaContracts.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -124,62 +130,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\GameBoard.png" />
-    <Resource Include="Images\GameBoardWithCards.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Cartes\DosCarte.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Cartes\Clubs\2.png" />
-    <Resource Include="Images\Cartes\Clubs\3.png" />
-    <Resource Include="Images\Cartes\Clubs\4.png" />
-    <Resource Include="Images\Cartes\Clubs\5.png" />
-    <Resource Include="Images\Cartes\Clubs\6.png" />
-    <Resource Include="Images\Cartes\Clubs\7.png" />
-    <Resource Include="Images\Cartes\Clubs\As.png" />
-    <Resource Include="Images\Cartes\Clubs\J.png" />
-    <Resource Include="Images\Cartes\Clubs\K.png" />
-    <Resource Include="Images\Cartes\Clubs\Q.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Cartes\Diamonds\2.png" />
-    <Resource Include="Images\Cartes\Diamonds\3.png" />
-    <Resource Include="Images\Cartes\Diamonds\4.png" />
-    <Resource Include="Images\Cartes\Diamonds\5.png" />
-    <Resource Include="Images\Cartes\Diamonds\6.png" />
-    <Resource Include="Images\Cartes\Diamonds\7.png" />
-    <Resource Include="Images\Cartes\Diamonds\As.png" />
-    <Resource Include="Images\Cartes\Diamonds\J.png" />
-    <Resource Include="Images\Cartes\Diamonds\K.png" />
-    <Resource Include="Images\Cartes\Diamonds\Q.png" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Resource Include="Images\Cartes\Hearts\2.png" />
-    <Resource Include="Images\Cartes\Hearts\3.png" />
-    <Resource Include="Images\Cartes\Hearts\4.png" />
-    <Resource Include="Images\Cartes\Hearts\5.png" />
-    <Resource Include="Images\Cartes\Hearts\6.png" />
-    <Resource Include="Images\Cartes\Hearts\7.png" />
-    <Resource Include="Images\Cartes\Hearts\As.png" />
-    <Resource Include="Images\Cartes\Hearts\J.png" />
-    <Resource Include="Images\Cartes\Hearts\K.png" />
-    <Resource Include="Images\Cartes\Hearts\Q.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Cartes\Spades\2.png" />
-    <Resource Include="Images\Cartes\Spades\3.png" />
-    <Resource Include="Images\Cartes\Spades\4.png" />
-    <Resource Include="Images\Cartes\Spades\5.png" />
-    <Resource Include="Images\Cartes\Spades\6.png" />
-    <Resource Include="Images\Cartes\Spades\7.png" />
-    <Resource Include="Images\Cartes\Spades\As.png" />
-    <Resource Include="Images\Cartes\Spades\J.png" />
-    <Resource Include="Images\Cartes\Spades\K.png" />
-    <Resource Include="Images\Cartes\Spades\Q.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
