@@ -4,7 +4,6 @@ using System.Linq;
 using System.ServiceModel;
 using SuecaContracts;
 
-using System.Timers;
 using System.Threading;
 
 namespace SuecaServices
@@ -14,12 +13,15 @@ namespace SuecaServices
     public class ServiceSueca : ISuecaContract
     {
         private List<Room> _listRooms;
-        delegate void delegateCallbacks(ISuecaCallbackContract callback);
+
+        //delegate void delegateCallbacks(ISuecaCallbackContract callback);
+
+        public delegate void CallbackDelegate<T>(T t);
+        public static CallbackDelegate<string> gameStarted; 
 
         public ServiceSueca()
         {
             this._listRooms = new List<Room>();
-
         }
 
         public string CreateRoom(string password = "")
@@ -82,49 +84,7 @@ namespace SuecaServices
 
             Room currentRoom = room.First();
 
-            Player currentPlayer = currentRoom.ListPlayers.Find(p => p.Token == playerToken);
-
-            if(isReady)
-            {
-                currentPlayer.IsReady = true;
-
-                int nbPlayersReady = currentRoom.ListPlayers.Count<Player>(p => p.IsReady);
-
-                if(nbPlayersReady >= 4)
-                {
-                    delegateCallbacks delCallbacks = delegate(ISuecaCallbackContract callback)
-                        {
-                            callback.GameStarted("game started");
-                        };
-
-                    Console.WriteLine("[server] Send callback to players");
-                    
-                   // currentRoom.ListPlayers.ForEach(p => delCallbacks(p.Callback));
-                    foreach(Player p in currentRoom.ListPlayers)
-                    {
-                        if(p.Token != playerToken)
-                        {
-                            delCallbacks(p.Callback);
-                        }
-                        else
-                        {
-                            delCallbacks(OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>());
-                        }
-
-                    }
-
-                }
-                else
-                {
-                    Console.WriteLine("[server] Not enough player to send callback");
-                }
-            }
-
-        }
-
-        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
+            currentRoom.MakePlayerReady(playerToken,isReady);
         }
 
     }

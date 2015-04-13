@@ -36,7 +36,6 @@ namespace SuecaContracts
         [OperationContract(IsTerminating = false, IsOneWay = false)]
         List<Room> ListRoom();
 
-
         #endregion
 
         #region Game methods

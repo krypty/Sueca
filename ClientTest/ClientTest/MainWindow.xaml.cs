@@ -85,7 +85,6 @@ namespace ClientTest
             {
                 listRoom.Items.Add(room.Name);
             }
-
         }
     }
 }

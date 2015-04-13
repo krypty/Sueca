@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="cD+j7LfNWwozLo9kEOKyB1oi32k=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="XSILrZ9yiLuRShiM/PC7kQ2ULGI=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="wsDualHttpBinding" name="WSDualHttpBinding_Sueca">
       <properties>
@@ -97,10 +97,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="WSDualHttpBinding_Sueca" contract="ServiceReference1.Sueca" bindingType="wsDualHttpBinding" address="http://84.75.40.186:8731/SuecaServices/" bindingConfiguration="WSDualHttpBinding_Sueca">
+    <endpoint name="WSDualHttpBinding_Sueca" contract="ServiceReference1.Sueca" bindingType="wsDualHttpBinding" address="http://localhost:8731/SuecaServices/" bindingConfiguration="WSDualHttpBinding_Sueca">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://84.75.40.186:8731/SuecaServices/</serializedValue>
+          <serializedValue>http://localhost:8731/SuecaServices/</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

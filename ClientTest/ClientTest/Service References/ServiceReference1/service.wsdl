@@ -116,9 +116,9 @@
   </wsdl:binding>
   <wsdl:service name="ServiceSueca">
     <wsdl:port name="WSDualHttpBinding_Sueca" binding="tns:WSDualHttpBinding_Sueca">
-      <soap12:address location="http://84.75.40.186:8731/SuecaServices/" />
+      <soap12:address location="http://localhost:8731/SuecaServices/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://84.75.40.186:8731/SuecaServices/</wsa10:Address>
+        <wsa10:Address>http://localhost:8731/SuecaServices/</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>
