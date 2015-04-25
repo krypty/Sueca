@@ -47,6 +47,9 @@ namespace SuecaContracts
         //    return this.mapRooms.get(roomID).getGameInfoClient(playerToken);
         //    return null;
         //}
+
+        Room GetRoom(String roomName);
+
         #endregion
     }
 }

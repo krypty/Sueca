@@ -11,12 +11,27 @@ namespace SuecaContracts
     {
         private int nbPlayersReady;
         public delegate void CallbackDelegate<T>(T t);
-        public CallbackDelegate<string> gameStarted; 
+        public CallbackDelegate<string> gameStarted;
+
+        private GameInfoServer gameInfo;
+
+        private List<GameInfo> listGameInfos;
 
         [DataMember]
         public string Name { get; set; }
-        [DataMember]
+        [DataMember] // TODO: pas datamember ou alors pas de get/set
         public string Password { get; set; }
+
+        public enum RoomStateE
+        {
+            WAITING_READY,
+            GAME_IN_PROGRESS,
+            END_GAME
+        };
+
+        [DataMember]
+        public RoomStateE RoomState
+        { get; private set; }
 
         [DataMember]
         private List<Player> listPlayers;
@@ -39,6 +54,7 @@ namespace SuecaContracts
         public void AddPlayer(Player player)
         {
             listPlayers.Add(player);
+            //  listGameInfos.Add(GameInfoFactory(player.Token));
         }
 
         public int CountPlayers()
@@ -57,7 +73,7 @@ namespace SuecaContracts
 
             currentPlayer.IsReady = isReady;
 
-            if(isReady)
+            if (isReady)
             {
                 nbPlayersReady++;
 
@@ -96,5 +112,10 @@ namespace SuecaContracts
         {
             return Name;
         }
+
+        //public getGameInfoClient(String playerToken)
+        //{
+        //   return listGameInfos.
+        //}
     }
 }

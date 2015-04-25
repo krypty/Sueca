@@ -13,7 +13,8 @@ namespace SuecaServices
     public class ServiceSueca : ISuecaContract
     {
         private List<Room> _listRooms;
-
+        //private HashSet<String, Room>  
+        //private Dictionary<String, Room> roomList; 
         //delegate void delegateCallbacks(ISuecaCallbackContract callback);
 
         public delegate void CallbackDelegate<T>(T t);
@@ -83,6 +84,17 @@ namespace SuecaServices
         {
             return this._listRooms;
         }
+
+        public Room GetRoom(string roomName)
+        {
+            //TODO: ...
+            throw new NotImplementedException();
+        }
+
+        //public Room getRoom(String roomName)
+        //{
+        //    this.mapRoom.get(roomName);
+        //}
 
         public void SendReady(string playerToken, bool isReady)
         {
