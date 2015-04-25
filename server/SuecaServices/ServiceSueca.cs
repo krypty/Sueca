@@ -17,7 +17,7 @@ namespace SuecaServices
         //delegate void delegateCallbacks(ISuecaCallbackContract callback);
 
         public delegate void CallbackDelegate<T>(T t);
-        public static CallbackDelegate<string> gameStarted; 
+        public static CallbackDelegate<string> gameStarted;
 
         public ServiceSueca()
         {
@@ -34,35 +34,48 @@ namespace SuecaServices
 
         public String JoinRoom(string roomName, string password = "")
         {
-            try
+            # region DELETE ME
+            //TODO: delete me
+            foreach (var roomItem in _listRooms)
             {
-                Console.WriteLine("[server] joinRoom");
-
-                if (!_listRooms.Exists(r => r.Name == roomName))
-                {
-                    throw new Exception("room with name [" + roomName + "] doesn't exist");
-                }
-
-                Room room = this._listRooms.Find(r => r.Name == roomName);
-
-                if (password != "" && password != room.Password)
-                {
-                    throw new Exception("room with name [" + roomName + "] has not this password");
-                }
-
-                String playerToken = Guid.NewGuid().ToString();
-
-                Player newPlayer = new Player(playerToken);
-                newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
-                room.AddPlayer(newPlayer);
-
-                return playerToken;
-                
+                Console.WriteLine("room: " + roomItem.Name + " pass: " + roomItem.Password);
             }
-            catch
+            # endregion
+
+
+            Console.WriteLine("[server] joinRoom");
+
+            if (!_listRooms.Exists(r => r.Name == roomName))
             {
-                return "";
+                Console.WriteLine("[Join room] room doesn't exist");
+                throw new Exception("room with name [" + roomName + "] doesn't exist");
             }
+
+            Room room = this._listRooms.Find(r => r.Name == roomName);
+
+            if (!room.Password.Equals(password))
+            {
+                Console.WriteLine("[Join room] invalid password");
+                return null;
+            }
+
+            String playerToken = Guid.NewGuid().ToString();
+
+            Player newPlayer = new Player(playerToken);
+            newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+            room.AddPlayer(newPlayer);
+
+            # region DELETE ME
+            //TODO: delete me, debug only
+            new Thread(new ParameterizedThreadStart(
+                    delegate(object message)
+                    {
+                        newPlayer.Callback.GameStarted(message.ToString());
+                    })
+                    ).Start("Game started");
+
+            return playerToken;
+            #endregion
         }
 
 
@@ -76,15 +89,15 @@ namespace SuecaServices
             Console.WriteLine("[server] Player with token " + playerToken + " send ready");
 
             IEnumerable<Room> room = _listRooms.Where<Room>(r => r.ListPlayers.Exists(p => p.Token == playerToken));
-            
-            if(room.Count() < 1)
+
+            if (room.Count() < 1)
             {
                 throw new Exception("Player with token [" + playerToken + "] doesn't exist");
             }
 
             Room currentRoom = room.First();
 
-            currentRoom.MakePlayerReady(playerToken,isReady);
+            currentRoom.MakePlayerReady(playerToken, isReady);
         }
 
     }

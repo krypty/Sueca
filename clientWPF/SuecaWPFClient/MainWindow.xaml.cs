@@ -13,12 +13,12 @@ namespace suecaWPFClient
 {
     // callback freezes if true
     [CallbackBehavior(UseSynchronizationContext = false)]
-    public partial class MainWindow : Window, SuecaCallback
+    public partial class MainWindow : Window//, SuecaCallback
     {
         //DuplexChannelFactory<ISuecaContract> _channelFactory;
         //ISuecaContract _suecaClient;
 
-        private Sueca _suecaClient;
+        //        private Sueca _suecaClient;
 
         private const int MaxCard = 10;
         private List<Card> _listCards = new List<Card>();
@@ -26,9 +26,17 @@ namespace suecaWPFClient
         public MainWindow()
         {
             InitializeComponent();
-            _suecaClient = new SuecaClient(new InstanceContext(this));
+            //            _suecaClient = new SuecaClient(new InstanceContext(this));
             ResetCards();
             DrawAllPlayersCards();
+
+            new WelcomeWindow().Show();
+            ServiceManager.GetInstance().OnGameInfoUpdated += ServiceManagerOnOnGameInfoUpdated;
+        }
+
+        private void ServiceManagerOnOnGameInfoUpdated(string message)
+        {
+            MessageBox.Show("MainWindow: " + message);
         }
 
         private void ResetCards()
@@ -52,18 +60,21 @@ namespace suecaWPFClient
 
             // create room
             Console.WriteLine("create room...");
-            String roomName = _suecaClient.CreateRoom("no_password");
+            //String roomName = _suecaClient.CreateRoom("no_password");
+            String roomName = ServiceManager.GetInstance().CreateRoom("no_password");
             MessageBox.Show("roomName: " + roomName);
 
             // join it 
             Console.WriteLine("Join room");
-            String playerToken = _suecaClient.JoinRoom(roomName, "other_password_that_fail");
+            //String playerToken = _suecaClient.JoinRoom(roomName, "other_password_that_fail");
+            String playerToken = ServiceManager.GetInstance().JoinRoom(roomName, "other_password_that_fail");
             Console.WriteLine("[client] playerToken: " + playerToken);
         }
 
         private void btnListRoom_Click(object sender, RoutedEventArgs e)
         {
-            var listRoom = _suecaClient.ListRoom();
+            //            var listRoom = _suecaClient.ListRoom();
+            var listRoom = ServiceManager.GetInstance().ListRoom();
 
             StringBuilder builder = new StringBuilder();
 
@@ -75,11 +86,11 @@ namespace suecaWPFClient
             MessageBox.Show(builder.ToString());
         }
 
-        // callback
-        public void GameStarted(string message)
-        {
-            Console.WriteLine("[Client] server says: " + message);
-        }
+        //// callback
+        //public void GameStarted(string message)
+        //{
+        //    Console.WriteLine("[Client] server says: " + message);
+        //}
 
         private void Ellipse_OnMouseDown(object sender, MouseButtonEventArgs e)
         {

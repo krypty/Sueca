@@ -21,7 +21,7 @@ namespace SuecaContracts
         /// </summary>
         /// <param name="roomName"></param>
         /// <param name="password"></param>
-        /// <returns>playerToken which is unique among all players in all rooms</returns>
+        /// <returns>playerToken which is unique among all players in all rooms or null if wrong password</returns>
         [OperationContract(IsTerminating = false, IsOneWay = false)]
         String JoinRoom(String roomName, String password = "");
 
@@ -40,6 +40,13 @@ namespace SuecaContracts
 
         #region Game methods
         //TODO: add here game methods like playCard(Card card, String playerToken)
+
+
+        //GameInfo GetGameInfo(String roomID, String playerToken)
+        //{
+        //    return this.mapRooms.get(roomID).getGameInfoClient(playerToken);
+        //    return null;
+        //}
         #endregion
     }
 }
