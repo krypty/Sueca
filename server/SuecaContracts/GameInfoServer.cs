@@ -131,6 +131,7 @@ namespace SuecaContracts
                 if(numberPlayersHavePlayed >= 4)
                 {
                     CalculateTurn();
+                    numberPlayersHavePlayed = 0;
                 }
             }
             else
@@ -182,6 +183,7 @@ namespace SuecaContracts
                 {
                     Console.WriteLine("[server] the best card of the turn is : "+bestCard.Color+" : "+bestCard.Value+" and the player who win is : " + winnerToken);
                     winner.ListCardsWin.AddRange(listCardsTurn);
+                    numberPlayerTurn = winner.NumberTurn;
                 }
                 else
                 {
