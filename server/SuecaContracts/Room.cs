@@ -12,6 +12,7 @@ namespace SuecaContracts
         private int nbPlayersReady;
         public delegate void CallbackDelegate<T>(T t);
         public CallbackDelegate<string> gameStarted;
+        public CallbackDelegate<Room> gameUpdated;
 
         private GameInfoServer gameInfo;
 
@@ -19,10 +20,10 @@ namespace SuecaContracts
 
         [DataMember]
         public string Name { get; set; }
-        [DataMember] // TODO: pas datamember ou alors pas de get/set
+
         public string Password { get; set; }
 
-        public enum RoomStateE
+        public enum StateRoom
         {
             WAITING_READY,
             GAME_IN_PROGRESS,
@@ -30,7 +31,7 @@ namespace SuecaContracts
         };
 
         [DataMember]
-        public RoomStateE RoomState
+        public StateRoom RoomState
         { get; private set; }
 
         [DataMember]
@@ -49,6 +50,7 @@ namespace SuecaContracts
 
             nbPlayersReady = 0;
             listPlayers = new List<Player>();
+            RoomState = StateRoom.WAITING_READY;
         }
 
         public void AddPlayer(Player player)
@@ -77,6 +79,7 @@ namespace SuecaContracts
             {
                 nbPlayersReady++;
 
+                //If the room is full, launch the game
                 if (nbPlayersReady == 2)
                 {
                     foreach (Player p in ListPlayers)
@@ -84,12 +87,16 @@ namespace SuecaContracts
                         gameStarted += p.Callback.GameStarted;
                     }
 
+                    //Start the game for the client
                     new Thread(new ParameterizedThreadStart(
                         delegate(object message)
                         {
                             gameStarted((string)message);
                         })
                         ).Start("Game started");
+
+                    //Start the game for the server
+                    new Thread(StartGame).Start();
                 }
             }
             else
@@ -98,8 +105,42 @@ namespace SuecaContracts
             }
         }
 
-        private void callGameStarted(object m)
+        private void StartGame()
         {
+            //Initialize the gameInfoServer
+            gameInfo = new GameInfoServer();
+
+            //Get the callback from players
+            foreach (Player p in ListPlayers)
+            {
+                gameUpdated += p.Callback.RoomUpdated;
+            }
+
+            //Change state of room
+            RoomState = StateRoom.GAME_IN_PROGRESS;
+
+            //Distribute cards
+            DistributeCards();
+
+            Console.WriteLine("[server] has distribute cards");
+
+            //Call
+            new Thread(new ParameterizedThreadStart(
+                delegate(object room)
+                {
+                    gameUpdated((Room)room);
+                })
+            ).Start(this);
+
+            Console.WriteLine("[server] has send callback to update room");
+        }
+
+        private void DistributeCards()
+        {
+            foreach(Player p in listPlayers)
+            {
+                gameInfo.distributeCardsPerPlayer(p);
+            }
         }
 
         private static string GenerateName()
@@ -112,10 +153,5 @@ namespace SuecaContracts
         {
             return Name;
         }
-
-        //public getGameInfoClient(String playerToken)
-        //{
-        //   return listGameInfos.
-        //}
     }
 }

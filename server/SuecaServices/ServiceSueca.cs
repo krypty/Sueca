@@ -12,9 +12,9 @@ namespace SuecaServices
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
     public class ServiceSueca : ISuecaContract
     {
-        private List<Room> _listRooms;
+        //private List<Room> _listRooms;
         //private HashSet<String, Room>  
-        //private Dictionary<String, Room> roomList; 
+        private Dictionary<String, Room> roomList; 
         //delegate void delegateCallbacks(ISuecaCallbackContract callback);
 
         public delegate void CallbackDelegate<T>(T t);
@@ -22,39 +22,32 @@ namespace SuecaServices
 
         public ServiceSueca()
         {
-            this._listRooms = new List<Room>();
+           // this._listRooms = new List<Room>();
+            this.roomList = new Dictionary<string, Room>();
         }
 
         public string CreateRoom(string password = "")
         {
             Console.WriteLine("[server] createRoom");
             Room room = new Room(password);
-            _listRooms.Add(room);
+            roomList.Add(room.Name, room);
+            //_listRooms.Add(room);
             return room.Name;
         }
 
         public String JoinRoom(string roomName, string password = "")
         {
-            # region DELETE ME
-            //TODO: delete me
-            foreach (var roomItem in _listRooms)
-            {
-                Console.WriteLine("room: " + roomItem.Name + " pass: " + roomItem.Password);
-            }
-            # endregion
-
-
             Console.WriteLine("[server] joinRoom");
-
-            if (!_listRooms.Exists(r => r.Name == roomName))
+            Room currentRoom;
+            if (!roomList.TryGetValue(roomName, out currentRoom))
             {
                 Console.WriteLine("[Join room] room doesn't exist");
                 throw new Exception("room with name [" + roomName + "] doesn't exist");
             }
 
-            Room room = this._listRooms.Find(r => r.Name == roomName);
+            //Room room = this._listRooms.Find(r => r.Name == roomName);
 
-            if (!room.Password.Equals(password))
+            if (!currentRoom.Password.Equals(password))
             {
                 Console.WriteLine("[Join room] invalid password");
                 return null;
@@ -64,43 +57,34 @@ namespace SuecaServices
 
             Player newPlayer = new Player(playerToken);
             newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
-            room.AddPlayer(newPlayer);
-
-            # region DELETE ME
-            //TODO: delete me, debug only
-            new Thread(new ParameterizedThreadStart(
-                    delegate(object message)
-                    {
-                        newPlayer.Callback.GameStarted(message.ToString());
-                    })
-                    ).Start("Game started");
+            currentRoom.AddPlayer(newPlayer);
 
             return playerToken;
-            #endregion
         }
 
 
         public List<Room> ListRoom()
         {
-            return this._listRooms;
+            return this.roomList.Values.ToList();
         }
 
         public Room GetRoom(string roomName)
         {
-            //TODO: ...
-            throw new NotImplementedException();
+            Room currentRoom;
+            if (!roomList.TryGetValue(roomName, out currentRoom))
+            {
+                return null;
+            }
+            return currentRoom;
         }
 
-        //public Room getRoom(String roomName)
-        //{
-        //    this.mapRoom.get(roomName);
-        //}
 
         public void SendReady(string playerToken, bool isReady)
         {
             Console.WriteLine("[server] Player with token " + playerToken + " send ready");
 
-            IEnumerable<Room> room = _listRooms.Where<Room>(r => r.ListPlayers.Exists(p => p.Token == playerToken));
+            List<Room> listRoom = roomList.Values.ToList();
+            IEnumerable<Room> room = listRoom.Where<Room>(r => r.ListPlayers.Exists(p => p.Token == playerToken));
 
             if (room.Count() < 1)
             {
