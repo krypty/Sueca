@@ -47,6 +47,7 @@ namespace SuecaContracts
         //    return this.mapRooms.get(roomID).getGameInfoClient(playerToken);
         //    return null;
         //}
+        void PlayCard(string playerToken, CardColor color, CardValue value);
 
         Room GetRoom(String roomName);
 

@@ -83,6 +83,23 @@ namespace SuecaServices
         {
             Console.WriteLine("[server] Player with token " + playerToken + " send ready");
 
+            Room currentRoom = GetRoomFromPlayerToken(playerToken);
+
+            currentRoom.MakePlayerReady(playerToken, isReady);
+        }
+
+        public void PlayCard(string playerToken, CardColor color, CardValue value)
+        {
+            Room currentRoom = GetRoomFromPlayerToken(playerToken);
+
+            if(currentRoom != null)
+            {
+                currentRoom.PlayCard(playerToken,color,value);
+            }
+        }
+
+        private Room GetRoomFromPlayerToken(string playerToken)
+        {
             List<Room> listRoom = roomList.Values.ToList();
             IEnumerable<Room> room = listRoom.Where<Room>(r => r.ListPlayers.Exists(p => p.Token == playerToken));
 
@@ -91,9 +108,7 @@ namespace SuecaServices
                 throw new Exception("Player with token [" + playerToken + "] doesn't exist");
             }
 
-            Room currentRoom = room.First();
-
-            currentRoom.MakePlayerReady(playerToken, isReady);
+            return room.First();
         }
 
     }

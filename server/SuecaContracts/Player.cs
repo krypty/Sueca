@@ -12,6 +12,7 @@ namespace SuecaContracts
     {
         private List<Card> listCardsHolding;
         private List<Card> listCardsWin;
+        private int numberTurn;
 
         [DataMember]
         string token;
@@ -50,6 +51,11 @@ namespace SuecaContracts
         {
             get { return listCardsHolding; }
             set { listCardsHolding = value; }
+        }
+        public int NumberTurn
+        {
+            get { return numberTurn; }
+            set { numberTurn = value; }
         }
 
         public Player()

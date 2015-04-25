@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-
+using System.Linq;
 using System.Threading;
 
 namespace SuecaContracts
@@ -55,6 +55,11 @@ namespace SuecaContracts
 
         public void AddPlayer(Player player)
         {
+            //CAREFULL : if somebody quit the game => not manage
+            //Add a number to known when the user comes
+            //First : 0, second : 1, third : 2, fourth : 3
+            player.NumberTurn = listPlayers.Count;
+
             listPlayers.Add(player);
             //  listGameInfos.Add(GameInfoFactory(player.Token));
         }
@@ -80,7 +85,7 @@ namespace SuecaContracts
                 nbPlayersReady++;
 
                 //If the room is full, launch the game
-                if (nbPlayersReady == 2)
+                if (nbPlayersReady == 1)
                 {
                     foreach (Player p in ListPlayers)
                     {
@@ -93,7 +98,7 @@ namespace SuecaContracts
                         {
                             gameStarted((string)message);
                         })
-                        ).Start("Game started");
+                    ).Start("Game started");
 
                     //Start the game for the server
                     new Thread(StartGame).Start();
@@ -102,13 +107,26 @@ namespace SuecaContracts
             else
             {
                 nbPlayersReady--;
+
+                if (RoomState == StateRoom.GAME_IN_PROGRESS)
+                {
+                    RoomState = StateRoom.WAITING_READY;
+                    
+                    //If the user send not ready during a game, it means that he leaves the game
+                    IEnumerable<Player> playerToRemove = listPlayers.Where<Player>(p => p.Token == playerToken);
+                    Player player = playerToRemove.First();
+                    listPlayers.Remove(player);
+
+                    gameInfo = null;
+                    gameUpdated = null;
+                }
             }
         }
 
         private void StartGame()
         {
             //Initialize the gameInfoServer
-            gameInfo = new GameInfoServer();
+            gameInfo = new GameInfoServer(listPlayers);
 
             //Get the callback from players
             foreach (Player p in ListPlayers)
@@ -120,11 +138,10 @@ namespace SuecaContracts
             RoomState = StateRoom.GAME_IN_PROGRESS;
 
             //Distribute cards
-            DistributeCards();
+            gameInfo.distributeCardsForEachPlayer();
 
             Console.WriteLine("[server] has distribute cards");
 
-            //Call
             new Thread(new ParameterizedThreadStart(
                 delegate(object room)
                 {
@@ -135,12 +152,9 @@ namespace SuecaContracts
             Console.WriteLine("[server] has send callback to update room");
         }
 
-        private void DistributeCards()
+        public void PlayCard(string playerToken, CardColor color, CardValue value)
         {
-            foreach(Player p in listPlayers)
-            {
-                gameInfo.distributeCardsPerPlayer(p);
-            }
+            gameInfo.PlayCard(playerToken, color, value);
         }
 
         private static string GenerateName()
