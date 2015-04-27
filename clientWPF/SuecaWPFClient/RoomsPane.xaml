@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="suecaWPFClient.RoomsPane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <DockPanel Margin="10 10 10 10">
+        <StackPanel DockPanel.Dock="Bottom" Height="32" x:Name="ButtonsWrapPanel" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="5,0,0,0"/>
+                    <Setter Property="Padding" Value="5"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="Créer une salle" x:Name="BtnCreateRoom" Click="BtnCreateRoom_Click"></Button>
+            <Button Content="Rafraîchir" x:Name="BtnRefresh" Height="{Binding Path=Height, ElementName=ButtonsWrapPanel}" Click="BtnRefresh_Click"></Button>
+            <Button Content="Se connecter" x:Name="BtnConnect" Click="BtnConnect_OnClick"></Button>
+        </StackPanel>
+        <DockPanel>
+            <Label DockPanel.Dock="Top" Content="Liste des salles" FontFamily="Arial" FontSize="22"/>
+            <ListView x:Name="RoomListView" DisplayMemberPath="Name" MouseDoubleClick="ListViewClick"/>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

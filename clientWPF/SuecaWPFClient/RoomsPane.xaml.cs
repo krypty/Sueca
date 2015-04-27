@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,24 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using suecaWPFClient.ServiceReference1;
 
 namespace suecaWPFClient
 {
     /// <summary>
-    /// Interaction logic for WelcomeWindow.xaml
+    /// Interaction logic for RoomsPane.xaml
     /// </summary>
-    
-    public partial class WelcomeWindow : Window
+    public partial class RoomsPane : UserControl
     {
+
         private Room[] _rooms;
 
-        public WelcomeWindow()
+        public RoomsPane()
         {
             InitializeComponent();
             ServiceManager.GetInstance().OnGameInfoUpdated += GameInfoUpdated;
-            //RefreshRoomList(); //TODO: async
         }
 
         private void BtnCreateRoom_Click(object sender, RoutedEventArgs e)
@@ -72,6 +71,16 @@ namespace suecaWPFClient
 
         private void ListViewClick(object sender, MouseButtonEventArgs e)
         {
+            JoinRoom();
+        }
+
+        private void BtnConnect_OnClick(object sender, RoutedEventArgs e)
+        {
+            JoinRoom();
+        }
+
+        private void JoinRoom()
+        {
             Room room = (Room)RoomListView.SelectedItem;
             if (room == null) return;
 
@@ -90,12 +99,10 @@ namespace suecaWPFClient
             if (playerID == null)
             {
                 MessageBox.Show("Invalid password");
+                return;
             }
-            else
-            {
-                MessageBox.Show("Room joined. PlayerID: " + playerID);
-            }
-            
+
+            MessageBox.Show("Room joined. PlayerID: " + playerID);
         }
     }
 }
