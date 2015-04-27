@@ -8,8 +8,8 @@ module SuecaCard {
 
         constructor() {
             this.cardArray = new Array();
-            this.addCard(new Card(CardColor.Hearts, CardValue.Two, "Images/Cards/Hearts/2.png"));
-            this.addCard(new Card(CardColor.Hearts, CardValue.Three, "Images/Cards/Hearts/2.png"));
+            this.addCard(new Card(CardColor.Hearts, CardValue.Two, "/Images/Cards/Hearts/2.png"));
+            this.addCard(new Card(CardColor.Hearts, CardValue.Three, "/Images/Cards/Hearts/2.png"));
 
         }
 

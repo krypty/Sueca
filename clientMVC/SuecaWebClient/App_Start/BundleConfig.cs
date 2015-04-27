@@ -27,6 +27,10 @@ namespace SuecaWebClient
                 "~/Scripts/CustomScripts/Listing.js"
                 ));
 
+            bundles.Add(new ScriptBundle("~/bundles/easeljs").Include(
+                "~/Scripts/easeljs-0.8.0.combined.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/pathresolver").Include(
                 "~/Scripts/CustomScripts/PathScript.js"
                 ));

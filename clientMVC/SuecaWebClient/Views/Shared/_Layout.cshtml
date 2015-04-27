@@ -8,7 +8,9 @@
     @Styles.Render("~/Content/css")
 
     <script>
-        var roomPath = "@Url.Action("Join", "Room", new { roomId = "" }, Request.Url.Scheme)";
+    var roomPath = "@Url.Action("Join", "Room", new { roomId = "" }, Request.Url.Scheme)";
+        var getGameState = "@Url.Action("getGameState", "Room")";
+
     </script>
 </head>
 <body>

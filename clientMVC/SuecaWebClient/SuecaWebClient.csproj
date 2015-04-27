@@ -146,6 +146,48 @@
     <Compile Include="ViewModel\RoomViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Cards\Back.png" />
+    <Content Include="Images\Cards\Clubs\2.png" />
+    <Content Include="Images\Cards\Clubs\3.png" />
+    <Content Include="Images\Cards\Clubs\4.png" />
+    <Content Include="Images\Cards\Clubs\5.png" />
+    <Content Include="Images\Cards\Clubs\6.png" />
+    <Content Include="Images\Cards\Clubs\7.png" />
+    <Content Include="Images\Cards\Clubs\As.png" />
+    <Content Include="Images\Cards\Clubs\J.png" />
+    <Content Include="Images\Cards\Clubs\K.png" />
+    <Content Include="Images\Cards\Clubs\Q.png" />
+    <Content Include="Images\Cards\Diamonds\2.png" />
+    <Content Include="Images\Cards\Diamonds\3.png" />
+    <Content Include="Images\Cards\Diamonds\4.png" />
+    <Content Include="Images\Cards\Diamonds\5.png" />
+    <Content Include="Images\Cards\Diamonds\6.png" />
+    <Content Include="Images\Cards\Diamonds\7.png" />
+    <Content Include="Images\Cards\Diamonds\As.png" />
+    <Content Include="Images\Cards\Diamonds\J.png" />
+    <Content Include="Images\Cards\Diamonds\K.png" />
+    <Content Include="Images\Cards\Diamonds\Q.png" />
+    <Content Include="Images\Cards\Hearts\2.png" />
+    <Content Include="Images\Cards\Hearts\3.png" />
+    <Content Include="Images\Cards\Hearts\4.png" />
+    <Content Include="Images\Cards\Hearts\5.png" />
+    <Content Include="Images\Cards\Hearts\6.png" />
+    <Content Include="Images\Cards\Hearts\7.png" />
+    <Content Include="Images\Cards\Hearts\As.png" />
+    <Content Include="Images\Cards\Hearts\J.png" />
+    <Content Include="Images\Cards\Hearts\K.png" />
+    <Content Include="Images\Cards\Hearts\Q.png" />
+    <Content Include="Images\Cards\Spades\2.png" />
+    <Content Include="Images\Cards\Spades\3.png" />
+    <Content Include="Images\Cards\Spades\4.png" />
+    <Content Include="Images\Cards\Spades\5.png" />
+    <Content Include="Images\Cards\Spades\6.png" />
+    <Content Include="Images\Cards\Spades\7.png" />
+    <Content Include="Images\Cards\Spades\As.png" />
+    <Content Include="Images\Cards\Spades\J.png" />
+    <Content Include="Images\Cards\Spades\K.png" />
+    <Content Include="Images\Cards\Spades\Q.png" />
+    <Content Include="Images\GameBoard.png" />
     <Content Include="Images\tools\ajax-loader.gif" />
     <Content Include="Content\themes\bootstrap\bootstrap-theme.css" />
     <Content Include="Content\themes\bootstrap\bootstrap-theme.min.css" />
@@ -219,8 +261,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\CustomScripts\GameScript.js" />
+    <Content Include="Scripts\CustomScripts\GameScriptAjax.js" />
     <Content Include="Scripts\CustomScripts\Listing.js" />
     <Content Include="Scripts\CustomScripts\PathScript.js" />
+    <Content Include="Scripts\easeljs-0.8.0.combined.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -290,7 +334,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\Cards\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

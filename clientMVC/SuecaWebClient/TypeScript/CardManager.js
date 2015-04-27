@@ -5,8 +5,8 @@ var SuecaCard;
     var CardManager = (function () {
         function CardManager() {
             this.cardArray = new Array();
-            this.addCard(new SuecaCard.Card(4 /* Hearts */, 1 /* Two */, "Images/Cards/Hearts/2.png"));
-            this.addCard(new SuecaCard.Card(4 /* Hearts */, 2 /* Three */, "Images/Cards/Hearts/2.png"));
+            this.addCard(new SuecaCard.Card(4 /* Hearts */, 1 /* Two */, "/Images/Cards/Hearts/2.png"));
+            this.addCard(new SuecaCard.Card(4 /* Hearts */, 2 /* Three */, "/Images/Cards/Hearts/2.png"));
         }
         CardManager.prototype.addCard = function (card) {
             this.cardArray.push(card);

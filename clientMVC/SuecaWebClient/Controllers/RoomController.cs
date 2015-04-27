@@ -11,6 +11,13 @@ namespace SuecaWebClient.Controllers
         //
         // GET: /Room/
 
+        [HttpPost]
+        public ActionResult getGameState(string roomId, string playerToken)
+        {
+            return Content("It works " + roomId + " | " + playerToken);
+        }
+
+
         public ActionResult Join(string roomId)
         {
             return View();

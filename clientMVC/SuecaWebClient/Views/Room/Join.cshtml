@@ -3,11 +3,12 @@
 }
 
 <h2>Join</h2>
-<canvas id='c' style="border:1px solid black;width:100%;"></canvas>
+<canvas id='c' style="border:1px solid black;" width="1500" height="1000"></canvas>
 
-
-
+@Scripts.Render("~/Scripts/jquery-1.9.1.min.js")
+@Scripts.Render("~/Scripts/easeljs-0.8.0.combined.js")
 @Scripts.Render("~/TypeScript/CardEnums.js")
 @Scripts.Render("~/TypeScript/CardDefinition.js")
 @Scripts.Render("~/TypeScript/CardManager.js")
 @Scripts.Render("~/Scripts/CustomScripts/GameScript.js")
+@Scripts.Render("~/Scripts/CustomScripts/GameScriptAjax.js")
