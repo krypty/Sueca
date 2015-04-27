@@ -1,0 +1,26 @@
+﻿<Window x:Class="suecaWPFClient.CreateRoomWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Créer une salle" Height="125" Width="355">
+
+    <DockPanel Margin="15">
+        <WrapPanel DockPanel.Dock="Bottom"  HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button IsDefault="True" Name="OkButton" MinWidth="60" Margin="0,0,10,0" Click="OkButton_OnClick">_OK</Button>
+            <Button IsCancel="True" MinWidth="60">_Cancel</Button>
+        </WrapPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0">Mot de passe(facultatif):</Label>
+            <PasswordBox Name="PasswordTextBox"  Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"></PasswordBox>
+        </Grid>
+
+
+    </DockPanel>
+</Window>

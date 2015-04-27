@@ -10,6 +10,10 @@ namespace SuecaContracts
     [DataContract]
     public class Player
     {
+        private List<Card> listCardsHolding;
+        private List<Card> listCardsWin;
+        private int numberTurn;
+
         [DataMember]
         string token;
 
@@ -38,10 +42,27 @@ namespace SuecaContracts
             get { return callback; }
             set { callback = value; }
         }
+        internal List<Card> ListCardsWin
+        {
+            get { return listCardsWin; }
+            set { listCardsWin = value; }
+        }
+        internal List<Card> ListCardsHolding
+        {
+            get { return listCardsHolding; }
+            set { listCardsHolding = value; }
+        }
+        public int NumberTurn
+        {
+            get { return numberTurn; }
+            set { numberTurn = value; }
+        }
 
         public Player()
         {
             this.isReady = false;
+            this.ListCardsHolding = new List<Card>();
+            this.ListCardsWin = new List<Card>();
         }
 
         public Player(string playerToken) : this()
