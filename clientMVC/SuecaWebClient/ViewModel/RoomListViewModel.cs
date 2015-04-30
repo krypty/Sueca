@@ -6,13 +6,13 @@ using System.Web.Optimization;
 
 namespace SuecaWebClient.Models
 {
-    public class RoomViewModel
+    public class RoomListViewModel
     {
         public string roomId { get; set; }
 
         public bool hasPassword { get; set; }
 
-        public RoomViewModel(string roomId, bool hasPassword = false)
+        public RoomListViewModel(string roomId, bool hasPassword = false)
         {
             this.roomId = roomId;
             this.hasPassword = hasPassword;

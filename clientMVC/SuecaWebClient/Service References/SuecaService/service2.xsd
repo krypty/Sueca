@@ -33,6 +33,7 @@
   <xs:element name="SendReady">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="playerToken" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="isReady" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
@@ -58,6 +59,13 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RoomUpdated">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="room" nillable="true" type="q2:Room" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

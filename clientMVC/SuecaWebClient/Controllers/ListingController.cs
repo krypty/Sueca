@@ -41,7 +41,7 @@ namespace SuecaWebClient.Controllers
         [HttpGet]  
         public ActionResult RoomList()
         {
-            List<RoomViewModel> roomViewList = new List<RoomViewModel>();
+            List<RoomListViewModel> roomViewList = new List<RoomListViewModel>();
             serviceHelper = new SuecaServiceHelper();
             
             Room[] roomList = serviceHelper.getRoomsArray();
@@ -49,7 +49,8 @@ namespace SuecaWebClient.Controllers
             {
                 foreach (Room r in roomList)
                 {
-                    roomViewList.Add(new RoomViewModel(r.Name, r.Password != ""));
+                    
+                    roomViewList.Add(new RoomListViewModel(r.Name, true));
                 }
             }
             else
@@ -57,7 +58,7 @@ namespace SuecaWebClient.Controllers
                
             }
 
-            return View(roomViewList.AsEnumerable<RoomViewModel>());
+            return View(roomViewList.AsEnumerable<RoomListViewModel>());
         }
 
 

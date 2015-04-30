@@ -143,7 +143,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\RoomViewModel.cs" />
+    <Compile Include="ViewModel\RoomInfoModel.cs" />
+    <Compile Include="ViewModel\RoomListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Cards\Back.png" />
@@ -288,9 +289,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Service References\SuecaService\Arrays1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\SuecaService\configuration91.svcinfo" />
     <None Include="Service References\SuecaService\configuration.svcinfo" />
     <None Include="Service References\SuecaService\Reference.svcmap">

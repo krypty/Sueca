@@ -26,7 +26,6 @@
     <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="77bed899-1e47-45ed-be8f-86072906d612" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
     <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="e6cd6d2e-c504-4b88-99cf-772d2e466f02" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
     <MetadataFile FileName="SuecaContracts1.xsd" MetadataType="Schema" ID="0bda9083-195c-444c-bba2-93f4fd6f2534" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
-    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="3f2f5fde-f72d-4109-a412-891c7f601e6f" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
