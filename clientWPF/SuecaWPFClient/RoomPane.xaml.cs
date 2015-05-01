@@ -1,30 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using suecaWPFClient.ServiceReference1;
 
 namespace suecaWPFClient
 {
     /// <summary>
-    /// Interaction logic for RoomsPane.xaml
+    /// Interaction logic for RoomPane.xaml
     /// </summary>
-    public partial class RoomsPane : UserControl
+    public partial class RoomPane : GameStatePaneA
     {
 
         private Room[] _rooms;
 
-        public RoomsPane()
+        public RoomPane()
         {
             InitializeComponent();
             ServiceManager.GetInstance().OnGameInfoUpdated += GameInfoUpdated;
@@ -103,6 +92,14 @@ namespace suecaWPFClient
             }
 
             MessageBox.Show("Room joined. PlayerID: " + playerID);
+
+            // switch the view to waiting room
+            ChangeState(GameState.WaitingRoom);
+        }
+
+        protected override void Quit()
+        {
+            throw new NotImplementedException();
         }
     }
 }

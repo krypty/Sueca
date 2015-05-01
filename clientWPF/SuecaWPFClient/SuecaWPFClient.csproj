@@ -72,8 +72,10 @@
     <Compile Include="GameSummaryPane.xaml.cs">
       <DependentUpon>GameSummaryPane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RoomsPane.xaml.cs">
-      <DependentUpon>RoomsPane.xaml</DependentUpon>
+    <Compile Include="GameStatePaneA.cs" />
+    <Compile Include="PaneSwitcher.cs" />
+    <Compile Include="RoomPane.xaml.cs">
+      <DependentUpon>RoomPane.xaml</DependentUpon>
     </Compile>
     <Compile Include="RoomSummaryPane.xaml.cs">
       <DependentUpon>RoomSummaryPane.xaml</DependentUpon>
@@ -107,7 +109,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="RoomsPane.xaml">
+    <Page Include="RoomPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
