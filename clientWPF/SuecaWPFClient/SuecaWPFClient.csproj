@@ -60,9 +60,9 @@
     <Compile Include="BoardPane.xaml.cs">
       <DependentUpon>BoardPane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CardImageFactory.cs" />
-    <Compile Include="CardType.cs" />
-    <Compile Include="Card.cs" />
+    <Compile Include="Cards\CardImageFactory.cs" />
+    <Compile Include="Cards\CardType.cs" />
+    <Compile Include="Cards\Card.cs" />
     <Compile Include="CreateRoomWindow.xaml.cs">
       <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
     </Compile>
