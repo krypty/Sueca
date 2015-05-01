@@ -66,18 +66,18 @@
     <Compile Include="CreateRoomWindow.xaml.cs">
       <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameEndPane.xaml.cs">
+    <Compile Include="GamePanes\GameEndPane.xaml.cs">
       <DependentUpon>GameEndPane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameSummaryPane.xaml.cs">
+    <Compile Include="GamePanes\GameSummaryPane.xaml.cs">
       <DependentUpon>GameSummaryPane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameStatePaneA.cs" />
-    <Compile Include="PaneSwitcher.cs" />
-    <Compile Include="RoomPane.xaml.cs">
+    <Compile Include="GamePanes\GameStatePaneA.cs" />
+    <Compile Include="GamePanes\PaneSwitcher.cs" />
+    <Compile Include="GamePanes\RoomPane.xaml.cs">
       <DependentUpon>RoomPane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RoomSummaryPane.xaml.cs">
+    <Compile Include="GamePanes\RoomSummaryPane.xaml.cs">
       <DependentUpon>RoomSummaryPane.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service References\ServiceReference1\Reference.cs">
@@ -97,11 +97,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameEndPane.xaml">
+    <Page Include="GamePanes\GameEndPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameSummaryPane.xaml">
+    <Page Include="GamePanes\GameSummaryPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -109,11 +109,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="RoomPane.xaml">
+    <Page Include="GamePanes\RoomPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RoomSummaryPane.xaml">
+    <Page Include="GamePanes\RoomSummaryPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
