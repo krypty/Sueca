@@ -23,10 +23,8 @@ namespace SuecaWebClient.Helper
         {
             
             string playerToken = client.JoinRoom(roomId, password);
-            
-
-
-            return new RoomInfoModel(roomId,playerToken);
+            bool[] statesPlayers = new[] {true, true, false, false};
+            return new RoomInfoModel(roomId, playerToken, statesPlayers);
         }
 
 
