@@ -118,5 +118,11 @@ namespace SuecaServices
             return room.First();
         }
 
+
+
+        public GameInfo GetGameInfo(string playerToken, string roomId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

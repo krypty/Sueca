@@ -33,7 +33,7 @@ namespace SuecaWebClient.Helper
         {
             //SuecaService.Room.StateRoom
             //client.JoinRoom();
-
+            
         }
 
         public void sendClientReady(bool state)
