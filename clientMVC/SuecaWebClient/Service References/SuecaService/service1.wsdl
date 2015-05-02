@@ -44,11 +44,32 @@
   <wsdl:message name="Sueca_ListRoom_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListRoomResponse" />
   </wsdl:message>
+  <wsdl:message name="Sueca_PlayCard_InputMessage">
+    <wsdl:part name="parameters" element="tns:PlayCard" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_PlayCard_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PlayCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GetRoom_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoom" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GetRoom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoomResponse" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GetGameInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGameInfo" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GetGameInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGameInfoResponse" />
+  </wsdl:message>
   <wsdl:message name="Sueca_GameStarted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GameStarted" />
   </wsdl:message>
   <wsdl:message name="Sueca_RoomUpdated_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RoomUpdated" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GameInfoUpdated_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GameInfoUpdated" />
   </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="Sueca">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateRoom">
@@ -67,11 +88,26 @@
       <wsdl:input wsaw:Action="http://tempuri.org/Sueca/ListRoom" message="tns:Sueca_ListRoom_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/ListRoomResponse" message="tns:Sueca_ListRoom_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="PlayCard">
+      <wsdl:input wsaw:Action="http://tempuri.org/Sueca/PlayCard" message="tns:Sueca_PlayCard_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/PlayCardResponse" message="tns:Sueca_PlayCard_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetRoom">
+      <wsdl:input wsaw:Action="http://tempuri.org/Sueca/GetRoom" message="tns:Sueca_GetRoom_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GetRoomResponse" message="tns:Sueca_GetRoom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetGameInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/Sueca/GetGameInfo" message="tns:Sueca_GetGameInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GetGameInfoResponse" message="tns:Sueca_GetGameInfo_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameStarted">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameStarted" message="tns:Sueca_GameStarted_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RoomUpdated">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/RoomUpdated" message="tns:Sueca_RoomUpdated_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameInfoUpdated">
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameInfoUpdated" message="tns:Sueca_GameInfoUpdated_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_Sueca" type="tns:Sueca">
@@ -113,6 +149,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PlayCard">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/PlayCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRoom">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/GetRoom" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGameInfo">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/GetGameInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GameStarted">
       <soap12:operation soapAction="http://tempuri.org/Sueca/GameStarted" style="document" />
       <wsdl:output>
@@ -121,6 +184,12 @@
     </wsdl:operation>
     <wsdl:operation name="RoomUpdated">
       <soap12:operation soapAction="http://tempuri.org/Sueca/RoomUpdated" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GameInfoUpdated">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/GameInfoUpdated" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

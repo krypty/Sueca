@@ -9,19 +9,19 @@
   <xs:complexType name="Room">
     <xs:sequence>
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="RoomState" type="tns:Room.StateRoom" />
+      <xs:element minOccurs="0" name="RoomState" type="tns:StateRoom" />
       <xs:element minOccurs="0" name="listPlayers" nillable="true" type="tns:ArrayOfPlayer" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Room" nillable="true" type="tns:Room" />
-  <xs:simpleType name="Room.StateRoom">
+  <xs:simpleType name="StateRoom">
     <xs:restriction base="xs:string">
       <xs:enumeration value="WAITING_READY" />
       <xs:enumeration value="GAME_IN_PROGRESS" />
       <xs:enumeration value="END_GAME" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="Room.StateRoom" nillable="true" type="tns:Room.StateRoom" />
+  <xs:element name="StateRoom" nillable="true" type="tns:StateRoom" />
   <xs:complexType name="ArrayOfPlayer">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Player" nillable="true" type="tns:Player" />
@@ -30,6 +30,7 @@
   <xs:element name="ArrayOfPlayer" nillable="true" type="tns:ArrayOfPlayer" />
   <xs:complexType name="Player">
     <xs:sequence>
+      <xs:element minOccurs="0" name="NumberTurn" type="xs:int" />
       <xs:element minOccurs="0" name="holdingCards" type="xs:int" />
       <xs:element minOccurs="0" name="isReady" type="xs:boolean" />
       <xs:element minOccurs="0" name="takenCards" type="xs:int" />
@@ -37,4 +38,48 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Player" nillable="true" type="tns:Player" />
+  <xs:simpleType name="CardColor">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Spades" />
+      <xs:enumeration value="Diamonds" />
+      <xs:enumeration value="Clubs" />
+      <xs:enumeration value="Hearts" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CardColor" nillable="true" type="tns:CardColor" />
+  <xs:simpleType name="CardValue">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Two" />
+      <xs:enumeration value="Three" />
+      <xs:enumeration value="Four" />
+      <xs:enumeration value="Five" />
+      <xs:enumeration value="Six" />
+      <xs:enumeration value="Seven" />
+      <xs:enumeration value="Jack" />
+      <xs:enumeration value="Queen" />
+      <xs:enumeration value="King" />
+      <xs:enumeration value="Ace" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CardValue" nillable="true" type="tns:CardValue" />
+  <xs:complexType name="GameInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ListCardsPlayed" nillable="true" type="tns:ArrayOfCard" />
+      <xs:element minOccurs="0" name="NumberCardsWin" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberPlayerToPlay" type="xs:int" />
+      <xs:element minOccurs="0" name="PlayerToken" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GameInfo" nillable="true" type="tns:GameInfo" />
+  <xs:complexType name="ArrayOfCard">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Card" nillable="true" type="tns:Card" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCard" nillable="true" type="tns:ArrayOfCard" />
+  <xs:complexType name="Card">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="Card" nillable="true" type="tns:Card" />
 </xs:schema>
