@@ -14,8 +14,12 @@ namespace SuecaContracts
         [OperationContract(IsOneWay = true)]
         void GameStarted(String message);
 
-
+        //Everytime that someone connect to the room
         [OperationContract(IsOneWay = true)]
         void RoomUpdated(Room room);
+
+        //To update the game, send the gameinfo
+        [OperationContract(IsOneWay = true)]
+        void GameInfoUpdated(GameInfo gameInfo);
     }
 }

@@ -9,6 +9,7 @@ namespace SuecaContracts
     [DataContract]
     public class Room
     {
+        private const int NB_PLAYER_PER_GAME = 4;
         private int nbPlayersReady;
         public delegate void CallbackDelegate<T>(T t);
         public CallbackDelegate<string> gameStarted;
@@ -61,6 +62,10 @@ namespace SuecaContracts
             player.NumberTurn = listPlayers.Count;
 
             listPlayers.Add(player);
+
+            //Add the new player callback to the delegate
+            gameUpdated += player.Callback.RoomUpdated;
+            UpdateRoomForClient();
             //  listGameInfos.Add(GameInfoFactory(player.Token));
         }
 
@@ -84,8 +89,14 @@ namespace SuecaContracts
             {
                 nbPlayersReady++;
 
+
+                //Update the room to the clients because a new client arrived
+                UpdateRoomForClient();
+
+                Console.WriteLine("[server] has send callback to update room because a player send ready");
+
                 //If the room is full, launch the game
-                if (nbPlayersReady == 1)
+                if (nbPlayersReady == NB_PLAYER_PER_GAME)
                 {
                     foreach (Player p in ListPlayers)
                     {
@@ -128,11 +139,13 @@ namespace SuecaContracts
             //Initialize the gameInfoServer
             gameInfo = new GameInfoServer(listPlayers);
 
+            /*
             //Get the callback from players
             foreach (Player p in ListPlayers)
             {
                 gameUpdated += p.Callback.RoomUpdated;
             }
+            */
 
             //Change state of room
             RoomState = StateRoom.GAME_IN_PROGRESS;
@@ -141,15 +154,25 @@ namespace SuecaContracts
             gameInfo.distributeCardsForEachPlayer();
 
             Console.WriteLine("[server] has distribute cards");
-
+            /*
             new Thread(new ParameterizedThreadStart(
                 delegate(object room)
                 {
                     gameUpdated((Room)room);
                 })
             ).Start(this);
+            */
 
-            Console.WriteLine("[server] has send callback to update room");
+        }
+
+        private void UpdateRoomForClient()
+        {
+            new Thread(new ParameterizedThreadStart(
+                delegate(object room)
+                {
+                    gameUpdated((Room)room);
+                })
+            ).Start(this);
         }
 
         public void PlayCard(string playerToken, CardColor color, CardValue value)

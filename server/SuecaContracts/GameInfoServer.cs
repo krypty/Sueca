@@ -19,13 +19,13 @@ namespace SuecaContracts
         //Dictionnary to known who's player have this card on a turn
         private Dictionary<Card, string> dictCardPlayerForTurn;
 
-        public List<GameInfo> ListGameInfoPlayer { get; set; }
+        public Dictionary<string,GameInfo> DictGameInfoPlayer { get; set; }
 
         public GameInfoServer()
         {
             listCard = new List<Card>();
             dictPlayers = new Dictionary<string, Player>();
-            ListGameInfoPlayer = new List<GameInfo>();
+            DictGameInfoPlayer = new Dictionary<string,GameInfo>();
 
             List<CardColor> listColor = new List<CardColor>();
             
@@ -45,6 +45,7 @@ namespace SuecaContracts
             asset = listColor[rand.Next(4)];
         }
 
+
         public GameInfoServer(List<Player> listPlayers) : this()
         {
             foreach(Player p in listPlayers)
@@ -53,7 +54,7 @@ namespace SuecaContracts
             }
 
             //Define the first player to play and the number of players who have played
-            numberPlayerTurn = 1;
+            numberPlayerTurn = 1; //Player to the right of the first player
             numberPlayersHavePlayed = 0;
         }
 
@@ -124,6 +125,7 @@ namespace SuecaContracts
         {
             if(player.ListCardsHolding.Remove(card))
             {
+                //Dictionary to know which card a player has played
                 dictCardPlayerForTurn.Add(card,player.Token);
                 listCardsTurn.AddLast(card);
 
@@ -203,11 +205,11 @@ namespace SuecaContracts
 
         public void CreateGameInfoClient(List<Player> listPlayer)
         {
-            ListGameInfoPlayer.Clear();
+            DictGameInfoPlayer.Clear();
 
             foreach(Player p in listPlayer)
             {
-                ListGameInfoPlayer.Add(new GameInfo(p.Token, p.ListCardsWin.Count,numberPlayerTurn));
+                DictGameInfoPlayer.Add(p.Token, new GameInfo(p.Token,p.ListCardsWin.Count, numberPlayerTurn));
             }
         }
 
@@ -215,7 +217,7 @@ namespace SuecaContracts
         /// <summary>
         /// Mix a list of cards in a real randomness
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="List<Card>"></typeparam>
         /// <param name="list">List to randomize</param>
         private void mix(List<Card> list)
         {
