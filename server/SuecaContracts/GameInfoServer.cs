@@ -20,13 +20,13 @@ namespace SuecaContracts
         //Dictionnary to known who's player have this card on a turn
         private Dictionary<Card, string> dictCardPlayerForTurn;
 
-        public Dictionary<ISuecaCallbackContract, GameInfo> DictGameInfoPlayer { get; set; }
+        public Dictionary<string, GameInfo> DictGameInfoPlayer { get; set; }
 
         public GameInfoServer()
         {
             listCard = new List<Card>();
             dictPlayers = new Dictionary<string, Player>();
-            DictGameInfoPlayer = new Dictionary<ISuecaCallbackContract, GameInfo>();
+            DictGameInfoPlayer = new Dictionary<string, GameInfo>();
 
             List<CardColor> listColor = new List<CardColor>();
             
@@ -210,9 +210,12 @@ namespace SuecaContracts
 
             foreach(Player p in listPlayer)
             {
-                DictGameInfoPlayer.Add(p.Callback, new GameInfo(p.Token,p.ListCardsWin.Count, numberPlayerTurn));
+                DictGameInfoPlayer.Add(p.Token, new GameInfo(p, listPlayer));
             }
 
+
+            new System.Threading.Timer(obj => { callGameInfoClient(DictGameInfoPlayer); }, null, 1000, System.Threading.Timeout.Infinite);
+            /*
             new Thread(new ParameterizedThreadStart(
                 delegate(object room)
                 {
@@ -230,6 +233,28 @@ namespace SuecaContracts
                     }
                 })
             ).Start(DictGameInfoPlayer);
+             * 
+             */
+        }
+
+        private void callGameInfoClient(Dictionary<string,GameInfo> dict)
+        {
+            if (dict != null)
+            {
+                foreach (string token in dict.Keys)
+                {
+                    GameInfo gameInfo;
+
+                    if (dict.TryGetValue(token, out gameInfo))
+                    {
+                        ISuecaCallbackContract callback = gameInfo.Player.Callback;
+                        if(callback != null)
+                        {
+                            callback.GameInfoUpdated(gameInfo);
+                        }
+                    }
+                }
+            }
         }
 
         private void EndOfGame()

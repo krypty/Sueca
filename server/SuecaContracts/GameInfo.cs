@@ -6,8 +6,7 @@ namespace SuecaContracts
     [DataContract]
     public class GameInfo
     {
-        [DataMember]
-        public string PlayerToken { get; set; }
+        public Player Player { get; set; }
         [DataMember]
         public int NumberPlayerToPlay { get; set; }
         [DataMember]
@@ -15,12 +14,13 @@ namespace SuecaContracts
         [DataMember]
         public int NumberCardsWin { get; set; }
 
-        public GameInfo(string playerToken, int numberCardsWin, int numberPlayerToPlay) 
+        public GameInfo(Player player, List<Player> listPlayers) 
         {
-            PlayerToken = playerToken;
+            Player = player;
             ListCardsPlayed = new LinkedList<Card>();
-            NumberCardsWin = numberCardsWin;
-            this.NumberPlayerToPlay = numberPlayerToPlay;
+            
+            //NumberCardsWin = numberCardsWin;
+            //this.NumberPlayerToPlay = numberPlayerToPlay;
         }
     }
 }

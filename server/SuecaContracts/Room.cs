@@ -28,8 +28,6 @@ namespace SuecaContracts
 
         private GameInfoServer gameInfo;
 
-        private List<GameInfo> listGameInfos;
-
         [DataMember]
         public string Name { get; set; }
 
@@ -197,6 +195,24 @@ namespace SuecaContracts
         public void PlayCard(string playerToken, CardColor color, CardValue value)
         {
             gameInfo.PlayCard(playerToken, color, value);
+        }
+
+        public GameInfo getGameInfoForPlayerToken(string playerToken)
+        {
+            GameInfo gameInfoClient;
+            try
+            {
+                if (gameInfo.DictGameInfoPlayer.TryGetValue(playerToken, out gameInfoClient))
+                {
+                    return gameInfoClient;
+                }
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+
+            return null;
         }
 
         private static string GenerateName()

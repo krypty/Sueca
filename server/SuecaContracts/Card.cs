@@ -22,12 +22,13 @@ namespace SuecaContracts
             get { return realValue; }
             set { realValue = value; }
         }
-
+        [DataMember]
         public CardColor Color
         {
             get { return color; }
             set { color = value; }
         }
+        [DataMember]
         public CardValue Value
         {
             get { return value; }
