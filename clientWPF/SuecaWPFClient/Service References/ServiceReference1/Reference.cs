@@ -281,10 +281,13 @@ namespace suecaWPFClient.ServiceReference1 {
         private suecaWPFClient.ServiceReference1.Card[] ListCardsPlayedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int NumberCardsWinField;
+        private suecaWPFClient.ServiceReference1.Player[] ListPlayerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int NumberPlayerToPlayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.Player PlayerField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -310,14 +313,14 @@ namespace suecaWPFClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int NumberCardsWin {
+        public suecaWPFClient.ServiceReference1.Player[] ListPlayer {
             get {
-                return this.NumberCardsWinField;
+                return this.ListPlayerField;
             }
             set {
-                if ((this.NumberCardsWinField.Equals(value) != true)) {
-                    this.NumberCardsWinField = value;
-                    this.RaisePropertyChanged("NumberCardsWin");
+                if ((object.ReferenceEquals(this.ListPlayerField, value) != true)) {
+                    this.ListPlayerField = value;
+                    this.RaisePropertyChanged("ListPlayer");
                 }
             }
         }
@@ -331,6 +334,19 @@ namespace suecaWPFClient.ServiceReference1 {
                 if ((this.NumberPlayerToPlayField.Equals(value) != true)) {
                     this.NumberPlayerToPlayField = value;
                     this.RaisePropertyChanged("NumberPlayerToPlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.Player Player {
+            get {
+                return this.PlayerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerField, value) != true)) {
+                    this.PlayerField = value;
+                    this.RaisePropertyChanged("Player");
                 }
             }
         }

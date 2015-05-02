@@ -244,8 +244,9 @@
       <xs:complexType name="GameInfo">
         <xs:sequence>
           <xs:element minOccurs="0" name="ListCardsPlayed" nillable="true" type="tns:ArrayOfCard" />
-          <xs:element minOccurs="0" name="NumberCardsWin" type="xs:int" />
+          <xs:element minOccurs="0" name="ListPlayer" nillable="true" type="tns:ArrayOfPlayer" />
           <xs:element minOccurs="0" name="NumberPlayerToPlay" type="xs:int" />
+          <xs:element minOccurs="0" name="Player" nillable="true" type="tns:Player" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="GameInfo" nillable="true" type="tns:GameInfo" />
