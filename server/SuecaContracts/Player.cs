@@ -65,6 +65,7 @@ namespace SuecaContracts
             this.isReady = false;
             this.ListCardsHolding = new List<Card>();
             this.ListCardsWin = new List<Card>();
+            this.Callback = null;
         }
 
         public Player(string playerToken) : this()

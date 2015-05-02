@@ -23,7 +23,7 @@ namespace SuecaContracts
         /// <param name="password"></param>
         /// <returns>playerToken which is unique among all players in all rooms or null if wrong password</returns>
         [OperationContract(IsTerminating = false, IsOneWay = false)]
-        String JoinRoom(String roomName, String password = "");
+        String JoinRoom(String roomName, String password = "", bool isUsingCallback=true);
 
 
         /// <summary>

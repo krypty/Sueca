@@ -35,7 +35,7 @@ namespace SuecaServices
             return room.Name;
         }
 
-        public String JoinRoom(string roomName, string password = "")
+        public String JoinRoom(string roomName, string password = "", bool isUsingCallback=true)
         {
             Console.WriteLine("[server] joinRoom");
             Room currentRoom;
@@ -59,7 +59,8 @@ namespace SuecaServices
                     playerToken = Guid.NewGuid().ToString();
 
                     Player newPlayer = new Player(playerToken);
-                    newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+                    if(isUsingCallback)
+                        newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
                     currentRoom.AddPlayer(newPlayer);
                 }
             }
