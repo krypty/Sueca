@@ -21,7 +21,6 @@ namespace SuecaContracts
     public class Room
     {
         private const int NB_PLAYER_PER_GAME = 2;
-        private int nbPlayersReady;
         public delegate void CallbackDelegate<T>(T t);
         public CallbackDelegate<string> gameStarted;
         public CallbackDelegate<Room> gameUpdated;
@@ -51,7 +50,6 @@ namespace SuecaContracts
             Password = password;
             Name = GenerateName();
 
-            nbPlayersReady = 0;
             listPlayers = new List<Player>();
             RoomState = StateRoom.WAITING_READY;
         }
@@ -86,13 +84,12 @@ namespace SuecaContracts
         {
             Player currentPlayer = ListPlayers.Find(p => p.Token == playerToken);
 
-            currentPlayer.IsReady = isReady;
 
-            if (isReady)
+            int nbPlayersReady = ListPlayers.Count(p => p.IsReady);
+
+            if (!currentPlayer.IsReady && isReady && nbPlayersReady < 4)
             {
-                nbPlayersReady++;
-
-                Console.WriteLine("[server] has send callback to update room because a player send ready");
+                currentPlayer.IsReady = isReady;
 
                 //If the room is full, launch the game
                 if (nbPlayersReady == NB_PLAYER_PER_GAME)
@@ -113,15 +110,20 @@ namespace SuecaContracts
                     ).Start("Game started");
                     */
 
-                    new System.Threading.Timer(obj => { StartGame(); }, null, 1000, System.Threading.Timeout.Infinite);
+                    //new System.Threading.Timer(obj => { StartGame(); }, null, 1000, System.Threading.Timeout.Infinite);
                     //Start the game for the server
                     //new Thread(StartGame).Start();
+                    new Thread(new ParameterizedThreadStart(
+                        delegate(object room)
+                        {
+                            Thread.Sleep(1000);
+                            StartGame();
+                        })
+                    ).Start();
                 }
             }
-            else
+            else if(!isReady)
             {
-                nbPlayersReady--;
-
                 if (RoomState == StateRoom.GAME_IN_PROGRESS)
                 {
                     RoomState = StateRoom.WAITING_READY;
@@ -136,6 +138,7 @@ namespace SuecaContracts
                 }
             }
 
+            Console.WriteLine("[server] has send callback to update room because a player send ready to " + isReady);
             //Update the room to the clients everytime that a client sendready something
             UpdateRoomForClient();
         }
@@ -181,15 +184,16 @@ namespace SuecaContracts
 
         private void UpdateRoomForClient()
         {
-            new System.Threading.Timer(obj => { gameUpdated(this); }, null, 1000, System.Threading.Timeout.Infinite);
-            /*
+            //new System.Threading.Timer(obj => { gameUpdated(this); }, null, 1000, System.Threading.Timeout.Infinite);
+            
             new Thread(new ParameterizedThreadStart(
                 delegate(object room)
                 {
+                    Thread.Sleep(1000);
                     gameUpdated((Room)room);
                 })
             ).Start(this);
-            */
+            
         }
 
         public void PlayCard(string playerToken, CardColor color, CardValue value)

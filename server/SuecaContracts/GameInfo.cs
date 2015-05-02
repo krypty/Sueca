@@ -6,21 +6,28 @@ namespace SuecaContracts
     [DataContract]
     public class GameInfo
     {
+        [DataMember]
         public Player Player { get; set; }
+
         [DataMember]
         public int NumberPlayerToPlay { get; set; }
+
         [DataMember]
         public LinkedList<Card> ListCardsPlayed { get; set; }
-        [DataMember]
-        public int NumberCardsWin { get; set; }
 
-        public GameInfo(Player player, List<Player> listPlayers) 
+        [DataMember]
+        public List<Player> ListPlayer { get; set; }
+
+        public GameInfo(Player player, List<Player> listPlayers, int numberPlayerToPlay) 
         {
+            //User for who the gameinfo is
             Player = player;
-            ListCardsPlayed = new LinkedList<Card>();
-            
-            //NumberCardsWin = numberCardsWin;
-            //this.NumberPlayerToPlay = numberPlayerToPlay;
+
+            //List of other players
+            ListPlayer = listPlayers;
+            ListPlayer.Remove(Player);
+
+            NumberPlayerToPlay = numberPlayerToPlay;
         }
     }
 }

@@ -210,7 +210,7 @@ namespace SuecaContracts
 
             foreach(Player p in listPlayer)
             {
-                DictGameInfoPlayer.Add(p.Token, new GameInfo(p, listPlayer));
+                DictGameInfoPlayer.Add(p.Token, new GameInfo(p, listPlayer, numberPlayerTurn));
             }
 
 
