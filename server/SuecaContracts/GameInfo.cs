@@ -18,6 +18,12 @@ namespace SuecaContracts
         [DataMember]
         public List<Player> ListPlayer { get; set; }
 
+        [DataMember]
+        public Card[] tabCards;
+
+        [DataMember]
+        public Card FirstCard {get;set;}
+
         public GameInfo(Player player, List<Player> listPlayers, int numberPlayerToPlay) 
         {
             //User for who the gameinfo is
@@ -29,5 +35,6 @@ namespace SuecaContracts
 
             NumberPlayerToPlay = numberPlayerToPlay;
         }
+
     }
 }

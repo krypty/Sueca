@@ -199,6 +199,8 @@ namespace SuecaContracts
         public void PlayCard(string playerToken, CardColor color, CardValue value)
         {
             gameInfo.PlayCard(playerToken, color, value);
+
+            gameInfo.CreateGameInfoClient(listPlayers);
         }
 
         public GameInfo getGameInfoForPlayerToken(string playerToken)

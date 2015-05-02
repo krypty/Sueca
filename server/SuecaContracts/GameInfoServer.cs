@@ -210,49 +210,44 @@ namespace SuecaContracts
 
             foreach(Player p in listPlayer)
             {
-                DictGameInfoPlayer.Add(p.Token, new GameInfo(p, listPlayer, numberPlayerTurn));
+                GameInfo game = new GameInfo(p, listPlayer, numberPlayerTurn);
+
+                //If at least one card is put on the table, get the first to know the color for others players
+                if (listCardsTurn.Count > 0)
+                    game.FirstCard = listCardsTurn.First.Value;
+
+                game.ListCardsPlayed = listCardsTurn;
+
+                DictGameInfoPlayer.Add(p.Token, game);
             }
 
 
-            new System.Threading.Timer(obj => { callGameInfoClient(DictGameInfoPlayer); }, null, 1000, System.Threading.Timeout.Infinite);
-            /*
             new Thread(new ParameterizedThreadStart(
-                delegate(object room)
+                delegate(object dictGameInfo)
                 {
-                    Dictionary<ISuecaCallbackContract,GameInfo> dict = room as Dictionary<ISuecaCallbackContract,GameInfo>;
+                    Thread.Sleep(1000);
 
-                    if(dict != null)
-                    {
-                        foreach(ISuecaCallbackContract callbak in dict.Keys)
-                        {
-                            GameInfo gameInfo;
-
-                            if(dict.TryGetValue(callbak,out gameInfo))
-                                callbak.GameInfoUpdated(gameInfo);
-                        }
-                    }
+                    Dictionary<string, GameInfo> dict = dictGameInfo as Dictionary<string, GameInfo>;
+                    
+                    callGameInfoClient(dict);
+                    
                 })
             ).Start(DictGameInfoPlayer);
-             * 
-             */
+
         }
 
         private void callGameInfoClient(Dictionary<string,GameInfo> dict)
         {
             if (dict != null)
             {
-                foreach (string token in dict.Keys)
+                foreach (GameInfo game in dict.Values)
                 {
-                    GameInfo gameInfo;
-
-                    if (dict.TryGetValue(token, out gameInfo))
+                    ISuecaCallbackContract callback = game.Player.Callback;
+                    if(callback != null)
                     {
-                        ISuecaCallbackContract callback = gameInfo.Player.Callback;
-                        if(callback != null)
-                        {
-                            callback.GameInfoUpdated(gameInfo);
-                        }
+                        callback.GameInfoUpdated(game);
                     }
+
                 }
             }
         }
