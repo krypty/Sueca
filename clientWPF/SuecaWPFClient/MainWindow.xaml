@@ -14,12 +14,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Expander Grid.Column="0" ExpandDirection="Left" IsExpanded="True" Expanded="ExpanderChanged" Collapsed="ExpanderChanged" Name="Expander">
-        <!--<Expander Grid.Column="0" ExpandDirection="Left" IsExpanded="True" Name="Expander">-->
-            <Expander.Content>
-                <local:RoomsPane />
-            </Expander.Content>
-        </Expander>
+        <Expander Name="SideMenuPaneExpander" Grid.Column="0" ExpandDirection="Left" IsExpanded="True" Expanded="ExpanderChanged" Collapsed="ExpanderChanged" />
 
         <GridSplitter Grid.Row="0" Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" HorizontalAlignment="Stretch"/>
 

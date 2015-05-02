@@ -1,6 +1,4 @@
-﻿using System;
-using System.ServiceModel;
-using System.Threading;
+﻿using System.ServiceModel;
 using suecaWPFClient.ServiceReference1;
 
 namespace suecaWPFClient
