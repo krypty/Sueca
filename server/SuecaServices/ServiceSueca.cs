@@ -14,7 +14,7 @@ namespace SuecaServices
     {
         //private List<Room> _listRooms;
         //private HashSet<String, Room>  
-        private Dictionary<String, Room> roomList; 
+        private Dictionary<String, Room> dictRoom; 
         //delegate void delegateCallbacks(ISuecaCallbackContract callback);
 
         public delegate void CallbackDelegate<T>(T t);
@@ -23,14 +23,14 @@ namespace SuecaServices
         public ServiceSueca()
         {
            // this._listRooms = new List<Room>();
-            this.roomList = new Dictionary<string, Room>();
+            this.dictRoom = new Dictionary<string, Room>();
         }
 
         public string CreateRoom(string password = "")
         {
             Console.WriteLine("[server] createRoom");
             Room room = new Room(password);
-            roomList.Add(room.Name, room);
+            dictRoom.Add(room.Name, room);
             //_listRooms.Add(room);
             return room.Name;
         }
@@ -40,7 +40,7 @@ namespace SuecaServices
             Console.WriteLine("[server] joinRoom");
             Room currentRoom;
             String playerToken = "";
-            if (!roomList.TryGetValue(roomName, out currentRoom))
+            if (!dictRoom.TryGetValue(roomName, out currentRoom))
             {
                 Console.WriteLine("[Join room] room doesn't exist");
                 //throw new Exception("room with name [" + roomName + "] doesn't exist");
@@ -72,13 +72,13 @@ namespace SuecaServices
 
         public List<Room> ListRoom()
         {
-            return this.roomList.Values.ToList();
+            return this.dictRoom.Values.ToList();
         }
 
         public Room GetRoom(string roomName)
         {
             Room currentRoom;
-            if (!roomList.TryGetValue(roomName, out currentRoom))
+            if (!dictRoom.TryGetValue(roomName, out currentRoom))
             {
                 return null;
             }
@@ -107,7 +107,7 @@ namespace SuecaServices
 
         private Room GetRoomFromPlayerToken(string playerToken)
         {
-            List<Room> listRoom = roomList.Values.ToList();
+            List<Room> listRoom = dictRoom.Values.ToList();
             IEnumerable<Room> room = listRoom.Where<Room>(r => r.ListPlayers.Exists(p => p.Token == playerToken));
 
             if (room.Count() < 1)

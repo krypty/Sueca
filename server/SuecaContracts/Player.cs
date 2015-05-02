@@ -52,6 +52,8 @@ namespace SuecaContracts
             get { return listCardsHolding; }
             set { listCardsHolding = value; }
         }
+
+        [DataMember]
         public int NumberTurn
         {
             get { return numberTurn; }
