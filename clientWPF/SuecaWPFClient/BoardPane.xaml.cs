@@ -5,6 +5,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using suecaWPFClient.Cards;
+using suecaWPFClient.ServiceReference1;
+using Card = suecaWPFClient.Cards.Card;
 
 namespace suecaWPFClient
 {
@@ -30,9 +33,9 @@ namespace suecaWPFClient
             ServiceManager.GetInstance().OnGameInfoUpdated += ServiceManagerOnOnGameInfoUpdated;
         }
 
-        private void ServiceManagerOnOnGameInfoUpdated(string message)
+        private void ServiceManagerOnOnGameInfoUpdated(GameInfo gameInfo)
         {
-            MessageBox.Show("MainWindow: " + message);
+            MessageBox.Show("MainWindow: gameinfo" + gameInfo.ToString());
         }
 
         private void ResetCards()

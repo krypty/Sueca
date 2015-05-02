@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace suecaWPFClient
+﻿namespace suecaWPFClient.GamePanes
 {
     /// <summary>
     /// Interaction logic for GameEndPane.xaml

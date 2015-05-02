@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace suecaWPFClient
+namespace suecaWPFClient.GamePanes
 {
     internal class PaneSwitcher
     {
         private ContentControl _control;
 
-        private readonly Dictionary<GameState, GameStatePaneA> _dictUserControls =
-            new Dictionary<GameState, GameStatePaneA>();
+        private readonly Dictionary<GameState, GameStatePaneA> _dictUserControls = new Dictionary<GameState, GameStatePaneA>();
 
         public PaneSwitcher(ContentControl control)
         {

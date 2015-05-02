@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace suecaWPFClient
+namespace suecaWPFClient.Cards
 {
     class CardImageFactory
     {

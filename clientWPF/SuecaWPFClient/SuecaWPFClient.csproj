@@ -146,6 +146,9 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Service References\ServiceReference1\ServiceSueca.wsdl" />
+    <None Include="Service References\ServiceReference1\suecaWPFClient.ServiceReference1.GameInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference1\suecaWPFClient.ServiceReference1.Room.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
