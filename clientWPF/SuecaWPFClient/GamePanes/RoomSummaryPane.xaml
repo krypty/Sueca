@@ -32,7 +32,7 @@
                 <Label Grid.Row="2" Grid.Column="1" Name="PlayerReadyLabel"  Content="-"></Label>
             </Grid>
 
-            <CheckBox Name="SendReadyCheckBox" Content="Prêt !" HorizontalAlignment="Center" Checked="SendReadyCheckBox_OnChecked"></CheckBox>
+            <CheckBox Name="SendReadyCheckBox" Content="Prêt !" HorizontalAlignment="Center" Checked="SendReadyCheckBox_OnChecked" Unchecked="SendReadyCheckBox_OnChecked"></CheckBox>
         </StackPanel>
     </DockPanel>
 </gamePanes:GameStatePaneA>

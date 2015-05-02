@@ -36,9 +36,9 @@ namespace suecaWPFClient.GamePanes
             RefreshRoomList();
         }
 
-        private void GameInfoUpdated(string message)
+        private void GameInfoUpdated(GameInfo gameInfo)
         {
-            MessageBox.Show("message: " + message);
+            MessageBox.Show("RoomPane: gameinfo: " + gameInfo.ToString());
         }
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)

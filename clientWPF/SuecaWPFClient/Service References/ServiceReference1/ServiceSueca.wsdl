@@ -35,6 +35,7 @@
           <xs:sequence>
             <xs:element minOccurs="0" name="roomName" nillable="true" type="xs:string" />
             <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="isUsingCallback" type="xs:boolean" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -70,6 +71,49 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="PlayCard">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="playerToken" nillable="true" type="xs:string" />
+            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="color" type="q2:CardColor" />
+            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="value" type="q3:CardValue" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="PlayCardResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetRoom">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="roomName" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetRoomResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="GetRoomResult" nillable="true" type="q4:Room" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetGameInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="playerToken" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="roomId" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetGameInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="GetGameInfoResult" nillable="true" type="q5:GameInfo" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="GameStarted">
         <xs:complexType>
           <xs:sequence>
@@ -80,7 +124,14 @@
       <xs:element name="RoomUpdated">
         <xs:complexType>
           <xs:sequence>
-            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="room" nillable="true" type="q2:Room" />
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="room" nillable="true" type="q6:Room" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GameInfoUpdated">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="gameInfo" nillable="true" type="q7:GameInfo" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -136,19 +187,19 @@
       <xs:complexType name="Room">
         <xs:sequence>
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="RoomState" type="tns:Room.StateRoom" />
+          <xs:element minOccurs="0" name="RoomState" type="tns:StateRoom" />
           <xs:element minOccurs="0" name="listPlayers" nillable="true" type="tns:ArrayOfPlayer" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Room" nillable="true" type="tns:Room" />
-      <xs:simpleType name="Room.StateRoom">
+      <xs:simpleType name="StateRoom">
         <xs:restriction base="xs:string">
           <xs:enumeration value="WAITING_READY" />
           <xs:enumeration value="GAME_IN_PROGRESS" />
           <xs:enumeration value="END_GAME" />
         </xs:restriction>
       </xs:simpleType>
-      <xs:element name="Room.StateRoom" nillable="true" type="tns:Room.StateRoom" />
+      <xs:element name="StateRoom" nillable="true" type="tns:StateRoom" />
       <xs:complexType name="ArrayOfPlayer">
         <xs:sequence>
           <xs:element minOccurs="0" maxOccurs="unbounded" name="Player" nillable="true" type="tns:Player" />
@@ -157,6 +208,7 @@
       <xs:element name="ArrayOfPlayer" nillable="true" type="tns:ArrayOfPlayer" />
       <xs:complexType name="Player">
         <xs:sequence>
+          <xs:element minOccurs="0" name="NumberTurn" type="xs:int" />
           <xs:element minOccurs="0" name="holdingCards" type="xs:int" />
           <xs:element minOccurs="0" name="isReady" type="xs:boolean" />
           <xs:element minOccurs="0" name="takenCards" type="xs:int" />
@@ -164,6 +216,52 @@
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Player" nillable="true" type="tns:Player" />
+      <xs:simpleType name="CardColor">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="None" />
+          <xs:enumeration value="Spades" />
+          <xs:enumeration value="Diamonds" />
+          <xs:enumeration value="Clubs" />
+          <xs:enumeration value="Hearts" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CardColor" nillable="true" type="tns:CardColor" />
+      <xs:simpleType name="CardValue">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Two" />
+          <xs:enumeration value="Three" />
+          <xs:enumeration value="Four" />
+          <xs:enumeration value="Five" />
+          <xs:enumeration value="Six" />
+          <xs:enumeration value="Seven" />
+          <xs:enumeration value="Jack" />
+          <xs:enumeration value="Queen" />
+          <xs:enumeration value="King" />
+          <xs:enumeration value="Ace" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CardValue" nillable="true" type="tns:CardValue" />
+      <xs:complexType name="GameInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ListCardsPlayed" nillable="true" type="tns:ArrayOfCard" />
+          <xs:element minOccurs="0" name="NumberCardsWin" type="xs:int" />
+          <xs:element minOccurs="0" name="NumberPlayerToPlay" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GameInfo" nillable="true" type="tns:GameInfo" />
+      <xs:complexType name="ArrayOfCard">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Card" nillable="true" type="tns:Card" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCard" nillable="true" type="tns:ArrayOfCard" />
+      <xs:complexType name="Card">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Color" type="tns:CardColor" />
+          <xs:element minOccurs="0" name="Value" type="tns:CardValue" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Card" nillable="true" type="tns:Card" />
     </xs:schema>
   </wsdl:types>
   <wsdl:message name="Sueca_CreateRoom_InputMessage">
@@ -190,11 +288,32 @@
   <wsdl:message name="Sueca_ListRoom_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListRoomResponse" />
   </wsdl:message>
+  <wsdl:message name="Sueca_PlayCard_InputMessage">
+    <wsdl:part name="parameters" element="tns:PlayCard" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_PlayCard_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PlayCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GetRoom_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoom" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GetRoom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoomResponse" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GetGameInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGameInfo" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GetGameInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGameInfoResponse" />
+  </wsdl:message>
   <wsdl:message name="Sueca_GameStarted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GameStarted" />
   </wsdl:message>
   <wsdl:message name="Sueca_RoomUpdated_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RoomUpdated" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GameInfoUpdated_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GameInfoUpdated" />
   </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="Sueca">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateRoom">
@@ -213,11 +332,26 @@
       <wsdl:input wsaw:Action="http://tempuri.org/Sueca/ListRoom" message="tns:Sueca_ListRoom_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/ListRoomResponse" message="tns:Sueca_ListRoom_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="PlayCard">
+      <wsdl:input wsaw:Action="http://tempuri.org/Sueca/PlayCard" message="tns:Sueca_PlayCard_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/PlayCardResponse" message="tns:Sueca_PlayCard_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetRoom">
+      <wsdl:input wsaw:Action="http://tempuri.org/Sueca/GetRoom" message="tns:Sueca_GetRoom_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GetRoomResponse" message="tns:Sueca_GetRoom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetGameInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/Sueca/GetGameInfo" message="tns:Sueca_GetGameInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GetGameInfoResponse" message="tns:Sueca_GetGameInfo_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameStarted">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameStarted" message="tns:Sueca_GameStarted_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RoomUpdated">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/RoomUpdated" message="tns:Sueca_RoomUpdated_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameInfoUpdated">
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameInfoUpdated" message="tns:Sueca_GameInfoUpdated_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_Sueca" type="tns:Sueca">
@@ -259,6 +393,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PlayCard">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/PlayCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRoom">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/GetRoom" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGameInfo">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/GetGameInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GameStarted">
       <soap12:operation soapAction="http://tempuri.org/Sueca/GameStarted" style="document" />
       <wsdl:output>
@@ -267,6 +428,12 @@
     </wsdl:operation>
     <wsdl:operation name="RoomUpdated">
       <soap12:operation soapAction="http://tempuri.org/Sueca/RoomUpdated" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GameInfoUpdated">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/GameInfoUpdated" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

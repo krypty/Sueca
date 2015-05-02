@@ -49,8 +49,6 @@
                 <Label Grid.Row="3" Grid.Column="0" Content="Joueur Ouest: "></Label>
                 <Label Grid.Row="3" Grid.Column="1" Name="PlayerWestTakenCards"  Content="-"></Label>
 
-                <Label Grid.Row="4" Grid.Column="0" Content="Nombre de joueurs prêts: "></Label>
-                <Label Grid.Row="4" Grid.Column="1" Name="PlayerReadyLabel"  Content="-"></Label>
             </Grid>
         </StackPanel>
 

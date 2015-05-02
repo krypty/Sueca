@@ -18,8 +18,9 @@ namespace suecaWPFClient.GamePanes
             ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
         }
 
-        private void OnGameInfoUpdated(string message)
+        private void OnGameInfoUpdated(GameInfo gameInfo)
         {
+            Console.WriteLine("roomsummarypane: gameinfo updated");
             ChangeState(GameState.InGame);
         }
 
@@ -41,6 +42,7 @@ namespace suecaWPFClient.GamePanes
         private void SendReadyCheckBox_OnChecked(object sender, RoutedEventArgs e)
         {
             bool isReady = (sender as CheckBox).IsChecked.Value;
+            MessageBox.Show("isReady: " + isReady);
             String playerToken = ServiceManager.GetInstance().PlayerToken;
             ServiceManager.GetInstance().SendReady(playerToken, isReady);
         }

@@ -9,7 +9,10 @@ namespace suecaWPFClient
     {
         private static ServiceManager _instance;
 
-        public delegate void GameInfoUpdatedEventHandler(string message);
+        //public delegate void GameInfoUpdatedEventHandlerText(string message);
+        //public event GameInfoUpdatedEventHandlerText OnGameInfoUpdatedText;
+
+        public delegate void GameInfoUpdatedEventHandler(GameInfo gameInfo);
         public event GameInfoUpdatedEventHandler OnGameInfoUpdated;
 
         public delegate void RoomUpdatedEventHandler(Room room);
@@ -36,7 +39,7 @@ namespace suecaWPFClient
 
         internal string JoinRoom(string roomName, string password)
         {
-            return _suecaClient.JoinRoom(roomName, password);
+            return _suecaClient.JoinRoom(roomName, password, true);
         }
 
         internal void SendReady(string playerToken, bool isReady)
@@ -51,10 +54,7 @@ namespace suecaWPFClient
 
         public void GameStarted(string message)
         {
-            if (OnGameInfoUpdated != null)
-            {
-                OnGameInfoUpdated(message);
-            }
+           throw new NotImplementedException();
         }
 
         public void RoomUpdated(Room room)
@@ -62,6 +62,14 @@ namespace suecaWPFClient
             if (OnRoomUpdated != null)
             {
                 OnRoomUpdated(room);
+            }
+        }
+
+        public void GameInfoUpdated(GameInfo gameInfo)
+        {
+            if (OnGameInfoUpdated != null)
+            {
+                OnGameInfoUpdated(gameInfo);
             }
         }
     }
