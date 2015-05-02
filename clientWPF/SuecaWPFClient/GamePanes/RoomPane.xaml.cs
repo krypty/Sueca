@@ -38,7 +38,7 @@ namespace suecaWPFClient.GamePanes
 
         private void GameInfoUpdated(GameInfo gameInfo)
         {
-            MessageBox.Show("RoomPane: gameinfo: " + gameInfo.ToString());
+            Console.WriteLine("RoomPane: gameinfo: " + gameInfo.ToString());
         }
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
@@ -88,11 +88,11 @@ namespace suecaWPFClient.GamePanes
 
             if (playerID == null)
             {
-                MessageBox.Show("Invalid password");
+                MessageBox.Show("Mot de passe invalide, essayez encore");
                 return;
             }
 
-            MessageBox.Show("Room joined. PlayerID: " + playerID);
+            Console.WriteLine("Room joined. PlayerID: " + playerID);
 
             // switch the view to waiting room
             ChangeState(GameState.WaitingRoom);

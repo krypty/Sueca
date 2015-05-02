@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ServiceModel;
 using System.Text;
 using System.Windows;
@@ -13,7 +14,7 @@ namespace suecaWPFClient
 {
     // callback freezes if true
     [CallbackBehavior(UseSynchronizationContext = false)]
-    public partial class BoardPane: UserControl//, SuecaCallback
+    public partial class BoardPane : UserControl//, SuecaCallback
     {
         //DuplexChannelFactory<ISuecaContract> _channelFactory;
         //ISuecaContract _suecaClient;
@@ -30,12 +31,14 @@ namespace suecaWPFClient
             ResetCards();
             DrawAllPlayersCards();
 
-            ServiceManager.GetInstance().OnGameInfoUpdated += ServiceManagerOnOnGameInfoUpdated;
+            ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
         }
 
-        private void ServiceManagerOnOnGameInfoUpdated(GameInfo gameInfo)
+
+
+        private void OnGameInfoUpdated(GameInfo gameInfo)
         {
-            MessageBox.Show("MainWindow: gameinfo" + gameInfo.ToString());
+            Console.WriteLine("MainWindow: gameinfo" + gameInfo.ToString());
         }
 
         private void ResetCards()
@@ -47,6 +50,12 @@ namespace suecaWPFClient
                 _listCards.Add(CardImageFactory.CreateRandomCard());
             }
             AddCardsInGameBoard();
+        }
+
+        public void SetBoardEnabled(bool enabled)
+        {
+            IsEnabled = enabled;
+            DisablingRectangle.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
 
@@ -69,27 +78,6 @@ namespace suecaWPFClient
             String playerToken = ServiceManager.GetInstance().JoinRoom(roomName, "other_password_that_fail");
             Console.WriteLine("[client] playerToken: " + playerToken);
         }
-
-        private void btnListRoom_Click(object sender, RoutedEventArgs e)
-        {
-            //            var listRoom = _suecaClient.ListRoom();
-            var listRoom = ServiceManager.GetInstance().ListRoom();
-
-            StringBuilder builder = new StringBuilder();
-
-            foreach (var room in listRoom)
-            {
-                builder.AppendLine(room.ToString());
-            }
-
-            MessageBox.Show(builder.ToString());
-        }
-
-        //// callback
-        //public void GameStarted(string message)
-        //{
-        //    Console.WriteLine("[Client] server says: " + message);
-        //}
 
         private void Ellipse_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -184,7 +172,7 @@ namespace suecaWPFClient
         {
             Console.WriteLine("hello from custom card !");
             Card card = (Card)sender;
-            MessageBox.Show(card.ToString());
+            Console.WriteLine(card.ToString());
 
             bool removed = _listCards.Remove(card);
             SouthPlayerCanvas.Children.Remove(card);

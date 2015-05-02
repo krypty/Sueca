@@ -1,4 +1,6 @@
-﻿namespace suecaWPFClient.GamePanes
+﻿using System.Windows;
+
+namespace suecaWPFClient.GamePanes
 {
     /// <summary>
     /// Interaction logic for GameEndPane.xaml
@@ -13,6 +15,11 @@
         protected override void Quit()
         {
             throw new System.NotImplementedException();
+        }
+
+        private void BtnBackToRoomList_OnClick(object sender, RoutedEventArgs e)
+        {
+            ChangeState(GameState.ListRoom);
         }
     }
 }

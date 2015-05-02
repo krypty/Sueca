@@ -17,6 +17,15 @@ namespace suecaWPFClient
         {
             InitializeComponent();
             _paneSwitcher = new PaneSwitcher(SideMenuPaneExpander);
+            _paneSwitcher.BoardEnabled += PaneSwitcherOnBoardEnabled;
+
+            MyBoard.SetBoardEnabled(false);
+
+        }
+
+        private void PaneSwitcherOnBoardEnabled(bool isEnabled)
+        {
+            MyBoard.SetBoardEnabled(isEnabled);
         }
 
         //TODO: remove me 

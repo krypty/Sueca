@@ -9,9 +9,6 @@ namespace suecaWPFClient
     {
         private static ServiceManager _instance;
 
-        //public delegate void GameInfoUpdatedEventHandlerText(string message);
-        //public event GameInfoUpdatedEventHandlerText OnGameInfoUpdatedText;
-
         public delegate void GameInfoUpdatedEventHandler(GameInfo gameInfo);
         public event GameInfoUpdatedEventHandler OnGameInfoUpdated;
 
@@ -54,7 +51,7 @@ namespace suecaWPFClient
 
         public void GameStarted(string message)
         {
-           throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void RoomUpdated(Room room)

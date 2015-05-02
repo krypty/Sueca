@@ -6,9 +6,12 @@ namespace suecaWPFClient.GamePanes
 {
     internal class PaneSwitcher
     {
-        private ContentControl _control;
+        private readonly ContentControl _control;
 
         private readonly Dictionary<GameState, GameStatePaneA> _dictUserControls = new Dictionary<GameState, GameStatePaneA>();
+
+        public delegate void BoardEnabledEventHandler(bool isEnabled);
+        public event BoardEnabledEventHandler BoardEnabled;
 
         public PaneSwitcher(ContentControl control)
         {
@@ -37,6 +40,13 @@ namespace suecaWPFClient.GamePanes
 
         private void StateChanged(GameState state)
         {
+
+            if (BoardEnabled != null)
+            {
+                bool isBoardEnable = state.Equals(GameState.InGame);
+                BoardEnabled(isBoardEnable);
+            }
+
             Console.WriteLine("state changed " + state.ToString());
             _control.Content = _dictUserControls[state];
         }

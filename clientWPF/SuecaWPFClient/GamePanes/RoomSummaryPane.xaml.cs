@@ -42,7 +42,6 @@ namespace suecaWPFClient.GamePanes
         private void SendReadyCheckBox_OnChecked(object sender, RoutedEventArgs e)
         {
             bool isReady = (sender as CheckBox).IsChecked.Value;
-            MessageBox.Show("isReady: " + isReady);
             String playerToken = ServiceManager.GetInstance().PlayerToken;
             ServiceManager.GetInstance().SendReady(playerToken, isReady);
         }
