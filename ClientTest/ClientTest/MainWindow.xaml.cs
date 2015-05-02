@@ -37,12 +37,31 @@ namespace ClientTest
         }
 
 
-
+        /*
+         * CALLBACKS
+         * */
         public void GameStarted(string message)
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                labelCallback.Content = message;
+                labelCallbackRoom.Content = message;
+
+            }));
+        }
+        public void RoomUpdated(Room room)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                labelCallbackRoom.Content = room.Name;
+
+            }));
+        }
+
+        public void GameInfoUpdated(GameInfo gameInfo)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                labelCallbackGameInfo.Content = gameInfo.PlayerToken;
 
             }));
         }

@@ -9,7 +9,7 @@ namespace SuecaContracts
     [DataContract]
     public class Room
     {
-        private const int NB_PLAYER_PER_GAME = 4;
+        private const int NB_PLAYER_PER_GAME = 2;
         private int nbPlayersReady;
         public delegate void CallbackDelegate<T>(T t);
         public CallbackDelegate<string> gameStarted;
@@ -89,10 +89,6 @@ namespace SuecaContracts
             {
                 nbPlayersReady++;
 
-
-                //Update the room to the clients because a new client arrived
-                UpdateRoomForClient();
-
                 Console.WriteLine("[server] has send callback to update room because a player send ready");
 
                 //If the room is full, launch the game
@@ -103,6 +99,7 @@ namespace SuecaContracts
                         gameStarted += p.Callback.GameStarted;
                     }
 
+                    /*
                     //Start the game for the client
                     new Thread(new ParameterizedThreadStart(
                         delegate(object message)
@@ -110,9 +107,11 @@ namespace SuecaContracts
                             gameStarted((string)message);
                         })
                     ).Start("Game started");
+                    */
 
+                    new System.Threading.Timer(obj => { StartGame(); }, null, 1000, System.Threading.Timeout.Infinite);
                     //Start the game for the server
-                    new Thread(StartGame).Start();
+                    //new Thread(StartGame).Start();
                 }
             }
             else
@@ -132,10 +131,17 @@ namespace SuecaContracts
                     gameUpdated = null;
                 }
             }
+
+            //Update the room to the clients everytime that a client sendready something
+            UpdateRoomForClient();
         }
 
         private void StartGame()
         {
+            Console.WriteLine("[server] Start the game");
+
+
+            Console.WriteLine("[server] construct party");
             //Initialize the gameInfoServer
             gameInfo = new GameInfoServer(listPlayers);
 
@@ -147,6 +153,7 @@ namespace SuecaContracts
             }
             */
 
+            Console.WriteLine("[server] change the state of the room");
             //Change state of room
             RoomState = StateRoom.GAME_IN_PROGRESS;
 
@@ -154,6 +161,9 @@ namespace SuecaContracts
             gameInfo.distributeCardsForEachPlayer();
 
             Console.WriteLine("[server] has distribute cards");
+
+            gameInfo.CreateGameInfoClient(listPlayers);
+
             /*
             new Thread(new ParameterizedThreadStart(
                 delegate(object room)
@@ -167,12 +177,16 @@ namespace SuecaContracts
 
         private void UpdateRoomForClient()
         {
+            
+            new System.Threading.Timer(obj => { gameUpdated(this); }, null, 1000, System.Threading.Timeout.Infinite);
+            /*
             new Thread(new ParameterizedThreadStart(
                 delegate(object room)
                 {
                     gameUpdated((Room)room);
                 })
             ).Start(this);
+            */
         }
 
         public void PlayCard(string playerToken, CardColor color, CardValue value)

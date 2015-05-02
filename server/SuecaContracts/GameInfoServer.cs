@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace SuecaContracts
 {
@@ -19,13 +20,13 @@ namespace SuecaContracts
         //Dictionnary to known who's player have this card on a turn
         private Dictionary<Card, string> dictCardPlayerForTurn;
 
-        public Dictionary<string,GameInfo> DictGameInfoPlayer { get; set; }
+        public Dictionary<ISuecaCallbackContract, GameInfo> DictGameInfoPlayer { get; set; }
 
         public GameInfoServer()
         {
             listCard = new List<Card>();
             dictPlayers = new Dictionary<string, Player>();
-            DictGameInfoPlayer = new Dictionary<string,GameInfo>();
+            DictGameInfoPlayer = new Dictionary<ISuecaCallbackContract, GameInfo>();
 
             List<CardColor> listColor = new List<CardColor>();
             
@@ -209,10 +210,32 @@ namespace SuecaContracts
 
             foreach(Player p in listPlayer)
             {
-                DictGameInfoPlayer.Add(p.Token, new GameInfo(p.Token,p.ListCardsWin.Count, numberPlayerTurn));
+                DictGameInfoPlayer.Add(p.Callback, new GameInfo(p.Token,p.ListCardsWin.Count, numberPlayerTurn));
             }
+
+            new Thread(new ParameterizedThreadStart(
+                delegate(object room)
+                {
+                    Dictionary<ISuecaCallbackContract,GameInfo> dict = room as Dictionary<ISuecaCallbackContract,GameInfo>;
+
+                    if(dict != null)
+                    {
+                        foreach(ISuecaCallbackContract callbak in dict.Keys)
+                        {
+                            GameInfo gameInfo;
+
+                            if(dict.TryGetValue(callbak,out gameInfo))
+                                callbak.GameInfoUpdated(gameInfo);
+                        }
+                    }
+                })
+            ).Start(DictGameInfoPlayer);
         }
 
+        private void EndOfGame()
+        {
+
+        }
 
         /// <summary>
         /// Mix a list of cards in a real randomness

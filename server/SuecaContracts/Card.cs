@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace SuecaContracts
 {
     public enum CardColor { None, Spades, Diamonds, Clubs, Hearts };
     public enum CardValue { Two, Three, Four, Five, Six, Seven, Jack, Queen, King, Ace };
 
-    class Card
+    [DataContract]
+    public class Card
     {
         private CardColor color;
         private CardValue value;

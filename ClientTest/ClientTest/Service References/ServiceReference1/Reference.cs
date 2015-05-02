@@ -26,7 +26,7 @@ namespace ClientTest.ServiceReference1 {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
+        private ClientTest.ServiceReference1.Room.StateRoom RoomStateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private ClientTest.ServiceReference1.Player[] listPlayersField;
@@ -55,14 +55,14 @@ namespace ClientTest.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
+        public ClientTest.ServiceReference1.Room.StateRoom RoomState {
             get {
-                return this.PasswordField;
+                return this.RoomStateField;
             }
             set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
+                if ((this.RoomStateField.Equals(value) != true)) {
+                    this.RoomStateField = value;
+                    this.RaisePropertyChanged("RoomState");
                 }
             }
         }
@@ -87,6 +87,20 @@ namespace ClientTest.ServiceReference1 {
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
+        }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="Room.StateRoom", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+        public enum StateRoom : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            WAITING_READY = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            GAME_IN_PROGRESS = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            END_GAME = 2,
         }
     }
     
@@ -183,6 +197,128 @@ namespace ClientTest.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GameInfo", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    [System.SerializableAttribute()]
+    public partial class GameInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ClientTest.ServiceReference1.Card[] ListCardsPlayedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberCardsWinField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberPlayerToPlayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlayerTokenField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ClientTest.ServiceReference1.Card[] ListCardsPlayed {
+            get {
+                return this.ListCardsPlayedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListCardsPlayedField, value) != true)) {
+                    this.ListCardsPlayedField = value;
+                    this.RaisePropertyChanged("ListCardsPlayed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NumberCardsWin {
+            get {
+                return this.NumberCardsWinField;
+            }
+            set {
+                if ((this.NumberCardsWinField.Equals(value) != true)) {
+                    this.NumberCardsWinField = value;
+                    this.RaisePropertyChanged("NumberCardsWin");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NumberPlayerToPlay {
+            get {
+                return this.NumberPlayerToPlayField;
+            }
+            set {
+                if ((this.NumberPlayerToPlayField.Equals(value) != true)) {
+                    this.NumberPlayerToPlayField = value;
+                    this.RaisePropertyChanged("NumberPlayerToPlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlayerToken {
+            get {
+                return this.PlayerTokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerTokenField, value) != true)) {
+                    this.PlayerTokenField = value;
+                    this.RaisePropertyChanged("PlayerToken");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Card", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    [System.SerializableAttribute()]
+    public partial class Card : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.Sueca", CallbackContract=typeof(ClientTest.ServiceReference1.SuecaCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface Sueca {
@@ -217,6 +353,12 @@ namespace ClientTest.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/GameStarted")]
         void GameStarted(string message);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/RoomUpdated")]
+        void RoomUpdated(ClientTest.ServiceReference1.Room room);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/GameInfoUpdated")]
+        void GameInfoUpdated(ClientTest.ServiceReference1.GameInfo gameInfo);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

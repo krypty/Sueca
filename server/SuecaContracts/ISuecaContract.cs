@@ -51,6 +51,8 @@ namespace SuecaContracts
 
         Room GetRoom(String roomName);
 
+        GameInfo GetGameInfo(string playerToken, string roomId);
+
         #endregion
     }
 }

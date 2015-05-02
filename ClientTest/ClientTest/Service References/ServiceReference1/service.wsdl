@@ -47,6 +47,12 @@
   <wsdl:message name="Sueca_GameStarted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GameStarted" />
   </wsdl:message>
+  <wsdl:message name="Sueca_RoomUpdated_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RoomUpdated" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_GameInfoUpdated_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GameInfoUpdated" />
+  </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="Sueca">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateRoom">
       <wsdl:input wsaw:Action="http://tempuri.org/Sueca/CreateRoom" message="tns:Sueca_CreateRoom_InputMessage" />
@@ -66,6 +72,12 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameStarted">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameStarted" message="tns:Sueca_GameStarted_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RoomUpdated">
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/RoomUpdated" message="tns:Sueca_RoomUpdated_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameInfoUpdated">
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameInfoUpdated" message="tns:Sueca_GameInfoUpdated_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_Sueca" type="tns:Sueca">
@@ -109,6 +121,18 @@
     </wsdl:operation>
     <wsdl:operation name="GameStarted">
       <soap12:operation soapAction="http://tempuri.org/Sueca/GameStarted" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RoomUpdated">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/RoomUpdated" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GameInfoUpdated">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/GameInfoUpdated" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

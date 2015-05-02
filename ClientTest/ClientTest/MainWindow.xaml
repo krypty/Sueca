@@ -14,8 +14,9 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <Label x:Name="labelCallback" Grid.Row="1" Content="Callbacks" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <Label x:Name="labelCallbackRoom" Grid.Row="1" Content="Callbacks Room" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label x:Name="labelCallbackGameInfo" Grid.Row="2" Content="Callbacks Game" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBox x:Name="textboxName" Height="30" Text="NameRoom" Margin="0,10,0,40"/>
         <TextBox x:Name="textboxPassword" Height="30" Text="Password" Margin="0,50,0,0"/>
         <Button Content="Create Room" Click="Create_Click" Grid.Column="1"/>
