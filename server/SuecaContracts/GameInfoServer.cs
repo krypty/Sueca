@@ -55,7 +55,7 @@ namespace SuecaContracts
             }
 
             //Define the first player to play and the number of players who have played
-            numberPlayerTurn = 1; //Player to the right of the first player
+            numberPlayerTurn = 0; //Player to the right of the first player
             numberPlayersHavePlayed = 0;
         }
 

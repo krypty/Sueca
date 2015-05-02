@@ -68,7 +68,8 @@ namespace SuecaContracts
             listPlayers.Add(player);
 
             //Add the new player callback to the delegate
-            gameUpdated += player.Callback.RoomUpdated;
+            if(player.Callback != null)
+                gameUpdated += player.Callback.RoomUpdated;
             UpdateRoomForClient();
             //  listGameInfos.Add(GameInfoFactory(player.Token));
         }
@@ -98,11 +99,12 @@ namespace SuecaContracts
                 //If the room is full, launch the game
                 if (nbPlayersReady == NB_PLAYER_PER_GAME)
                 {
+                    /*
                     foreach (Player p in ListPlayers)
                     {
                         gameStarted += p.Callback.GameStarted;
                     }
-
+                    */
                     /*
                     //Start the game for the client
                     new Thread(new ParameterizedThreadStart(
@@ -181,7 +183,6 @@ namespace SuecaContracts
 
         private void UpdateRoomForClient()
         {
-            
             new System.Threading.Timer(obj => { gameUpdated(this); }, null, 1000, System.Threading.Timeout.Infinite);
             /*
             new Thread(new ParameterizedThreadStart(
