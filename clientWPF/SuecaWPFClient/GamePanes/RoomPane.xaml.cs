@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using suecaWPFClient.ServiceReference1;
 
-namespace suecaWPFClient
+namespace suecaWPFClient.GamePanes
 {
     /// <summary>
     /// Interaction logic for RoomPane.xaml
@@ -84,6 +84,7 @@ namespace suecaWPFClient
 
             Console.WriteLine("pass: " + roomPassword);
             var playerID = ServiceManager.GetInstance().JoinRoom(room.Name, roomPassword);
+            ServiceManager.GetInstance().PlayerToken = playerID;
 
             if (playerID == null)
             {
@@ -99,7 +100,8 @@ namespace suecaWPFClient
 
         protected override void Quit()
         {
-            throw new NotImplementedException();
+            //TODO: see if it's necessary to stop listening to callback ?
+            ChangeState(GameState.ListRoom);
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿<local:GameStatePaneA x:Class="suecaWPFClient.GameSummaryPane"
+﻿<gamePanes:GameStatePaneA x:Class="suecaWPFClient.GamePanes.GameSummaryPane"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:suecaWPFClient"
+             xmlns:gamePanes="clr-namespace:suecaWPFClient.GamePanes"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Background="White">
@@ -17,7 +18,7 @@
                     <Setter Property="MinWidth" Value="65"></Setter>
                 </Style>
             </StackPanel.Resources>
-            <Button Name="SendReadyCheckBox" Content="Quitter" HorizontalAlignment="Center"></Button>
+            <Button Name="BtnQuit" Content="Quitter" HorizontalAlignment="Center" Click="BtnQuit_OnClick"></Button>
         </StackPanel>
 
         <StackPanel>
@@ -55,4 +56,4 @@
 
 
     </DockPanel>
-</local:GameStatePaneA>
+</gamePanes:GameStatePaneA>

@@ -1,6 +1,10 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using suecaWPFClient.ServiceReference1;
 
-namespace suecaWPFClient
+namespace suecaWPFClient.GamePanes
 {
     /// <summary>
     /// Interaction logic for RoomSummaryPane.xaml
@@ -10,11 +14,35 @@ namespace suecaWPFClient
         public RoomSummaryPane()
         {
             InitializeComponent();
+            ServiceManager.GetInstance().OnRoomUpdated += OnRoomUpdated;
+            ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
+        }
+
+        private void OnGameInfoUpdated(string message)
+        {
+            ChangeState(GameState.InGame);
+        }
+
+        private void OnRoomUpdated(Room room)
+        {
+            int playerCount = room.listPlayers.Length;
+            int playersReady = room.listPlayers.Count(player => player.isReady);
+
+            RoomNameLabel.Content = room.Name;
+            PlayerConnectedLabel.Content = playerCount + "/4";
+            PlayerReadyLabel.Content = playersReady + "/4";
         }
 
         protected override void Quit()
         {
-            throw new System.NotImplementedException();
+            ChangeState(GameState.ListRoom);
+        }
+
+        private void SendReadyCheckBox_OnChecked(object sender, RoutedEventArgs e)
+        {
+            bool isReady = (sender as CheckBox).IsChecked.Value;
+            String playerToken = ServiceManager.GetInstance().PlayerToken;
+            ServiceManager.GetInstance().SendReady(playerToken, isReady);
         }
     }
 }

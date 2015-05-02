@@ -77,6 +77,13 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="RoomUpdated">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="room" nillable="true" type="q2:Room" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="anyType" nillable="true" type="xs:anyType" />
@@ -129,11 +136,19 @@
       <xs:complexType name="Room">
         <xs:sequence>
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RoomState" type="tns:Room.StateRoom" />
           <xs:element minOccurs="0" name="listPlayers" nillable="true" type="tns:ArrayOfPlayer" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Room" nillable="true" type="tns:Room" />
+      <xs:simpleType name="Room.StateRoom">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="WAITING_READY" />
+          <xs:enumeration value="GAME_IN_PROGRESS" />
+          <xs:enumeration value="END_GAME" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="Room.StateRoom" nillable="true" type="tns:Room.StateRoom" />
       <xs:complexType name="ArrayOfPlayer">
         <xs:sequence>
           <xs:element minOccurs="0" maxOccurs="unbounded" name="Player" nillable="true" type="tns:Player" />
@@ -178,6 +193,9 @@
   <wsdl:message name="Sueca_GameStarted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GameStarted" />
   </wsdl:message>
+  <wsdl:message name="Sueca_RoomUpdated_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RoomUpdated" />
+  </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="Sueca">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateRoom">
       <wsdl:input wsaw:Action="http://tempuri.org/Sueca/CreateRoom" message="tns:Sueca_CreateRoom_InputMessage" />
@@ -197,6 +215,9 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameStarted">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameStarted" message="tns:Sueca_GameStarted_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RoomUpdated">
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/RoomUpdated" message="tns:Sueca_RoomUpdated_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_Sueca" type="tns:Sueca">
@@ -240,6 +261,12 @@
     </wsdl:operation>
     <wsdl:operation name="GameStarted">
       <soap12:operation soapAction="http://tempuri.org/Sueca/GameStarted" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RoomUpdated">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/RoomUpdated" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
