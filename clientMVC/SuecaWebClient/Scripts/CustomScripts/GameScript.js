@@ -2,8 +2,8 @@
 
 
 
-var roomId = "a092nsd";
-var playerToken = "sdaSDJ";
+//var roomId = "a092nsd";
+//var playerToken = "sdaSDJ";
 var roomState = null;
 var gameState = null;
 

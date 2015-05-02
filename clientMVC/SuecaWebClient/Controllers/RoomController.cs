@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SuecaWebClient.Models;
 
 namespace SuecaWebClient.Controllers
 {
@@ -13,26 +14,33 @@ namespace SuecaWebClient.Controllers
         // GET: /Room/
 
         [HttpPost]
-        public ActionResult getGameState(string roomId, string playerToken)
+        public ActionResult GetGameState(string roomId, string playerToken)
         {
             SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
-
+            //RoomInfoModel values = new RoomInfoModel(roomId, playerToken);
             //serviceHelper.
 
             return Content("It works " + roomId + " | " + playerToken);
         }
 
-
-        public ActionResult Join(string roomId, string password)
+        [HttpPost]
+        public ActionResult GetRoomState(string roomId, string playerToken)
         {
             SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
-            serviceHelper.joinRoom(roomId, password);
-            return View();
+            bool[] listState = new[] {true, true, false, false};
+            //RoomInfoModel values = new RoomInfoModel(roomId, playerToken, listState);
+            //serviceHelper.
+            
+            return Json(serviceHelper.joinRoom(roomId,""));
         }
 
-        public ActionResult Join(string roomId)
+
+        public ActionResult Join(string roomId, string password = "")
         {
-            return Join(roomId, "");
+            SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
+            RoomInfoModel roomInfo = serviceHelper.joinRoom(roomId, password);
+            ViewData["playerTokenServer"] = roomInfo.playerToken;
+            return View();
         }
 
     }

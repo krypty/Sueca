@@ -39,25 +39,32 @@ namespace SuecaServices
         {
             Console.WriteLine("[server] joinRoom");
             Room currentRoom;
+            String playerToken = "";
             if (!roomList.TryGetValue(roomName, out currentRoom))
             {
                 Console.WriteLine("[Join room] room doesn't exist");
-                throw new Exception("room with name [" + roomName + "] doesn't exist");
+                //throw new Exception("room with name [" + roomName + "] doesn't exist");
             }
 
             //Room room = this._listRooms.Find(r => r.Name == roomName);
-
-            if (!currentRoom.Password.Equals(password))
+            if (currentRoom != null)
             {
-                Console.WriteLine("[Join room] invalid password");
-                return null;
+                if (!currentRoom.Password.Equals(password))
+                {
+                    Console.WriteLine("[Join room] invalid password");
+                    return null;
+                }
+                else
+                {
+                    playerToken = Guid.NewGuid().ToString();
+
+                    Player newPlayer = new Player(playerToken);
+                    newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+                    currentRoom.AddPlayer(newPlayer);
+                }
             }
 
-            String playerToken = Guid.NewGuid().ToString();
-
-            Player newPlayer = new Player(playerToken);
-            newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
-            currentRoom.AddPlayer(newPlayer);
+            
 
             return playerToken;
         }
