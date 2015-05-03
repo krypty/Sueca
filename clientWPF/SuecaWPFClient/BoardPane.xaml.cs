@@ -23,22 +23,25 @@ namespace suecaWPFClient
 
         private const int MaxCard = 10;
         private List<Card> _listCards = new List<Card>();
+        private string _playerToken;
+        private Card _firstCardPlayerThisTurn;
 
         public BoardPane()
         {
             InitializeComponent();
-            //            _suecaClient = new SuecaClient(new InstanceContext(this));
             ResetCards();
             DrawAllPlayersCards();
 
             ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
+            _playerToken = ServiceManager.GetInstance().PlayerToken;
         }
-
-
 
         private void OnGameInfoUpdated(GameInfo gameInfo)
         {
             Console.WriteLine("MainWindow: gameinfo" + gameInfo.ToString());
+            _firstCardPlayerThisTurn = CardTools.FromService(gameInfo.ListCardsPlayed[0]);
+
+            //TODO: populate _listCard with cards from gameInfo
         }
 
         private void ResetCards()
@@ -56,27 +59,6 @@ namespace suecaWPFClient
         {
             IsEnabled = enabled;
             DisablingRectangle.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // create instance
-            //_channelFactory = new DuplexChannelFactory<ISuecaContract>(this, "configClient");
-            //_suecaClient = _channelFactory.CreateChannel();
-            Console.WriteLine("Client started");
-
-            // create room
-            Console.WriteLine("create room...");
-            //String roomName = _suecaClient.CreateRoom("no_password");
-            String roomName = ServiceManager.GetInstance().CreateRoom("no_password");
-            MessageBox.Show("roomName: " + roomName);
-
-            // join it 
-            Console.WriteLine("Join room");
-            //String playerToken = _suecaClient.JoinRoom(roomName, "other_password_that_fail");
-            String playerToken = ServiceManager.GetInstance().JoinRoom(roomName, "other_password_that_fail");
-            Console.WriteLine("[client] playerToken: " + playerToken);
         }
 
         private void Ellipse_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -179,6 +161,17 @@ namespace suecaWPFClient
             ReplaceLaidCard(card);
             Console.WriteLine("card removed ? " + removed);
             DrawAllPlayersCards();
+
+            if (IsCardValid(card))
+            {
+                ServiceManager.GetInstance().PlayCard(_playerToken, card);
+            }
+
+        }
+
+        private bool IsCardValid(Card card)
+        {
+            return (card.CardColor == _firstCardPlayerThisTurn.CardColor || !_listCards.Exists(c => c.CardColor == _firstCardPlayerThisTurn.CardColor));
         }
 
         private void ReplaceLaidCard(Card card)

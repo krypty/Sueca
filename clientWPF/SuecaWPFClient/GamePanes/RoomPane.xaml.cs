@@ -17,6 +17,7 @@ namespace suecaWPFClient.GamePanes
         {
             InitializeComponent();
             ServiceManager.GetInstance().OnGameInfoUpdated += GameInfoUpdated;
+            RefreshRoomList();
         }
 
         private void BtnCreateRoom_Click(object sender, RoutedEventArgs e)
@@ -46,10 +47,10 @@ namespace suecaWPFClient.GamePanes
             RefreshRoomList();
         }
 
-        private void RefreshRoomList()
+        private async void RefreshRoomList()
         {
             RoomListView.Items.Clear();
-            _rooms = ServiceManager.GetInstance().ListRoom();
+            _rooms = await ServiceManager.GetInstance().ListRoom();
 
             foreach (var room in _rooms)
             {
