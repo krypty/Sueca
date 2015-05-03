@@ -16,13 +16,13 @@ namespace SuecaWebClient.Controllers
         // GET: /Room/
 
         [HttpPost]
-        public ActionResult GetGameState(string roomId, string playerToken)
+        public JsonResult GetGameState(string roomId, string playerToken)
         {
             SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
             //RoomInfoModel values = new RoomInfoModel(roomId, playerToken);
-            //serviceHelper.
+            serviceHelper.GetGameState(roomId, playerToken);
 
-            return Content("It works " + roomId + " | " + playerToken);
+            return Json(serviceHelper.GetGameState(roomId, playerToken));
         }
         [HttpPost]
         public bool SendReady(string playerToken, bool state)

@@ -36,6 +36,23 @@ namespace SuecaWebClient.Helper
             return "";
         }
 
+        public GameInfoModel GetGameState(string roomId, string playerToken)
+        {
+            GameInfoModel gameInfos = null;
+            try
+            {
+                gameInfos = new GameInfoModel(client.GetGameInfo(playerToken, roomId));
+            }
+            catch (Exception)
+            {
+                
+
+                
+            }
+            return gameInfos;
+
+        }
+
 
 
         public RoomInfoModel getRoomState(string roomId, string playerToken)

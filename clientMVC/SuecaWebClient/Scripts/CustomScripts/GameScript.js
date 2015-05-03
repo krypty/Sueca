@@ -29,10 +29,6 @@ function handleImageLoad(color, value) {
 
 for (var i = 0; i < 4; i++) {
     cardsForColor = {};
-    /*var img = new Image();
-    img.onload = handleImageLoad(bmp);
-    img.src = "/Images/Cards/" + colors[i] + "/As.png";*/
-    //cardsForColor["As"] = bmp;
     cardsForColor["As"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/As.png");
     cardsForColor["As"].CardColor = colors[i];
     cardsForColor["As"].CardValue = "As";
@@ -195,16 +191,13 @@ function getPlayerOriginalAndPositions(playerArea) {
 
 
 }
-function newScaleHandPlayers(Card) {
-    
-}
 
-var player1Cards = 10;
-var player2Cards = 10;
-var player3Cards = 10;
+var player1Cards = 0;
+var player2Cards = 0;
+var player3Cards = 0;
 
-var _gameState = 1;
-var _playerPlaying = 0; //0 = Self
+var _gameState = 0;
+var _playerPlaying = 0;
 var _playerNumer;
 
 var _roomPlaying = 2;
@@ -303,7 +296,7 @@ function drawScene(evt) {
 
             //Handle played card
             var boardCards = [null,null,null,null];
-            boardCards[0] = new Object();
+            /*boardCards[0] = new Object();
             boardCards[0].color = "Hearts";
             boardCards[0].value = "2";
             boardCards[1] = new Object();
@@ -314,7 +307,7 @@ function drawScene(evt) {
             boardCards[2].value = "J";
             boardCards[3] = new Object();
             boardCards[3].color = "Diamonds";
-            boardCards[3].value = "K";
+            boardCards[3].value = "K";*/
 
             newCardsOnBoard(boardCards);
 
@@ -628,9 +621,12 @@ function init() {
     createjs.Ticker.addEventListener("tick", drawScene);
 
     
-    addHandHeldCard(cardsHand["Hearts"]["As"]);
+    /**
+     
+     addHandHeldCard(cardsHand["Hearts"]["As"]);
     addHandHeldCard(cardsHand["Spades"]["As"]);
     addHandHeldCard(cardsHand["Clubs"]["As"]);
+    */
 }
 
 

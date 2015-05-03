@@ -160,10 +160,13 @@ namespace SuecaServices
         public void SendReady(string playerToken, bool isReady)
         {
             Console.WriteLine("[server] Player with token " + playerToken + " send ready");
+            if (playerToken != "")
+            {
+                Room currentRoom = GetRoomFromPlayerToken(playerToken);
 
-            Room currentRoom = GetRoomFromPlayerToken(playerToken);
-
-            currentRoom.MakePlayerReady(playerToken, isReady);
+                currentRoom.MakePlayerReady(playerToken, isReady);    
+            }
+            
         }
 
         public void PlayCard(string playerToken, CardColor color, CardValue value)
@@ -183,7 +186,8 @@ namespace SuecaServices
 
             if (room.Count() < 1)
             {
-                throw new Exception("Player with token [" + playerToken + "] doesn't exist");
+                //throw new Exception("Player with token [" + playerToken + "] doesn't exist");
+                return null;
             }
 
             return room.First();

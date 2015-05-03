@@ -143,6 +143,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\GameInfoModel.cs" />
     <Compile Include="ViewModel\RoomInfoModel.cs" />
     <Compile Include="ViewModel\RoomListViewModel.cs" />
   </ItemGroup>
