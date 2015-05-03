@@ -174,7 +174,7 @@ namespace SuecaContracts
 
             Console.WriteLine("[server] has distribute cards");
 
-            gameInfo.CreateGameInfoClient();
+            CreateGameInfoClient();
 
             /*
             new Thread(new ParameterizedThreadStart(
@@ -234,8 +234,47 @@ namespace SuecaContracts
         public void PlayCard(string playerToken, CardColor color, CardValue value)
         {
             gameInfo.PlayCard(playerToken, color, value);
+            CreateGameInfoClient();
+        }
 
+        private void CreateGameInfoClient()
+        {
             gameInfo.CreateGameInfoClient();
+
+            new Thread(new ParameterizedThreadStart(
+                delegate(object dictGameInfo)
+                {
+                    Thread.Sleep(1000);
+
+                    Dictionary<string, GameInfo> dict = dictGameInfo as Dictionary<string, GameInfo>;
+
+                    callGameInfoClient(dict);
+
+                })
+            ).Start(gameInfo.DictGameInfoPlayer);
+        }
+
+        private void callGameInfoClient(Dictionary<string, GameInfo> dict)
+        {
+            if (dict != null)
+            {
+                foreach (GameInfo game in dict.Values)
+                {
+                    ISuecaCallbackContract callback = game.Player.Callback;
+                    if (callback != null)
+                    {
+                        //Check is a wpf client is disconnect during party
+                        try
+                        {
+                            callback.GameInfoUpdated(game);
+                        }
+                        catch
+                        {
+                            PlayerDisconnectDuringParty = game.Player;
+                        }
+                    }
+                }
+            }
         }
 
         public GameInfo getGameInfoForPlayerToken(string playerToken)

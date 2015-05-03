@@ -222,35 +222,6 @@ namespace SuecaContracts
 
                 DictGameInfoPlayer.Add(p.Token, game);
             }
-
-
-            new Thread(new ParameterizedThreadStart(
-                delegate(object dictGameInfo)
-                {
-                    Thread.Sleep(1000);
-
-                    Dictionary<string, GameInfo> dict = dictGameInfo as Dictionary<string, GameInfo>;
-                    
-                    callGameInfoClient(dict);
-                    
-                })
-            ).Start(DictGameInfoPlayer);
-
-        }
-
-        private void callGameInfoClient(Dictionary<string,GameInfo> dict)
-        {
-            if (dict != null)
-            {
-                foreach (GameInfo game in dict.Values)
-                {
-                    ISuecaCallbackContract callback = game.Player.Callback;
-                    if(callback != null)
-                    {
-                        callback.GameInfoUpdated(game);
-                    }
-                }
-            }
         }
 
         private void EndOfGame()
