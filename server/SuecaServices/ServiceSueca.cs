@@ -12,6 +12,9 @@ namespace SuecaServices
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
     public class ServiceSueca : ISuecaContract
     {
+        private const int CHECK_ROOM_TIME = 30000;
+        private System.Timers.Timer timerCheckRoom;
+
         //private List<Room> _listRooms;
         //private HashSet<String, Room>  
         private Dictionary<String, Room> dictRoom; 
@@ -24,6 +27,23 @@ namespace SuecaServices
         {
            // this._listRooms = new List<Room>();
             this.dictRoom = new Dictionary<string, Room>();
+            timerCheckRoom = new System.Timers.Timer(CHECK_ROOM_TIME);
+            timerCheckRoom.Elapsed += (sender, e) =>
+            {
+                timerCheckRoom_Elapsed(dictRoom);
+            }; 
+        }
+
+        void timerCheckRoom_Elapsed(Dictionary<string,Room> dict)
+        {
+            Console.WriteLine("[server] check if a room has to be killed");
+            foreach(Room r in dictRoom.Values)
+            {
+                if(r.PlayerDisconnectDuringParty != null)
+                {
+                    Console.WriteLine("[server] the room "+r.Name+" has to be killed because player " + r.PlayerDisconnectDuringParty.Token+" is disconnect");
+                }
+            }
         }
 
         public string CreateRoom(string password = "")

@@ -219,6 +219,7 @@ namespace SuecaContracts
                     game.FirstCard = listCardsTurn.First.Value;
 
                 game.ListCardsPlayed = listCardsTurn;
+                game.ListCardsPlayer = p.ListCardsHolding;
 
                 DictGameInfoPlayer.Add(p.Token, game);
             }
