@@ -18,18 +18,46 @@ function updateData() {
         console.log("PLAYER TOEK : " + playerToken);
 
         var roomId = getUrlParameter("roomId");
-        
-    
+        if (roomId != "") {
+            $.ajax({
+                url: getRoomState,
+                data: { roomId: roomId, playerToken: playerToken },
+                type: 'POST',
+                success: function(data) {
+
+                    //Object { roomState: 0, getPlayerState: Array[4], roomId: "bee5a4d3", playerToken: "ec7362e1-09db-449b-bff1-6da20f6e1d32", playerNumber: 0 }
+                    //console.log("token : " + data.playerToken);
+                    _playerNumer = data.playerNumber;
+                    //console.log("number : " + data.playerNumber);
+                    //console.log("room : " + data.playerToken);
+                    setPlayersState(_titlePlayer1, data.getPlayerState[1], 1);
+                    setPlayersState(_titlePlayer2, data.getPlayerState[2], 2);
+                    setPlayersState(_titlePlayer3, data.getPlayerState[3], 3);
+                    console.log(data.getPlayerState);
+                    _gameState = data.roomState;
+                }
+            });
+        }
+        console.log(roomId);
         setInterval(function () {
             $.ajax({
                 url: getRoomState,
                 data: { roomId: roomId, playerToken: playerToken },
                 type: 'POST',
                 success: function (data) {
-                    console.log(data);
+
+                    //Object { roomState: 0, getPlayerState: Array[4], roomId: "bee5a4d3", playerToken: "ec7362e1-09db-449b-bff1-6da20f6e1d32", playerNumber: 0 }
+                    //console.log("token : " + data.playerToken);
+                    _playerNumer = data.playerNumber;
+                    //console.log("number : " + data.playerNumber);
+                    //console.log("room : " + data.playerToken);
+                    setPlayersState(_titlePlayer1, 1, data.getPlayerState);
+                    setPlayersState(_titlePlayer2, 2, data.getPlayerState);
+                    setPlayersState(_titlePlayer3, 3, data.getPlayerState);
+                    _gameState = data.roomState;
                 }
             });
-        }, 2000);
+        }, 10000);
     }
 }
 

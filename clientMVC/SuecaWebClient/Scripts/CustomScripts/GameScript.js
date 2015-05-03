@@ -205,6 +205,7 @@ var player3Cards = 10;
 
 var _gameState = 1;
 var _playerPlaying = 0; //0 = Self
+var _playerNumer;
 
 var _roomPlaying = 2;
 var _roundColor = "Hearts";
@@ -225,13 +226,13 @@ _titlePlayer3.textBaseline = "alphabetic";
 _titlePlayer3.textAlign = "right";
 
 
-var playerReady = [1, 2, 0, 0];
+var playerReady = [0, 0, 0, 0];
 
-function setPlayersState(playersState, id, states) {
+function setPlayersState(playersState, state, id) {
 
 
     
-    switch (states[id]) {
+    switch (state) {
         case 0:
             playersState.text = "-";
             break;
@@ -285,9 +286,9 @@ function drawScene(evt) {
     
         case 0:
             _roomState.text = "En attente d'autres joueurs";
-            setPlayersState(_titlePlayer1, 1, playerReady);
-            setPlayersState(_titlePlayer2, 2, playerReady);
-            setPlayersState(_titlePlayer3, 3, playerReady);
+            //setPlayersState(_titlePlayer1, 1, playerReady);
+            //setPlayersState(_titlePlayer2, 2, playerReady);
+           //setPlayersState(_titlePlayer3, 3, playerReady);
             
 
             break;

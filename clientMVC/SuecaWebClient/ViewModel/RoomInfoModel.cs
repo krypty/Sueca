@@ -10,7 +10,7 @@ namespace SuecaWebClient.Models
     public class RoomInfoModel
     {
 
-        public int gameState { get; set; }
+        public int roomState { get; set; }
 
         //public 
         public int[] getPlayerState { get; set; }
@@ -22,25 +22,42 @@ namespace SuecaWebClient.Models
     
 
         //public 
-        public RoomInfoModel(string roomId, string playerToken, Player[] players)
+        public RoomInfoModel(string roomId, string playerToken, Player[] players, int roomState)
         {
             this.roomId = roomId;
             this.playerToken = playerToken;
-
+            this.roomState = roomState;
             //0 : not in
             //1 : not rdy
             //2 : rdy
             int[] listState = new int[]{0,0,0,0};
 
-            int number = players.Where(p => p.token == playerToken).First().NumberTurn;
-
-            playerNumber = number;
-
+            playerNumber = players.Where(p => p.token == playerToken).First().NumberTurn;
+            //int i = 0;
             foreach (Player p in players)
             {
                 if (p != null)
                 {
-                    listState[(playerNumber + p.NumberTurn)%4] = p.isReady ? 2 : 1;
+                    //listState[p.NumberTurn] = p.NumberTurn;
+                    //i++;*/
+                    
+                    if (p.NumberTurn == playerNumber)
+                    {
+                        listState[0] = p.isReady ? 2 : 1;
+                    }
+                    else if (p.NumberTurn == ((playerNumber + 1)%4))
+                    {
+                        listState[1] = p.isReady ? 2 : 1;
+                    }
+                    else if (p.NumberTurn == ((playerNumber + 2) % 4))
+                    {
+                        listState[2] = p.isReady ? 2 : 1;
+                    }
+                    else if (p.NumberTurn == ((playerNumber + 3) % 4))
+                    {
+                        listState[3] = p.isReady ? 2 : 1;
+                    }
+
                 }
             }
             

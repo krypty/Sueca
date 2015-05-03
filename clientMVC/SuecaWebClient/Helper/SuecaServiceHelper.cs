@@ -50,7 +50,25 @@ namespace SuecaWebClient.Helper
 
                     Room r = client.GetRoom(roomId);
                     if (r != null)
-                        return new RoomInfoModel(r.Name, playerToken, r.listPlayers);
+                    {
+                        int roomState = 0;
+                        switch (r.RoomState)
+                        {
+                            case Room.StateRoom.WAITING_READY:
+                                roomState = 0;
+                                break;
+                            case Room.StateRoom.GAME_IN_PROGRESS:
+                                roomState = 1;
+                                break;
+                            case Room.StateRoom.END_GAME:
+                                roomState = 2;
+                                break;
+                        }
+
+
+                        return new RoomInfoModel(r.Name, playerToken, r.listPlayers, roomState);
+
+                    }
                     else
                         return null;
 

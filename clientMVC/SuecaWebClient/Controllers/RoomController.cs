@@ -24,20 +24,55 @@ namespace SuecaWebClient.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetRoomState(string roomId, string playerToken)
+        [CustomHandleErrorAttribute]
+        public JsonResult GetRoomState(string roomId = "", string playerToken = "")
         {
             SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
-
+            if (roomId != "" && playerToken != "")
+            {
+                return Json(serviceHelper.getRoomState(roomId, playerToken));    
+            }
+            throw new HttpException(404, "Bad Room");
             
-            return Json(serviceHelper.getRoomState(roomId,playerToken));
+        }
+        public class CustomHandleErrorAttribute : HandleErrorAttribute
+        {
+            public override void OnException(ExceptionContext filterContext)
+            {
+                var exception = filterContext.Exception;
+                var statusCode = new HttpException(null, exception).GetHttpCode();
+
+                filterContext.Result = new JsonResult
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet, //Not necessary for this example
+                    Data = new
+                    {
+                        error = true,
+                        message = filterContext.Exception.Message
+                    }
+                };
+
+                filterContext.ExceptionHandled = true;
+                filterContext.HttpContext.Response.Clear();
+                filterContext.HttpContext.Response.StatusCode = statusCode;
+                filterContext.HttpContext.Response.TrySkipIisCustomErrors = true;
+            }
         }
 
-
-        public ActionResult Join(string roomId, string password = "")
+        public ActionResult Join(string roomId = "", string password = "")
         {
-            SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
-            ViewData["playerTokenServer"] = serviceHelper.joinRoom(roomId, password);
-            //ViewData["playerTokenServer"] = roomInfo.playerToken;
+            if(roomId != "")
+            { 
+                SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
+                ViewData["playerTokenServer"] = serviceHelper.joinRoom(roomId, password);
+                ViewData["connected"] = true;
+                //ViewData["playerTokenServer"] = roomInfo.playerToken;
+            }
+            else
+            {
+                ViewData["playerTokenServer"] = "";
+                ViewData["connected"] = false;
+            }
             return View();
         }
 
