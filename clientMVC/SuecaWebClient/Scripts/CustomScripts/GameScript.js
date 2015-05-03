@@ -1,19 +1,69 @@
 ﻿
+/**
+ * Card list
+ */
+
+
+cardsColor = {};
+
+var colors = ["Hearts", "Spades", "Diamonds", "Clubs"];
+
+
+for (var i = 0; i < 4; i++) {
+    cardsForColor = {};
+    cardsForColor["As"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/As.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "As";
+    cardsForColor["2"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/2.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "2";
+    cardsForColor["3"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/3.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "3";
+    cardsForColor["4"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/4.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "4";
+    cardsForColor["5"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/5.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "5";
+    cardsForColor["6"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/6.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "6";
+    cardsForColor["7"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/7.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "7";
+    cardsForColor["J"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/J.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "J";
+    cardsForColor["Q"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/Q.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "Q";
+    cardsForColor["K"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/K.png");
+    cardsForColor["As"].CardColor = colors[i];
+    cardsForColor["As"].CardValue = "K";
+    cardsColor[colors[i]] = cardsForColor;
+    
+}
 
 
 
+
+console.log("CARDS :" + cardsColor);
 //var roomId = "a092nsd";
 //var playerToken = "sdaSDJ";
-var roomState = null;
+
+
+
+
 var gameState = null;
 
 var stage, output;
 //enum 
 
-playerHandScalling = 0.06;
-playerBoardScaling = 0.08;
-playerHandleScaling = 0.1;
-otherPlayersScale = 0.05;
+playerHandScalling = 1;
+playerBoardScaling = 1;
+playerHandleScaling = 1;
+otherPlayersScale = 1;
 
 
 var canPlay = true;
@@ -34,10 +84,10 @@ myArea.width = 0.6;
 myArea.height = 0.2;
 
 var boardArea = new Object();
-boardArea.x = 0.15;
-boardArea.y = 0.15;
-boardArea.width = 0.70;
-boardArea.height = 0.70;
+boardArea.x = 0.2;
+boardArea.y = 0.2;
+boardArea.width = 0.60;
+boardArea.height = 0.60;
 
 var player1Area = new Object();
 player1Area.x = 0.05;
@@ -50,7 +100,7 @@ player1Area.rotation = 90;
 
 var player2Area = new Object();
 player2Area.x = 0.2;
-player2Area.y = 0.05;
+player2Area.y = -0.1;
 player2Area.width = 0.6;
 player2Area.height = 0;
 player2Area.rotation = 180;
@@ -64,19 +114,10 @@ player3Area.rotation = -90;
 
 
 
-var player1Cards = 10;
-var player2Cards = 10;
-var player3Cards = 10;
 
 var backCard = new createjs.Bitmap("/Images/Cards/Back.png");
-
+var gameBoard = new createjs.Bitmap("/Images/GameBoard.png");
 var playersCard = [];
-
-function updateBoard() {
-
-    clearPlayersCards();
-    drawPlayersCards();
-}
 
 function clearPlayersCards() {
 
@@ -88,10 +129,6 @@ function clearPlayersCards() {
 }
 function getPlayerOriginalAndPositions(playerArea) {
     var card = backCard.clone();
-    card.scaleX = otherPlayersScale;
-    card.scaleY = otherPlayersScale;
-    card.rotation = playerArea.rotation;
-
     var playerOx = playerArea.x * stage.canvas.width;
     var playerOy = playerArea.y * stage.canvas.height;
     var playerOffsetX = playerArea.width * stage.canvas.width / 10;
@@ -101,34 +138,138 @@ function getPlayerOriginalAndPositions(playerArea) {
 
 
 }
+function newScaleHandPlayers(Card) {
+    
+}
+
+var player1Cards = 10;
+var player2Cards = 10;
+var player3Cards = 10;
+
+var _gameState = 1;
+var _playerPlaying = 0; //0 = Self
+
+var _roomPlaying = 2;
+var _roundColor = "Hearts";
+
+
+var _roomState = new createjs.Text("La Sueca !", "10px Calibri", "#000000");
+_roomState.textBaseline = "alphabetic";
+
+
+var _titlePlayer1 = new createjs.Text("J1 - ", "8px Calibri", "#666666");
+_titlePlayer1.textBaseline = "alphabetic";
+var _titlePlayer2 = new createjs.Text("J2 - Prêt", "8px Calibri", "#666666");
+
+_titlePlayer2.textAlign = "right";
+var _titlePlayer3 = new createjs.Text("J3 - Pas prêt", "8px Calibri", "#666666");
+_titlePlayer3.textBaseline = "alphabetic";
+
+_titlePlayer3.textAlign = "right";
+
+
+var playerReady = [1, 2, 0, 0];
+
+function setPlayersState(playersState, inGame) {
+    if (inGame) {
+        
+    }
+
+
+
+}
+
+
+
+
+function drawScene(evt) {
+    /**
+     *  Requires :
+     *      gameState : 0 - Waiting / 1 - InGame / 2 - Score
+     */
+    clearPlayersCards();
+    
+    var widthFactor = getScalingFactor(stage.canvas.width, boardArea.width, gameBoard.image.width);
+    var heightFactor = getScalingFactor(stage.canvas.height, boardArea.height, gameBoard.image.height);
+    gameBoard.x = stage.canvas.width * boardArea.x;
+    gameBoard.y = stage.canvas.height * boardArea.y;
+    gameBoard.scaleX = widthFactor;
+    gameBoard.scaleY = heightFactor;
+
+
+    
+    _roomState.y = stage.canvas.height - 1;
+    //_roomState.scaleX = _roomState.scaleY = 0.8;
+
+    _titlePlayer2.x = stage.canvas.width * 0.95;
+    _titlePlayer3.x = stage.canvas.width;
+    _titlePlayer3.y = stage.canvas.height - 1;
+    switch(_gameState) {
+    
+        case 0:
+            _roomState.text = "En attente d'autres joueurs";
+            
+
+            break;
+        case 1:
+
+            _roomState.text = "Au tour de : Joueur 1";
+            drawPlayersCards();
+
+            break;
+
+
+            //cardsColor[colors[0]]["2"]
+    }
+
+    stage.update();
+
+}
+
+
+
 
 
 function drawPlayersCards() {
+    var cardPlayer = null;
     var player1CardInfos = getPlayerOriginalAndPositions(player1Area);
+    var blurFilter = new createjs.BlurFilter(20, 20, 1);
+    //scaleOPlayers = stage.getBounds().height * 0.5 / player1CardInfos.card.height;
     for (var i = 0; i < player1Cards; i++) {
-        var card = player1CardInfos.card.clone();
-        card.x = player1CardInfos.ox;
-        card.y = player1CardInfos.oy + player1CardInfos.offsetY * (i + (10 - player1Cards) / 2);
-        playersCard.push(card);
-        stage.addChild(card);
+        cardPlayer = player1CardInfos.card.clone();
+        cardPlayer.scaleX = cardPlayer.scaleY = 0.5;
+        
+        cardPlayer.x = player1CardInfos.ox;
+        cardPlayer.y = player1CardInfos.oy + player1CardInfos.offsetY * (i + (10 - player1Cards) / 2);
+        cardPlayer.rotation = player1Area.rotation;
+        playersCard.push(cardPlayer);
+        stage.addChild(cardPlayer);
     }
 
     var player2CardInfos = getPlayerOriginalAndPositions(player2Area);
+    player2CardInfos.rotation = 180;
     for (var i = 0; i < player2Cards; i++) {
-        var card = player2CardInfos.card.clone();
-        card.x = player2CardInfos.ox + player2CardInfos.offsetX * (i + (10 - player2Cards) / 2);
-        card.y = player2CardInfos.oy;
-        playersCard.push(card);
-        stage.addChild(card);
+        cardPlayer = player2CardInfos.card.clone();
+        cardPlayer.rotation = player2CardInfos.rotation;
+        cardPlayer.scaleX = cardPlayer.scaleY = 0.5;
+        cardPlayer.filters = [blurFilter];
+        cardPlayer.x = player2CardInfos.ox + player2CardInfos.offsetX * (i + (10 - player2Cards) / 2);
+        cardPlayer.y = -player2CardInfos.oy;
+        
+        playersCard.push(cardPlayer);
+        stage.addChild(cardPlayer);
     }
 
     var player3CardInfos = getPlayerOriginalAndPositions(player3Area);
+    
     for (var i = 0; i < player3Cards; i++) {
-        var card = player3CardInfos.card.clone();
-        card.x = player3CardInfos.ox;
-        card.y = player3CardInfos.oy + player3CardInfos.offsetY * (i + (10 - player3Cards) / 2);
-        playersCard.push(card);
-        stage.addChild(card);
+        cardPlayer = player3CardInfos.card.clone();
+        cardPlayer.scaleX = cardPlayer.scaleY = 0.5;
+        cardPlayer.x = player3CardInfos.ox;
+        cardPlayer.y = player3CardInfos.oy + player3CardInfos.offsetY * (i + (10 - player3Cards) / 2);
+        cardPlayer.rotation = player3Area.rotation;
+        playersCard.push(cardPlayer);
+        stage.addChild(cardPlayer);
     }
 
 
@@ -175,42 +316,21 @@ function within(xPers, yPers, areaObj) {
 
 function getAreaFromPosition(xPers, yPers, card) {
     if (within(xPers, yPers, myArea)) {
-        console.log("HOME BUDDY");
         return 0;
     }
     else if (within(xPers, yPers, boardArea) && canPlay) {
-
-        console.log("BOARD");
         return 1;
     }
     else {
-        console.log("NOWHERE");
         return 2;
     }
     //console.log(x + " | " + y);
 }
 
 
-function init() {
-    stage = new createjs.Stage("c");
-
-    // this lets our drag continue to track the mouse even when it leaves the canvas:
-    // play with commenting this out to see the difference.
-    stage.mouseMoveOutside = true;
-    stage.enableMouseOver(10);
-    //var circle = new createjs.Shape();
-    //circle.graphics.beginFill("red").drawCircle(0, 0, 50);
+function addHandHeldCard(Card) {
     var bitmap = new createjs.Bitmap("/Images/Cards/Clubs/As.png");
     bitmap.selectable = true;
-
-    var gameBoard = new createjs.Bitmap("/Images/GameBoard.png");
-
-    var widthFactor = getScalingFactor(stage.canvas.width, boardArea.width, gameBoard.image.width);
-    var heightFactor = getScalingFactor(stage.canvas.height, boardArea.height, gameBoard.image.height);
-    gameBoard.x = stage.canvas.width * boardArea.x;
-    gameBoard.y = stage.canvas.height * boardArea.y;
-    gameBoard.scaleX = widthFactor;
-    gameBoard.scaleY = heightFactor;
     scaleCard(bitmap, playerHandScalling);
 
     bitmap.addEventListener("mousedown", function (evt) {
@@ -255,28 +375,40 @@ function init() {
     bitmap.on("mouseout", function (evt) {
         if (bitmap.selectable) {
             scaleCard(bitmap, playerHandScalling);
-            updateBoard();
             stage.update();
         }
-        //var o = evt.target;
-        //console.log(o.offset.x);
-
-        //console.log(stage.canvas.width);
-        /*if(area == 0)
-        {
-        
-            bitmap.scaleX = playerHandScalling;
-            bitmap.scaleY = playerHandScalling;
-        }*/
-
-
-
     });
 
-    stage.addChild(gameBoard);
     stage.addChild(bitmap);
-    updateBoard();
     stage.update();
+}
+
+stage = null;
+gameState = null;
+
+function init() {
+    
+    console.log(stage);
+    stage = new createjs.Stage("c");
+    // this lets our drag continue to track the mouse even when it leaves the canvas:
+    // play with commenting this out to see the difference.
+    stage.mouseMoveOutside = true;
+    stage.enableMouseOver(10);
+    //var circle = new createjs.Shape();
+    //circle.graphics.beginFill("red").drawCircle(0, 0, 50);
+    
+
+    
+
+    
+
+    stage.addChild(_titlePlayer1);
+    stage.addChild(_titlePlayer2);
+    stage.addChild(_titlePlayer3);
+    stage.addChild(gameBoard);
+    stage.addChild(_roomState);
+    createjs.Ticker.addEventListener("tick", drawScene);
+    
 }
 
 

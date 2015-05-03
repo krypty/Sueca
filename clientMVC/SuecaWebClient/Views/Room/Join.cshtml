@@ -8,13 +8,13 @@
 <h2></h2>
 
 <input type="hidden" name="tokenInput" value="@Html.Encode(@ViewData["playerTokenServer"])" id="tokenInput" />
-
-<canvas id='c' style="border:1px solid black;" width="1500" height="1000"></canvas>
-
-@Scripts.Render("~/Scripts/jquery-1.9.1.min.js")
-@Scripts.Render("~/Scripts/easeljs-0.8.0.combined.js")
-@Scripts.Render("~/TypeScript/CardEnums.js")
-@Scripts.Render("~/TypeScript/CardDefinition.js")
-@Scripts.Render("~/TypeScript/CardManager.js")
-@Scripts.Render("~/Scripts/CustomScripts/GameScript.js")
-@Scripts.Render("~/Scripts/CustomScripts/GameScriptAjax.js")
+<div class="row">
+    <div class="col-md-12">
+        <canvas id='c' class="canvas"></canvas>
+    </div>
+</div>
+    @Scripts.Render("~/Scripts/jquery-1.9.1.min.js")
+    @Scripts.Render("~/Scripts/easeljs-0.8.0.combined.js")
+    
+    @Scripts.Render("~/Scripts/CustomScripts/GameScript.js")
+    @Scripts.Render("~/Scripts/CustomScripts/GameScriptAjax.js")

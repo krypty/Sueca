@@ -15,15 +15,25 @@ namespace SuecaWebClient.Helper
 
         public SuecaServiceHelper()
         {
-            client = new SuecaClient(new System.ServiceModel.InstanceContext(new InterfaceService()));
+            //client = new SuecaClient(new System.ServiceModel.InstanceContext(new InterfaceService()));
             
         }
 
         public String joinRoom(string roomId, string password = "")
         {
-            
-            string playerToken = client.JoinRoom(roomId, password);
-            return playerToken;
+            if (roomId != "" && client != null)
+            {
+                try
+                {
+                    string playerToken = client.JoinRoom(roomId, password, false);
+                    return playerToken;
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
+            return "";
         }
 
 
@@ -32,13 +42,25 @@ namespace SuecaWebClient.Helper
         {
             //SuecaService.Room.StateRoom
             //client.JoinRoom();
-            
-            Room r = client.GetRoom(roomId);
-            if (r != null)
-                return new RoomInfoModel(r.Name, playerToken, r.listPlayers);
-            else
-                return null;
+            if (roomId != "" && client != null)
+            {
+                try
+                {
 
+
+                    Room r = client.GetRoom(roomId);
+                    if (r != null)
+                        return new RoomInfoModel(r.Name, playerToken, r.listPlayers);
+                    else
+                        return null;
+
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
+            return null;
         }
 
         public void sendClientReady(bool state)

@@ -9,19 +9,19 @@
   <xs:complexType name="Room">
     <xs:sequence>
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="RoomState" type="tns:StateRoom" />
+      <xs:element minOccurs="0" name="RoomState" type="tns:Room.StateRoom" />
       <xs:element minOccurs="0" name="listPlayers" nillable="true" type="tns:ArrayOfPlayer" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Room" nillable="true" type="tns:Room" />
-  <xs:simpleType name="StateRoom">
+  <xs:simpleType name="Room.StateRoom">
     <xs:restriction base="xs:string">
       <xs:enumeration value="WAITING_READY" />
       <xs:enumeration value="GAME_IN_PROGRESS" />
       <xs:enumeration value="END_GAME" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="StateRoom" nillable="true" type="tns:StateRoom" />
+  <xs:element name="Room.StateRoom" nillable="true" type="tns:Room.StateRoom" />
   <xs:complexType name="ArrayOfPlayer">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Player" nillable="true" type="tns:Player" />

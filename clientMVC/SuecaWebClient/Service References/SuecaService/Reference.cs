@@ -26,7 +26,7 @@ namespace SuecaWebClient.SuecaService {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private SuecaWebClient.SuecaService.StateRoom RoomStateField;
+        private SuecaWebClient.SuecaService.Room.StateRoom RoomStateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private SuecaWebClient.SuecaService.Player[] listPlayersField;
@@ -55,7 +55,7 @@ namespace SuecaWebClient.SuecaService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public SuecaWebClient.SuecaService.StateRoom RoomState {
+        public SuecaWebClient.SuecaService.Room.StateRoom RoomState {
             get {
                 return this.RoomStateField;
             }
@@ -88,20 +88,20 @@ namespace SuecaWebClient.SuecaService {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="StateRoom", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
-    public enum StateRoom : int {
         
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        WAITING_READY = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        GAME_IN_PROGRESS = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        END_GAME = 2,
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="Room.StateRoom", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+        public enum StateRoom : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            WAITING_READY = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            GAME_IN_PROGRESS = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            END_GAME = 2,
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -401,10 +401,10 @@ namespace SuecaWebClient.SuecaService {
         System.Threading.Tasks.Task<string> CreateRoomAsync(string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/JoinRoom", ReplyAction="http://tempuri.org/Sueca/JoinRoomResponse")]
-        string JoinRoom(string roomName, string password);
+        string JoinRoom(string roomName, string password, bool isUsingCallback);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/JoinRoom", ReplyAction="http://tempuri.org/Sueca/JoinRoomResponse")]
-        System.Threading.Tasks.Task<string> JoinRoomAsync(string roomName, string password);
+        System.Threading.Tasks.Task<string> JoinRoomAsync(string roomName, string password, bool isUsingCallback);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/SendReady", ReplyAction="http://tempuri.org/Sueca/SendReadyResponse")]
         void SendReady(string playerToken, bool isReady);
@@ -486,12 +486,12 @@ namespace SuecaWebClient.SuecaService {
             return base.Channel.CreateRoomAsync(password);
         }
         
-        public string JoinRoom(string roomName, string password) {
-            return base.Channel.JoinRoom(roomName, password);
+        public string JoinRoom(string roomName, string password, bool isUsingCallback) {
+            return base.Channel.JoinRoom(roomName, password, isUsingCallback);
         }
         
-        public System.Threading.Tasks.Task<string> JoinRoomAsync(string roomName, string password) {
-            return base.Channel.JoinRoomAsync(roomName, password);
+        public System.Threading.Tasks.Task<string> JoinRoomAsync(string roomName, string password, bool isUsingCallback) {
+            return base.Channel.JoinRoomAsync(roomName, password, isUsingCallback);
         }
         
         public void SendReady(string playerToken, bool isReady) {
