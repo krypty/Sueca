@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace suecaWPFClient
+namespace suecaWPFClient.GamePanes
 {
     public enum GameState
     {
@@ -30,6 +30,8 @@ namespace suecaWPFClient
             {
                 Console.WriteLine("GameStatePaneA 2");
                 OnStateChanged(state);
+
+                //TODO: if GameState.ListRoom --> Remove content on ServiceManager ?
             }
         }
 

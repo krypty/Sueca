@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using suecaWPFClient.ServiceReference1;
 
-namespace suecaWPFClient
+namespace suecaWPFClient.GamePanes
 {
     /// <summary>
     /// Interaction logic for RoomPane.xaml
@@ -17,6 +17,7 @@ namespace suecaWPFClient
         {
             InitializeComponent();
             ServiceManager.GetInstance().OnGameInfoUpdated += GameInfoUpdated;
+            RefreshRoomList();
         }
 
         private void BtnCreateRoom_Click(object sender, RoutedEventArgs e)
@@ -36,9 +37,9 @@ namespace suecaWPFClient
             RefreshRoomList();
         }
 
-        private void GameInfoUpdated(string message)
+        private void GameInfoUpdated(GameInfo gameInfo)
         {
-            MessageBox.Show("message: " + message);
+            Console.WriteLine("RoomPane: gameinfo: " + gameInfo.ToString());
         }
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
@@ -46,10 +47,10 @@ namespace suecaWPFClient
             RefreshRoomList();
         }
 
-        private void RefreshRoomList()
+        private async void RefreshRoomList()
         {
             RoomListView.Items.Clear();
-            _rooms = ServiceManager.GetInstance().ListRoom();
+            _rooms = await ServiceManager.GetInstance().ListRoom();
 
             foreach (var room in _rooms)
             {
@@ -84,14 +85,15 @@ namespace suecaWPFClient
 
             Console.WriteLine("pass: " + roomPassword);
             var playerID = ServiceManager.GetInstance().JoinRoom(room.Name, roomPassword);
+            ServiceManager.GetInstance().PlayerToken = playerID;
 
             if (playerID == null)
             {
-                MessageBox.Show("Invalid password");
+                MessageBox.Show("Mot de passe invalide, essayez encore");
                 return;
             }
 
-            MessageBox.Show("Room joined. PlayerID: " + playerID);
+            Console.WriteLine("Room joined. PlayerID: " + playerID);
 
             // switch the view to waiting room
             ChangeState(GameState.WaitingRoom);
@@ -99,7 +101,8 @@ namespace suecaWPFClient
 
         protected override void Quit()
         {
-            throw new NotImplementedException();
+            //TODO: see if it's necessary to stop listening to callback ?
+            ChangeState(GameState.ListRoom);
         }
     }
 }

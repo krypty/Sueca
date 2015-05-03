@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
+using suecaWPFClient.ServiceReference1;
 
-namespace suecaWPFClient
+namespace suecaWPFClient.Cards
 {
     class CardImageFactory
     {
@@ -11,25 +12,22 @@ namespace suecaWPFClient
         public static Card CreateRandomCard()
         {
             Array values = Enum.GetValues(typeof(CardValue));
-            CardValue randomCardValue;
-            do
-            {
-                randomCardValue = (CardValue)values.GetValue(random.Next(values.Length));
-            } while (randomCardValue.Equals(CardValue.None));
-
+            CardValue randomCardValue = (CardValue)values.GetValue(random.Next(values.Length));
             return CreateCard(CardColor.Hearts, randomCardValue);
         }
 
         public static Card CreateFaceDownCard()
         {
-            return new Card(CardColor.None, CardValue.None, RootImagesPath + "DosCarte.png");
+            //return new Card(CardColor.None, CardValue.None, RootImagesPath + "DosCarte.png");
+            return new Card(CardColor.None, CardValue.Two, RootImagesPath + "DosCarte.png");
         }
 
         public static Card CreateCard(CardColor cardColor, CardValue cardValue)
         {
-            if (cardColor.Equals(CardColor.None) || cardValue.Equals(CardValue.None))
+            //if (cardColor.Equals(CardColor.None) || cardValue.Equals(CardValue.None))
+            if (cardColor.Equals(CardColor.None))
             {
-                throw new Exception("Impossible to create face down card here. Please use CreateFaceDownCard() method.");
+                throw new ArgumentException("Impossible to create face down card here. Please use CreateFaceDownCard() method.");
             }
 
             StringBuilder builder = new StringBuilder();

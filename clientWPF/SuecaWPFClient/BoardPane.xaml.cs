@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ServiceModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using suecaWPFClient.Cards;
+using suecaWPFClient.ServiceReference1;
+using Card = suecaWPFClient.Cards.Card;
 
 namespace suecaWPFClient
 {
     // callback freezes if true
     [CallbackBehavior(UseSynchronizationContext = false)]
-    public partial class BoardPane: UserControl//, SuecaCallback
+    public partial class BoardPane : UserControl//, SuecaCallback
     {
         //DuplexChannelFactory<ISuecaContract> _channelFactory;
         //ISuecaContract _suecaClient;
@@ -19,20 +23,25 @@ namespace suecaWPFClient
 
         private const int MaxCard = 10;
         private List<Card> _listCards = new List<Card>();
+        private string _playerToken;
+        private Card _firstCardPlayerThisTurn;
 
         public BoardPane()
         {
             InitializeComponent();
-            //            _suecaClient = new SuecaClient(new InstanceContext(this));
             ResetCards();
             DrawAllPlayersCards();
 
-            ServiceManager.GetInstance().OnGameInfoUpdated += ServiceManagerOnOnGameInfoUpdated;
+            ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
+            _playerToken = ServiceManager.GetInstance().PlayerToken;
         }
 
-        private void ServiceManagerOnOnGameInfoUpdated(string message)
+        private void OnGameInfoUpdated(GameInfo gameInfo)
         {
-            MessageBox.Show("MainWindow: " + message);
+            Console.WriteLine("MainWindow: gameinfo" + gameInfo.ToString());
+            _firstCardPlayerThisTurn = CardTools.FromService(gameInfo.ListCardsPlayed[0]);
+
+            //TODO: populate _listCard with cards from gameInfo
         }
 
         private void ResetCards()
@@ -46,47 +55,11 @@ namespace suecaWPFClient
             AddCardsInGameBoard();
         }
 
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void SetBoardEnabled(bool enabled)
         {
-            // create instance
-            //_channelFactory = new DuplexChannelFactory<ISuecaContract>(this, "configClient");
-            //_suecaClient = _channelFactory.CreateChannel();
-            Console.WriteLine("Client started");
-
-            // create room
-            Console.WriteLine("create room...");
-            //String roomName = _suecaClient.CreateRoom("no_password");
-            String roomName = ServiceManager.GetInstance().CreateRoom("no_password");
-            MessageBox.Show("roomName: " + roomName);
-
-            // join it 
-            Console.WriteLine("Join room");
-            //String playerToken = _suecaClient.JoinRoom(roomName, "other_password_that_fail");
-            String playerToken = ServiceManager.GetInstance().JoinRoom(roomName, "other_password_that_fail");
-            Console.WriteLine("[client] playerToken: " + playerToken);
+            IsEnabled = enabled;
+            DisablingRectangle.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
         }
-
-        private void btnListRoom_Click(object sender, RoutedEventArgs e)
-        {
-            //            var listRoom = _suecaClient.ListRoom();
-            var listRoom = ServiceManager.GetInstance().ListRoom();
-
-            StringBuilder builder = new StringBuilder();
-
-            foreach (var room in listRoom)
-            {
-                builder.AppendLine(room.ToString());
-            }
-
-            MessageBox.Show(builder.ToString());
-        }
-
-        //// callback
-        //public void GameStarted(string message)
-        //{
-        //    Console.WriteLine("[Client] server says: " + message);
-        //}
 
         private void Ellipse_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -181,13 +154,24 @@ namespace suecaWPFClient
         {
             Console.WriteLine("hello from custom card !");
             Card card = (Card)sender;
-            MessageBox.Show(card.ToString());
+            Console.WriteLine(card.ToString());
 
             bool removed = _listCards.Remove(card);
             SouthPlayerCanvas.Children.Remove(card);
             ReplaceLaidCard(card);
             Console.WriteLine("card removed ? " + removed);
             DrawAllPlayersCards();
+
+            if (IsCardValid(card))
+            {
+                ServiceManager.GetInstance().PlayCard(_playerToken, card);
+            }
+
+        }
+
+        private bool IsCardValid(Card card)
+        {
+            return (card.CardColor == _firstCardPlayerThisTurn.CardColor || !_listCards.Exists(c => c.CardColor == _firstCardPlayerThisTurn.CardColor));
         }
 
         private void ReplaceLaidCard(Card card)

@@ -7,20 +7,34 @@ namespace SuecaContracts
     public class GameInfo
     {
         [DataMember]
-        public string PlayerToken { get; set; }
+        public Player Player { get; set; }
+
         [DataMember]
         public int NumberPlayerToPlay { get; set; }
+
         [DataMember]
         public LinkedList<Card> ListCardsPlayed { get; set; }
-        [DataMember]
-        public int NumberCardsWin { get; set; }
 
-        public GameInfo(string playerToken, int numberCardsWin, int numberPlayerToPlay) 
+        [DataMember]
+        public List<Player> ListPlayer { get; set; }
+
+        [DataMember]
+        public Card[] tabCards;
+
+        [DataMember]
+        public Card FirstCard {get;set;}
+
+        public GameInfo(Player player, List<Player> listPlayers, int numberPlayerToPlay) 
         {
-            PlayerToken = playerToken;
-            ListCardsPlayed = new LinkedList<Card>();
-            NumberCardsWin = numberCardsWin;
-            this.NumberPlayerToPlay = numberPlayerToPlay;
+            //User for who the gameinfo is
+            Player = player;
+
+            //List of other players
+            ListPlayer = listPlayers;
+            ListPlayer.Remove(Player);
+
+            NumberPlayerToPlay = numberPlayerToPlay;
         }
+
     }
 }

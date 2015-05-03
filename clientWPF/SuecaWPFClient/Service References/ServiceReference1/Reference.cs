@@ -8,36 +8,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Threading.Tasks;
-
 namespace suecaWPFClient.ServiceReference1 {
-    [DebuggerStepThrough()]
-    [GeneratedCode("System.Runtime.Serialization", "4.0.0.0")]
-    [DataContract(Name="Room", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
-    [Serializable()]
-    public partial class Room : object, IExtensibleDataObject, INotifyPropertyChanged {
+    using System.Runtime.Serialization;
+    using System;
+    
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Room", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    [System.SerializableAttribute()]
+    public partial class Room : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
-        [NonSerialized()]
-        private ExtensionDataObject extensionDataField;
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
-        [OptionalField()]
-        private string PasswordField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.StateRoom RoomStateField;
         
-        [OptionalField()]
-        private Player[] listPlayersField;
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.Player[] listPlayersField;
         
-        [Browsable(false)]
-        public ExtensionDataObject ExtensionData {
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
                 return this.extensionDataField;
             }
@@ -46,78 +41,95 @@ namespace suecaWPFClient.ServiceReference1 {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Name {
             get {
                 return this.NameField;
             }
             set {
-                if ((ReferenceEquals(this.NameField, value) != true)) {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
                 }
             }
         }
         
-        [DataMember()]
-        public string Password {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.StateRoom RoomState {
             get {
-                return this.PasswordField;
+                return this.RoomStateField;
             }
             set {
-                if ((ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
+                if ((this.RoomStateField.Equals(value) != true)) {
+                    this.RoomStateField = value;
+                    this.RaisePropertyChanged("RoomState");
                 }
             }
         }
         
-        [DataMember()]
-        public Player[] listPlayers {
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.Player[] listPlayers {
             get {
                 return this.listPlayersField;
             }
             set {
-                if ((ReferenceEquals(this.listPlayersField, value) != true)) {
+                if ((object.ReferenceEquals(this.listPlayersField, value) != true)) {
                     this.listPlayersField = value;
                     this.RaisePropertyChanged("listPlayers");
                 }
             }
         }
         
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
-            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
-                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
     
-    [DebuggerStepThrough()]
-    [GeneratedCode("System.Runtime.Serialization", "4.0.0.0")]
-    [DataContract(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
-    [Serializable()]
-    public partial class Player : object, IExtensibleDataObject, INotifyPropertyChanged {
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StateRoom", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    public enum StateRoom : int {
         
-        [NonSerialized()]
-        private ExtensionDataObject extensionDataField;
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WAITING_READY = 0,
         
-        [OptionalField()]
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        GAME_IN_PROGRESS = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        END_GAME = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    [System.SerializableAttribute()]
+    public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberTurnField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int holdingCardsField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool isReadyField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int takenCardsField;
         
-        [OptionalField()]
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string tokenField;
         
-        [Browsable(false)]
-        public ExtensionDataObject ExtensionData {
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
                 return this.extensionDataField;
             }
@@ -126,7 +138,20 @@ namespace suecaWPFClient.ServiceReference1 {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NumberTurn {
+            get {
+                return this.NumberTurnField;
+            }
+            set {
+                if ((this.NumberTurnField.Equals(value) != true)) {
+                    this.NumberTurnField = value;
+                    this.RaisePropertyChanged("NumberTurn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int holdingCards {
             get {
                 return this.holdingCardsField;
@@ -139,7 +164,7 @@ namespace suecaWPFClient.ServiceReference1 {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool isReady {
             get {
                 return this.isReadyField;
@@ -152,7 +177,7 @@ namespace suecaWPFClient.ServiceReference1 {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public int takenCards {
             get {
                 return this.takenCardsField;
@@ -165,90 +190,323 @@ namespace suecaWPFClient.ServiceReference1 {
             }
         }
         
-        [DataMember()]
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string token {
             get {
                 return this.tokenField;
             }
             set {
-                if ((ReferenceEquals(this.tokenField, value) != true)) {
+                if ((object.ReferenceEquals(this.tokenField, value) != true)) {
                     this.tokenField = value;
                     this.RaisePropertyChanged("token");
                 }
             }
         }
         
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
-            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
-                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
     
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    [ServiceContract(ConfigurationName="ServiceReference1.Sueca", CallbackContract=typeof(SuecaCallback), SessionMode=SessionMode.Required)]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardColor", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    public enum CardColor : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        None = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Spades = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Diamonds = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Clubs = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Hearts = 4,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardValue", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    public enum CardValue : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Two = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Three = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Four = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Five = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Six = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Seven = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Jack = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Queen = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        King = 8,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Ace = 9,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GameInfo", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    [System.SerializableAttribute()]
+    public partial class GameInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.Card[] ListCardsPlayedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.Player[] ListPlayerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberPlayerToPlayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.Player PlayerField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.Card[] ListCardsPlayed {
+            get {
+                return this.ListCardsPlayedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListCardsPlayedField, value) != true)) {
+                    this.ListCardsPlayedField = value;
+                    this.RaisePropertyChanged("ListCardsPlayed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.Player[] ListPlayer {
+            get {
+                return this.ListPlayerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListPlayerField, value) != true)) {
+                    this.ListPlayerField = value;
+                    this.RaisePropertyChanged("ListPlayer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NumberPlayerToPlay {
+            get {
+                return this.NumberPlayerToPlayField;
+            }
+            set {
+                if ((this.NumberPlayerToPlayField.Equals(value) != true)) {
+                    this.NumberPlayerToPlayField = value;
+                    this.RaisePropertyChanged("NumberPlayerToPlay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.Player Player {
+            get {
+                return this.PlayerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerField, value) != true)) {
+                    this.PlayerField = value;
+                    this.RaisePropertyChanged("Player");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Card", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+    [System.SerializableAttribute()]
+    public partial class Card : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.CardColor ColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.CardValue ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.CardColor Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((this.ColorField.Equals(value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.CardValue Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((this.ValueField.Equals(value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.Sueca", CallbackContract=typeof(suecaWPFClient.ServiceReference1.SuecaCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface Sueca {
         
-        [OperationContract(Action="http://tempuri.org/Sueca/CreateRoom", ReplyAction="http://tempuri.org/Sueca/CreateRoomResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/CreateRoom", ReplyAction="http://tempuri.org/Sueca/CreateRoomResponse")]
         string CreateRoom(string password);
         
-        [OperationContract(Action="http://tempuri.org/Sueca/CreateRoom", ReplyAction="http://tempuri.org/Sueca/CreateRoomResponse")]
-        Task<string> CreateRoomAsync(string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/CreateRoom", ReplyAction="http://tempuri.org/Sueca/CreateRoomResponse")]
+        System.Threading.Tasks.Task<string> CreateRoomAsync(string password);
         
-        [OperationContract(Action="http://tempuri.org/Sueca/JoinRoom", ReplyAction="http://tempuri.org/Sueca/JoinRoomResponse")]
-        string JoinRoom(string roomName, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/JoinRoom", ReplyAction="http://tempuri.org/Sueca/JoinRoomResponse")]
+        string JoinRoom(string roomName, string password, bool isUsingCallback);
         
-        [OperationContract(Action="http://tempuri.org/Sueca/JoinRoom", ReplyAction="http://tempuri.org/Sueca/JoinRoomResponse")]
-        Task<string> JoinRoomAsync(string roomName, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/JoinRoom", ReplyAction="http://tempuri.org/Sueca/JoinRoomResponse")]
+        System.Threading.Tasks.Task<string> JoinRoomAsync(string roomName, string password, bool isUsingCallback);
         
-        [OperationContract(Action="http://tempuri.org/Sueca/SendReady", ReplyAction="http://tempuri.org/Sueca/SendReadyResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/SendReady", ReplyAction="http://tempuri.org/Sueca/SendReadyResponse")]
         void SendReady(string playerToken, bool isReady);
         
-        [OperationContract(Action="http://tempuri.org/Sueca/SendReady", ReplyAction="http://tempuri.org/Sueca/SendReadyResponse")]
-        Task SendReadyAsync(string playerToken, bool isReady);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/SendReady", ReplyAction="http://tempuri.org/Sueca/SendReadyResponse")]
+        System.Threading.Tasks.Task SendReadyAsync(string playerToken, bool isReady);
         
-        [OperationContract(Action="http://tempuri.org/Sueca/ListRoom", ReplyAction="http://tempuri.org/Sueca/ListRoomResponse")]
-        Room[] ListRoom();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/ListRoom", ReplyAction="http://tempuri.org/Sueca/ListRoomResponse")]
+        suecaWPFClient.ServiceReference1.Room[] ListRoom();
         
-        [OperationContract(Action="http://tempuri.org/Sueca/ListRoom", ReplyAction="http://tempuri.org/Sueca/ListRoomResponse")]
-        Task<Room[]> ListRoomAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/ListRoom", ReplyAction="http://tempuri.org/Sueca/ListRoomResponse")]
+        System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.Room[]> ListRoomAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/PlayCard", ReplyAction="http://tempuri.org/Sueca/PlayCardResponse")]
+        void PlayCard(string playerToken, suecaWPFClient.ServiceReference1.CardColor color, suecaWPFClient.ServiceReference1.CardValue value);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/PlayCard", ReplyAction="http://tempuri.org/Sueca/PlayCardResponse")]
+        System.Threading.Tasks.Task PlayCardAsync(string playerToken, suecaWPFClient.ServiceReference1.CardColor color, suecaWPFClient.ServiceReference1.CardValue value);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetRoom", ReplyAction="http://tempuri.org/Sueca/GetRoomResponse")]
+        suecaWPFClient.ServiceReference1.Room GetRoom(string roomName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetRoom", ReplyAction="http://tempuri.org/Sueca/GetRoomResponse")]
+        System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.Room> GetRoomAsync(string roomName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetGameInfo", ReplyAction="http://tempuri.org/Sueca/GetGameInfoResponse")]
+        suecaWPFClient.ServiceReference1.GameInfo GetGameInfo(string playerToken, string roomId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetGameInfo", ReplyAction="http://tempuri.org/Sueca/GetGameInfoResponse")]
+        System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.GameInfo> GetGameInfoAsync(string playerToken, string roomId);
     }
     
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface SuecaCallback {
         
-        [OperationContract(IsOneWay=true, Action="http://tempuri.org/Sueca/GameStarted")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/GameStarted")]
         void GameStarted(string message);
-    }
-    
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    public interface SuecaChannel : Sueca, IClientChannel {
-    }
-    
-    [DebuggerStepThrough()]
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    public partial class SuecaClient : DuplexClientBase<Sueca>, Sueca {
         
-        public SuecaClient(InstanceContext callbackInstance) : 
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/RoomUpdated")]
+        void RoomUpdated(suecaWPFClient.ServiceReference1.Room room);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/GameInfoUpdated")]
+        void GameInfoUpdated(suecaWPFClient.ServiceReference1.GameInfo gameInfo);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface SuecaChannel : suecaWPFClient.ServiceReference1.Sueca, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SuecaClient : System.ServiceModel.DuplexClientBase<suecaWPFClient.ServiceReference1.Sueca>, suecaWPFClient.ServiceReference1.Sueca {
+        
+        public SuecaClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
         }
         
-        public SuecaClient(InstanceContext callbackInstance, string endpointConfigurationName) : 
+        public SuecaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
                 base(callbackInstance, endpointConfigurationName) {
         }
         
-        public SuecaClient(InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+        public SuecaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public SuecaClient(InstanceContext callbackInstance, string endpointConfigurationName, EndpointAddress remoteAddress) : 
+        public SuecaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public SuecaClient(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress) : 
+        public SuecaClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
         }
         
@@ -256,32 +514,56 @@ namespace suecaWPFClient.ServiceReference1 {
             return base.Channel.CreateRoom(password);
         }
         
-        public Task<string> CreateRoomAsync(string password) {
+        public System.Threading.Tasks.Task<string> CreateRoomAsync(string password) {
             return base.Channel.CreateRoomAsync(password);
         }
         
-        public string JoinRoom(string roomName, string password) {
-            return base.Channel.JoinRoom(roomName, password);
+        public string JoinRoom(string roomName, string password, bool isUsingCallback) {
+            return base.Channel.JoinRoom(roomName, password, isUsingCallback);
         }
         
-        public Task<string> JoinRoomAsync(string roomName, string password) {
-            return base.Channel.JoinRoomAsync(roomName, password);
+        public System.Threading.Tasks.Task<string> JoinRoomAsync(string roomName, string password, bool isUsingCallback) {
+            return base.Channel.JoinRoomAsync(roomName, password, isUsingCallback);
         }
         
         public void SendReady(string playerToken, bool isReady) {
             base.Channel.SendReady(playerToken, isReady);
         }
         
-        public Task SendReadyAsync(string playerToken, bool isReady) {
+        public System.Threading.Tasks.Task SendReadyAsync(string playerToken, bool isReady) {
             return base.Channel.SendReadyAsync(playerToken, isReady);
         }
         
-        public Room[] ListRoom() {
+        public suecaWPFClient.ServiceReference1.Room[] ListRoom() {
             return base.Channel.ListRoom();
         }
         
-        public Task<Room[]> ListRoomAsync() {
+        public System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.Room[]> ListRoomAsync() {
             return base.Channel.ListRoomAsync();
+        }
+        
+        public void PlayCard(string playerToken, suecaWPFClient.ServiceReference1.CardColor color, suecaWPFClient.ServiceReference1.CardValue value) {
+            base.Channel.PlayCard(playerToken, color, value);
+        }
+        
+        public System.Threading.Tasks.Task PlayCardAsync(string playerToken, suecaWPFClient.ServiceReference1.CardColor color, suecaWPFClient.ServiceReference1.CardValue value) {
+            return base.Channel.PlayCardAsync(playerToken, color, value);
+        }
+        
+        public suecaWPFClient.ServiceReference1.Room GetRoom(string roomName) {
+            return base.Channel.GetRoom(roomName);
+        }
+        
+        public System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.Room> GetRoomAsync(string roomName) {
+            return base.Channel.GetRoomAsync(roomName);
+        }
+        
+        public suecaWPFClient.ServiceReference1.GameInfo GetGameInfo(string playerToken, string roomId) {
+            return base.Channel.GetGameInfo(playerToken, roomId);
+        }
+        
+        public System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.GameInfo> GetGameInfoAsync(string playerToken, string roomId) {
+            return base.Channel.GetGameInfoAsync(playerToken, roomId);
         }
     }
 }

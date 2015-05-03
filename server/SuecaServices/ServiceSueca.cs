@@ -49,23 +49,28 @@ namespace SuecaServices
             //Room room = this._listRooms.Find(r => r.Name == roomName);
             if (currentRoom != null)
             {
-                if (!currentRoom.Password.Equals(password))
-                {
-                    Console.WriteLine("[Join room] invalid password");
-                    return null;
+                if(currentRoom.CountPlayers() < 4)
+                { 
+                    if (!currentRoom.Password.Equals(password))
+                    {
+                        Console.WriteLine("[Join room] invalid password");
+                        return null;
+                    }
+                    else
+                    {
+                        playerToken = Guid.NewGuid().ToString();
+
+                        Player newPlayer = new Player(playerToken);
+                        if(isUsingCallback)
+                            newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
+                        currentRoom.AddPlayer(newPlayer);
+                    }
                 }
                 else
                 {
-                    playerToken = Guid.NewGuid().ToString();
-
-                    Player newPlayer = new Player(playerToken);
-                    if(isUsingCallback)
-                        newPlayer.Callback = OperationContext.Current.GetCallbackChannel<ISuecaCallbackContract>();
-                    currentRoom.AddPlayer(newPlayer);
+                    return "The game is full";
                 }
             }
-
-            
 
             return playerToken;
         }
@@ -79,11 +84,19 @@ namespace SuecaServices
         public Room GetRoom(string roomName)
         {
             Room currentRoom;
-            if (!dictRoom.TryGetValue(roomName, out currentRoom))
+            try
+            {
+                if (!dictRoom.TryGetValue(roomName, out currentRoom))
+                {
+                    return null;
+                }
+                return currentRoom;
+                
+            }
+            catch(Exception e)
             {
                 return null;
             }
-            return currentRoom;
         }
 
 
@@ -121,6 +134,12 @@ namespace SuecaServices
 
         public GameInfo GetGameInfo(string playerToken, string roomId)
         {
+            Room currentRoom = GetRoomFromPlayerToken(playerToken);
+
+            if(currentRoom != null && currentRoom.Name == roomId)
+            {
+                return currentRoom.getGameInfoForPlayerToken(playerToken);
+            }
             return null;
         }
     }

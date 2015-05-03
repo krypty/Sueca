@@ -20,13 +20,13 @@ namespace SuecaContracts
         //Dictionnary to known who's player have this card on a turn
         private Dictionary<Card, string> dictCardPlayerForTurn;
 
-        public Dictionary<ISuecaCallbackContract, GameInfo> DictGameInfoPlayer { get; set; }
+        public Dictionary<string, GameInfo> DictGameInfoPlayer { get; set; }
 
         public GameInfoServer()
         {
             listCard = new List<Card>();
             dictPlayers = new Dictionary<string, Player>();
-            DictGameInfoPlayer = new Dictionary<ISuecaCallbackContract, GameInfo>();
+            DictGameInfoPlayer = new Dictionary<string, GameInfo>();
 
             List<CardColor> listColor = new List<CardColor>();
             
@@ -35,9 +35,11 @@ namespace SuecaContracts
             {
                 foreach(CardValue value in Enum.GetValues(typeof(CardValue)))
                 {
-                    listCard.Add(new Card(color,value));
+                    if(color != CardColor.None & value != CardValue.None)
+                        listCard.Add(new Card(color,value));
                 }
-                listColor.Add(color);
+                if(color != CardColor.None)
+                    listColor.Add(color);
             }
             mix(listCard);
 
@@ -204,32 +206,52 @@ namespace SuecaContracts
             
         }
 
-        public void CreateGameInfoClient(List<Player> listPlayer)
+        public void CreateGameInfoClient()
         {
             DictGameInfoPlayer.Clear();
 
-            foreach(Player p in listPlayer)
+            foreach(Player p in dictPlayers.Values)
             {
-                DictGameInfoPlayer.Add(p.Callback, new GameInfo(p.Token,p.ListCardsWin.Count, numberPlayerTurn));
+                GameInfo game = new GameInfo(p, dictPlayers.Values.ToList(), numberPlayerTurn);
+
+                //If at least one card is put on the table, get the first to know the color for others players
+                if (listCardsTurn.Count > 0)
+                    game.FirstCard = listCardsTurn.First.Value;
+
+                game.ListCardsPlayed = listCardsTurn;
+
+                DictGameInfoPlayer.Add(p.Token, game);
             }
 
+
             new Thread(new ParameterizedThreadStart(
-                delegate(object room)
+                delegate(object dictGameInfo)
                 {
-                    Dictionary<ISuecaCallbackContract,GameInfo> dict = room as Dictionary<ISuecaCallbackContract,GameInfo>;
+                    Thread.Sleep(1000);
 
-                    if(dict != null)
-                    {
-                        foreach(ISuecaCallbackContract callbak in dict.Keys)
-                        {
-                            GameInfo gameInfo;
-
-                            if(dict.TryGetValue(callbak,out gameInfo))
-                                callbak.GameInfoUpdated(gameInfo);
-                        }
-                    }
+                    Dictionary<string, GameInfo> dict = dictGameInfo as Dictionary<string, GameInfo>;
+                    
+                    callGameInfoClient(dict);
+                    
                 })
             ).Start(DictGameInfoPlayer);
+
+        }
+
+        private void callGameInfoClient(Dictionary<string,GameInfo> dict)
+        {
+            if (dict != null)
+            {
+                foreach (GameInfo game in dict.Values)
+                {
+                    ISuecaCallbackContract callback = game.Player.Callback;
+                    if(callback != null)
+                    {
+                        callback.GameInfoUpdated(game);
+                    }
+
+                }
+            }
         }
 
         private void EndOfGame()

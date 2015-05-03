@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace suecaWPFClient
+namespace suecaWPFClient.Cards
 {
     public class Card : Control
     {
@@ -14,13 +14,13 @@ namespace suecaWPFClient
             Width = 200;
         }
 
-        public CardColor CardColor { get; private set; }
-        public CardValue CardValue { get; private set; }
+        public ServiceReference1.CardColor CardColor { get; private set; }
+        public ServiceReference1.CardValue CardValue { get; private set; }
         public int OriginalZIndex { get; private set; }
 
         private readonly String _imagePath;
 
-        public Card(CardColor cardColor, CardValue cardValue, String imagePath)
+        public Card(ServiceReference1.CardColor cardColor, ServiceReference1.CardValue cardValue, String imagePath)
             : this()
         {
             CardColor = cardColor;

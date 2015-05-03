@@ -45,12 +45,16 @@ namespace SuecaContracts
         internal List<Card> ListCardsWin
         {
             get { return listCardsWin; }
-            set { listCardsWin = value; }
+            set { listCardsWin = value;
+            takenCards = listCardsWin.Count;
+            }
         }
         internal List<Card> ListCardsHolding
         {
             get { return listCardsHolding; }
-            set { listCardsHolding = value; }
+            set { listCardsHolding = value;
+            holdingCards = listCardsHolding.Count;
+            }
         }
 
         [DataMember]

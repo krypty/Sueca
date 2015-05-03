@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using suecaWPFClient.GamePanes;
 
 namespace suecaWPFClient
 {
@@ -16,6 +17,15 @@ namespace suecaWPFClient
         {
             InitializeComponent();
             _paneSwitcher = new PaneSwitcher(SideMenuPaneExpander);
+            _paneSwitcher.BoardEnabled += PaneSwitcherOnBoardEnabled;
+
+            MyBoard.SetBoardEnabled(false);
+
+        }
+
+        private void PaneSwitcherOnBoardEnabled(bool isEnabled)
+        {
+            MyBoard.SetBoardEnabled(isEnabled);
         }
 
         //TODO: remove me 

@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace SuecaContracts
 {
     public enum CardColor { None, Spades, Diamonds, Clubs, Hearts };
-    public enum CardValue { Two, Three, Four, Five, Six, Seven, Jack, Queen, King, Ace };
+    public enum CardValue { None, Two, Three, Four, Five, Six, Seven, Jack, Queen, King, Ace };
 
     [DataContract]
     public class Card
@@ -22,12 +22,13 @@ namespace SuecaContracts
             get { return realValue; }
             set { realValue = value; }
         }
-
+        [DataMember]
         public CardColor Color
         {
             get { return color; }
             set { color = value; }
         }
+        [DataMember]
         public CardValue Value
         {
             get { return value; }
