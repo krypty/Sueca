@@ -57,6 +57,8 @@ namespace SuecaContracts
             }
         }
 
+        public DateTime? TimeOutClientWeb {get;set;}
+
         [DataMember]
         public int NumberTurn
         {
@@ -70,6 +72,7 @@ namespace SuecaContracts
             this.ListCardsHolding = new List<Card>();
             this.ListCardsWin = new List<Card>();
             this.Callback = null;
+            this.TimeOutClientWeb = null;
         }
 
         public Player(string playerToken) : this()

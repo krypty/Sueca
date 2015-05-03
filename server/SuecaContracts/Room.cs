@@ -22,13 +22,17 @@ namespace SuecaContracts
     public class Room
     {
         private System.Timers.Timer timer;
+
+        public bool IsPlayerDisconnectDuringParty {get;set;}
+        public Player PlayerDisconnectDuringParty { get; set; }
+
+        private const int CHECK_WEB_CLIENT_TIME = 30000;
         private const int NB_PLAYER_PER_GAME = 4;
         public delegate void CallbackDelegate<T>(T t);
         public CallbackDelegate<string> gameStarted;
         public CallbackDelegate<Room> gameUpdated;
 
         private GameInfoServer gameInfo;
-        private DateTime timeoutClientWeb;
 
         [DataMember]
         public string Name { get; set; }
@@ -55,6 +59,7 @@ namespace SuecaContracts
 
             listPlayers = new List<Player>();
             RoomState = StateRoom.WAITING_READY;
+            IsPlayerDisconnectDuringParty = false;
         }
 
         public void AddPlayer(Player player)
@@ -184,22 +189,34 @@ namespace SuecaContracts
             ).Start(this);
             */
 
-            /*
-            timer = new System.Timers.Timer(2000);
+
+            //Timer to know if a web client is disconnect during the game
+            timer = new System.Timers.Timer(CHECK_WEB_CLIENT_TIME);
             timer.Elapsed += (sender, e) =>
             {
                 timer_Elapsed(this);
             };
             timer.Enabled = true;
-             * */
+             
         }
 
         void timer_Elapsed(Room room)
         {
-            if(DateTime.Now.Subtract(timeoutClientWeb).Milliseconds > 10000)
+            foreach(Player p in room.ListPlayers)
             {
-                //A web client is deconnect
+                if(p.TimeOutClientWeb.HasValue)
+                {
+                    Console.WriteLine("[server] check web client player " + p.Token);
+                    if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).Milliseconds > 10000)
+                    {
+                        //A web client is deconnect
+                        IsPlayerDisconnectDuringParty = true;
+                        PlayerDisconnectDuringParty = p;
+                    }
+                }
             }
+
+            Console.WriteLine("[server] check web client");
         }
 
         private void UpdateRoomForClient()
@@ -230,7 +247,7 @@ namespace SuecaContracts
             {
                 if (gameInfo.DictGameInfoPlayer.TryGetValue(playerToken, out gameInfoClient))
                 {
-                    timeoutClientWeb = DateTime.Now;
+                    gameInfoClient.Player.TimeOutClientWeb = DateTime.Now;
                     return gameInfoClient;
                 }
             }

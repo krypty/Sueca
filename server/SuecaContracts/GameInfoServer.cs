@@ -249,7 +249,6 @@ namespace SuecaContracts
                     {
                         callback.GameInfoUpdated(game);
                     }
-
                 }
             }
         }
