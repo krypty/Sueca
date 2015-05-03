@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using suecaWPFClient.Cards;
 using suecaWPFClient.ServiceReference1;
@@ -24,7 +26,9 @@ namespace suecaWPFClient
         private const int MaxCard = 10;
         private List<Card> _listCards = new List<Card>();
         private string _playerToken;
-        private Card _firstCardPlayerThisTurn;
+        private Card _firstCardPlayedThisTurn;
+
+        private bool _canPlayerPlay;
 
         public BoardPane()
         {
@@ -33,15 +37,38 @@ namespace suecaWPFClient
             DrawAllPlayersCards();
 
             ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
-            _playerToken = ServiceManager.GetInstance().PlayerToken;
+            _canPlayerPlay = false;
         }
 
         private void OnGameInfoUpdated(GameInfo gameInfo)
         {
             Console.WriteLine("MainWindow: gameinfo" + gameInfo.ToString());
-            _firstCardPlayerThisTurn = CardTools.FromService(gameInfo.ListCardsPlayed[0]);
+
+            if (gameInfo.FirstCard != null)
+            {
+                _firstCardPlayedThisTurn = CardTools.FromService(gameInfo.FirstCard);
+            }
 
             //TODO: populate _listCard with cards from gameInfo
+            UpdateOthersPlayersCards(gameInfo.ListPlayer.Where(p => p.NumberTurn != gameInfo.Player.NumberTurn)); // player North, West, East
+            //UpdatePlayerCards(gameInfo.CARTES_DU_JOUEUR); // player South
+
+
+            _canPlayerPlay = gameInfo.NumberPlayerToPlay == gameInfo.Player.NumberTurn;
+
+            YourTurnLabel.Visibility = _canPlayerPlay ? Visibility.Visible : Visibility.Hidden;
+
+            _playerToken = ServiceManager.GetInstance().PlayerToken;
+        }
+
+        private void UpdateOthersPlayersCards(IEnumerable<Player> players)
+        {
+            //TODO...
+        }
+
+        private void UpdatePlayerCards()
+        {
+            //TODO...
         }
 
         private void ResetCards()
@@ -162,16 +189,17 @@ namespace suecaWPFClient
             Console.WriteLine("card removed ? " + removed);
             DrawAllPlayersCards();
 
-            if (IsCardValid(card))
+            if (!_canPlayerPlay) return;
+
+            if (_firstCardPlayedThisTurn == null || IsCardValid(card))
             {
                 ServiceManager.GetInstance().PlayCard(_playerToken, card);
             }
-
         }
 
         private bool IsCardValid(Card card)
         {
-            return (card.CardColor == _firstCardPlayerThisTurn.CardColor || !_listCards.Exists(c => c.CardColor == _firstCardPlayerThisTurn.CardColor));
+            return (card.CardColor == _firstCardPlayedThisTurn.CardColor || !_listCards.Exists(c => c.CardColor == _firstCardPlayedThisTurn.CardColor));
         }
 
         private void ReplaceLaidCard(Card card)

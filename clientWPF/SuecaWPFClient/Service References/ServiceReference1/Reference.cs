@@ -26,7 +26,7 @@ namespace suecaWPFClient.ServiceReference1 {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private suecaWPFClient.ServiceReference1.StateRoom RoomStateField;
+        private suecaWPFClient.ServiceReference1.Room.StateRoom RoomStateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private suecaWPFClient.ServiceReference1.Player[] listPlayersField;
@@ -55,7 +55,7 @@ namespace suecaWPFClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public suecaWPFClient.ServiceReference1.StateRoom RoomState {
+        public suecaWPFClient.ServiceReference1.Room.StateRoom RoomState {
             get {
                 return this.RoomStateField;
             }
@@ -88,20 +88,20 @@ namespace suecaWPFClient.ServiceReference1 {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="StateRoom", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
-    public enum StateRoom : int {
         
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        WAITING_READY = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        GAME_IN_PROGRESS = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        END_GAME = 2,
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="Room.StateRoom", Namespace="http://schemas.datacontract.org/2004/07/SuecaContracts")]
+        public enum StateRoom : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            WAITING_READY = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            GAME_IN_PROGRESS = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            END_GAME = 2,
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -238,34 +238,37 @@ namespace suecaWPFClient.ServiceReference1 {
     public enum CardValue : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Two = 0,
+        None = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Three = 1,
+        Two = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Four = 2,
+        Three = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Five = 3,
+        Four = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Six = 4,
+        Five = 4,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Seven = 5,
+        Six = 5,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Jack = 6,
+        Seven = 6,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Queen = 7,
+        Jack = 7,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        King = 8,
+        Queen = 8,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Ace = 9,
+        King = 9,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Ace = 10,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -278,7 +281,13 @@ namespace suecaWPFClient.ServiceReference1 {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.Card FirstCardField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private suecaWPFClient.ServiceReference1.Card[] ListCardsPlayedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.Card[] ListCardsPlayerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private suecaWPFClient.ServiceReference1.Player[] ListPlayerField;
@@ -288,6 +297,9 @@ namespace suecaWPFClient.ServiceReference1 {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private suecaWPFClient.ServiceReference1.Player PlayerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.Card[] tabCardsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -300,6 +312,19 @@ namespace suecaWPFClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.Card FirstCard {
+            get {
+                return this.FirstCardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstCardField, value) != true)) {
+                    this.FirstCardField = value;
+                    this.RaisePropertyChanged("FirstCard");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public suecaWPFClient.ServiceReference1.Card[] ListCardsPlayed {
             get {
                 return this.ListCardsPlayedField;
@@ -308,6 +333,19 @@ namespace suecaWPFClient.ServiceReference1 {
                 if ((object.ReferenceEquals(this.ListCardsPlayedField, value) != true)) {
                     this.ListCardsPlayedField = value;
                     this.RaisePropertyChanged("ListCardsPlayed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.Card[] ListCardsPlayer {
+            get {
+                return this.ListCardsPlayerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListCardsPlayerField, value) != true)) {
+                    this.ListCardsPlayerField = value;
+                    this.RaisePropertyChanged("ListCardsPlayer");
                 }
             }
         }
@@ -347,6 +385,19 @@ namespace suecaWPFClient.ServiceReference1 {
                 if ((object.ReferenceEquals(this.PlayerField, value) != true)) {
                     this.PlayerField = value;
                     this.RaisePropertyChanged("Player");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.Card[] tabCards {
+            get {
+                return this.tabCardsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tabCardsField, value) != true)) {
+                    this.tabCardsField = value;
+                    this.RaisePropertyChanged("tabCards");
                 }
             }
         }
