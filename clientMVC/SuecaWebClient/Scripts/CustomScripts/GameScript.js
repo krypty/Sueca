@@ -209,7 +209,7 @@ var _playerNumer;
 
 var _roomPlaying = 2;
 var _roundColor = "Hearts";
-
+var _imReady = false;
 var _playerCards = [];
 
 

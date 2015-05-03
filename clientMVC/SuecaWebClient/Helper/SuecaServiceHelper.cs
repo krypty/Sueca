@@ -48,7 +48,7 @@ namespace SuecaWebClient.Helper
                 {
 
 
-                    Room r = client.GetRoom(roomId);
+                    Room r = client.GetRoom(playerToken, roomId);
                     if (r != null)
                     {
                         int roomState = 0;
@@ -81,10 +81,9 @@ namespace SuecaWebClient.Helper
             return null;
         }
 
-        public void sendClientReady(bool state)
+        public void sendClientReady(string playerToken, bool state)
         {
-
-
+            client.SendReady(playerToken,state);
         }
 
         

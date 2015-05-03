@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using SuecaWebClient.Models;
@@ -22,18 +24,37 @@ namespace SuecaWebClient.Controllers
 
             return Content("It works " + roomId + " | " + playerToken);
         }
+        [HttpPost]
+        public bool SendReady(string playerToken, bool state)
+        {
+            try
+            {
+                SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
+                serviceHelper.sendClientReady(playerToken, state);
+                return true;
+            }
+            catch (Exception e)
+            {
+            }
+
+            return false;
+
+
+        }
+
 
         [HttpPost]
         [CustomHandleErrorAttribute]
-        public JsonResult GetRoomState(string roomId = "", string playerToken = "")
+        public ActionResult GetRoomState(string roomId = "", string playerToken = "")
         {
             SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
             if (roomId != "" && playerToken != "")
             {
                 return Json(serviceHelper.getRoomState(roomId, playerToken));    
             }
-            throw new HttpException(404, "Bad Room");
-            
+            //throw new HttpException(404, "Bad Room");
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Content("Pas de room", MediaTypeNames.Text.Plain); ;
         }
         public class CustomHandleErrorAttribute : HandleErrorAttribute
         {

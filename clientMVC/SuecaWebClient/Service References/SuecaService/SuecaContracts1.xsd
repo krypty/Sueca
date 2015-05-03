@@ -68,6 +68,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="FirstCard" nillable="true" type="tns:Card" />
       <xs:element minOccurs="0" name="ListCardsPlayed" nillable="true" type="tns:ArrayOfCard" />
+      <xs:element minOccurs="0" name="ListCardsPlayer" nillable="true" type="tns:ArrayOfCard" />
       <xs:element minOccurs="0" name="ListPlayer" nillable="true" type="tns:ArrayOfPlayer" />
       <xs:element minOccurs="0" name="NumberPlayerToPlay" type="xs:int" />
       <xs:element minOccurs="0" name="Player" nillable="true" type="tns:Player" />

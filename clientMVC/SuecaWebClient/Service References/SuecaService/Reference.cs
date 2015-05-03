@@ -287,6 +287,9 @@ namespace SuecaWebClient.SuecaService {
         private SuecaWebClient.SuecaService.Card[] ListCardsPlayedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SuecaWebClient.SuecaService.Card[] ListCardsPlayerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private SuecaWebClient.SuecaService.Player[] ListPlayerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -330,6 +333,19 @@ namespace SuecaWebClient.SuecaService {
                 if ((object.ReferenceEquals(this.ListCardsPlayedField, value) != true)) {
                     this.ListCardsPlayedField = value;
                     this.RaisePropertyChanged("ListCardsPlayed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SuecaWebClient.SuecaService.Card[] ListCardsPlayer {
+            get {
+                return this.ListCardsPlayerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListCardsPlayerField, value) != true)) {
+                    this.ListCardsPlayerField = value;
+                    this.RaisePropertyChanged("ListCardsPlayer");
                 }
             }
         }
@@ -492,10 +508,10 @@ namespace SuecaWebClient.SuecaService {
         System.Threading.Tasks.Task PlayCardAsync(string playerToken, SuecaWebClient.SuecaService.CardColor color, SuecaWebClient.SuecaService.CardValue value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetRoom", ReplyAction="http://tempuri.org/Sueca/GetRoomResponse")]
-        SuecaWebClient.SuecaService.Room GetRoom(string roomName);
+        SuecaWebClient.SuecaService.Room GetRoom(string playerToken, string roomName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetRoom", ReplyAction="http://tempuri.org/Sueca/GetRoomResponse")]
-        System.Threading.Tasks.Task<SuecaWebClient.SuecaService.Room> GetRoomAsync(string roomName);
+        System.Threading.Tasks.Task<SuecaWebClient.SuecaService.Room> GetRoomAsync(string playerToken, string roomName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetGameInfo", ReplyAction="http://tempuri.org/Sueca/GetGameInfoResponse")]
         SuecaWebClient.SuecaService.GameInfo GetGameInfo(string playerToken, string roomId);
@@ -585,12 +601,12 @@ namespace SuecaWebClient.SuecaService {
             return base.Channel.PlayCardAsync(playerToken, color, value);
         }
         
-        public SuecaWebClient.SuecaService.Room GetRoom(string roomName) {
-            return base.Channel.GetRoom(roomName);
+        public SuecaWebClient.SuecaService.Room GetRoom(string playerToken, string roomName) {
+            return base.Channel.GetRoom(playerToken, roomName);
         }
         
-        public System.Threading.Tasks.Task<SuecaWebClient.SuecaService.Room> GetRoomAsync(string roomName) {
-            return base.Channel.GetRoomAsync(roomName);
+        public System.Threading.Tasks.Task<SuecaWebClient.SuecaService.Room> GetRoomAsync(string playerToken, string roomName) {
+            return base.Channel.GetRoomAsync(playerToken, roomName);
         }
         
         public SuecaWebClient.SuecaService.GameInfo GetGameInfo(string playerToken, string roomId) {
