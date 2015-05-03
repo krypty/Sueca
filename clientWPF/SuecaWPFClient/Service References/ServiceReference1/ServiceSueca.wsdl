@@ -88,6 +88,7 @@
       <xs:element name="GetRoom">
         <xs:complexType>
           <xs:sequence>
+            <xs:element minOccurs="0" name="playerToken" nillable="true" type="xs:string" />
             <xs:element minOccurs="0" name="roomName" nillable="true" type="xs:string" />
           </xs:sequence>
         </xs:complexType>

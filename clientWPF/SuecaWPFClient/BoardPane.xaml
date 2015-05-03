@@ -18,7 +18,6 @@
             <Canvas.Background>
                 <ImageBrush ImageSource="Images/GameBoard.png"></ImageBrush>
             </Canvas.Background>
-            <Ellipse Canvas.Left="30" Canvas.Top="50" Width="200" Height="200" Fill="Aqua" MouseDown="Ellipse_OnMouseDown" />
 
             <Label x:Name="YourTurnLabel" Content="C'est à vous de jouer !" FontSize="36" Canvas.Right="0" Canvas.Top="10" Visibility="Hidden"></Label>
 

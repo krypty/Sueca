@@ -33,8 +33,8 @@ namespace suecaWPFClient
         public BoardPane()
         {
             InitializeComponent();
-            ResetCards();
-            DrawAllPlayersCards();
+            //ResetCards();
+            //DrawAllPlayersCards();
 
             ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
             _canPlayerPlay = false;
@@ -51,7 +51,7 @@ namespace suecaWPFClient
 
             //TODO: populate _listCard with cards from gameInfo
             UpdateOthersPlayersCards(gameInfo.ListPlayer.Where(p => p.NumberTurn != gameInfo.Player.NumberTurn)); // player North, West, East
-            //UpdatePlayerCards(gameInfo.CARTES_DU_JOUEUR); // player South
+            UpdatePlayerCards(gameInfo.ListCardsPlayer); // player South
 
 
             _canPlayerPlay = gameInfo.NumberPlayerToPlay == gameInfo.Player.NumberTurn;
@@ -66,32 +66,34 @@ namespace suecaWPFClient
             //TODO...
         }
 
-        private void UpdatePlayerCards()
-        {
-            //TODO...
-        }
-
-        private void ResetCards()
+        private void UpdatePlayerCards(ServiceReference1.Card[] listCardsPlayer)
         {
             _listCards.Clear();
             SouthPlayerCanvas.Children.Clear();
-            for (int i = 0; i < MaxCard; i++)
+            foreach (var card in listCardsPlayer)
             {
-                _listCards.Add(CardImageFactory.CreateRandomCard());
+                _listCards.Add(CardTools.FromService(card));
             }
             AddCardsInGameBoard();
+
+            DrawAllPlayersCards();
         }
+
+        //private void ResetCards()
+        //{
+        //    _listCards.Clear();
+        //    SouthPlayerCanvas.Children.Clear();
+        //    for (int i = 0; i < MaxCard; i++)
+        //    {
+        //        _listCards.Add(CardImageFactory.CreateRandomCard());
+        //    }
+        //    AddCardsInGameBoard();
+        //}
 
         public void SetBoardEnabled(bool enabled)
         {
             IsEnabled = enabled;
             DisablingRectangle.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        private void Ellipse_OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ResetCards();
-            DrawAllPlayersCards();
         }
 
         private void AddCardsInGameBoard()
@@ -181,13 +183,13 @@ namespace suecaWPFClient
         {
             Console.WriteLine("hello from custom card !");
             Card card = (Card)sender;
-            Console.WriteLine(card.ToString());
+            //Console.WriteLine(card.ToString());
 
-            bool removed = _listCards.Remove(card);
-            SouthPlayerCanvas.Children.Remove(card);
-            ReplaceLaidCard(card);
-            Console.WriteLine("card removed ? " + removed);
-            DrawAllPlayersCards();
+            //bool removed = _listCards.Remove(card);
+            //SouthPlayerCanvas.Children.Remove(card);
+            //ReplaceLaidCard(card);
+            //Console.WriteLine("card removed ? " + removed);
+            //DrawAllPlayersCards();
 
             if (!_canPlayerPlay) return;
 

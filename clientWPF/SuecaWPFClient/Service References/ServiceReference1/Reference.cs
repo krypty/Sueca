@@ -508,10 +508,10 @@ namespace suecaWPFClient.ServiceReference1 {
         System.Threading.Tasks.Task PlayCardAsync(string playerToken, suecaWPFClient.ServiceReference1.CardColor color, suecaWPFClient.ServiceReference1.CardValue value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetRoom", ReplyAction="http://tempuri.org/Sueca/GetRoomResponse")]
-        suecaWPFClient.ServiceReference1.Room GetRoom(string roomName);
+        suecaWPFClient.ServiceReference1.Room GetRoom(string playerToken, string roomName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetRoom", ReplyAction="http://tempuri.org/Sueca/GetRoomResponse")]
-        System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.Room> GetRoomAsync(string roomName);
+        System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.Room> GetRoomAsync(string playerToken, string roomName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetGameInfo", ReplyAction="http://tempuri.org/Sueca/GetGameInfoResponse")]
         suecaWPFClient.ServiceReference1.GameInfo GetGameInfo(string playerToken, string roomId);
@@ -601,12 +601,12 @@ namespace suecaWPFClient.ServiceReference1 {
             return base.Channel.PlayCardAsync(playerToken, color, value);
         }
         
-        public suecaWPFClient.ServiceReference1.Room GetRoom(string roomName) {
-            return base.Channel.GetRoom(roomName);
+        public suecaWPFClient.ServiceReference1.Room GetRoom(string playerToken, string roomName) {
+            return base.Channel.GetRoom(playerToken, roomName);
         }
         
-        public System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.Room> GetRoomAsync(string roomName) {
-            return base.Channel.GetRoomAsync(roomName);
+        public System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.Room> GetRoomAsync(string playerToken, string roomName) {
+            return base.Channel.GetRoomAsync(playerToken, roomName);
         }
         
         public suecaWPFClient.ServiceReference1.GameInfo GetGameInfo(string playerToken, string roomId) {
