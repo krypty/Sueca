@@ -35,9 +35,11 @@ namespace SuecaContracts
             {
                 foreach(CardValue value in Enum.GetValues(typeof(CardValue)))
                 {
-                    listCard.Add(new Card(color,value));
+                    if(color != CardColor.None & value != CardValue.None)
+                        listCard.Add(new Card(color,value));
                 }
-                listColor.Add(color);
+                if(color != CardColor.None)
+                    listColor.Add(color);
             }
             mix(listCard);
 
@@ -204,13 +206,13 @@ namespace SuecaContracts
             
         }
 
-        public void CreateGameInfoClient(List<Player> listPlayer)
+        public void CreateGameInfoClient()
         {
             DictGameInfoPlayer.Clear();
 
-            foreach(Player p in listPlayer)
+            foreach(Player p in dictPlayers.Values)
             {
-                GameInfo game = new GameInfo(p, listPlayer, numberPlayerTurn);
+                GameInfo game = new GameInfo(p, dictPlayers.Values.ToList(), numberPlayerTurn);
 
                 //If at least one card is put on the table, get the first to know the color for others players
                 if (listCardsTurn.Count > 0)

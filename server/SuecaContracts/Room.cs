@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Linq;
 using System.Threading;
+using System.Timers;
 
 namespace SuecaContracts
 {
@@ -20,12 +21,14 @@ namespace SuecaContracts
     [DataContract]
     public class Room
     {
-        private const int NB_PLAYER_PER_GAME = 2;
+        private System.Timers.Timer timer;
+        private const int NB_PLAYER_PER_GAME = 4;
         public delegate void CallbackDelegate<T>(T t);
         public CallbackDelegate<string> gameStarted;
         public CallbackDelegate<Room> gameUpdated;
 
         private GameInfoServer gameInfo;
+        private DateTime timeoutClientWeb;
 
         [DataMember]
         public string Name { get; set; }
@@ -90,6 +93,7 @@ namespace SuecaContracts
             if (!currentPlayer.IsReady && isReady && nbPlayersReady < 4)
             {
                 currentPlayer.IsReady = isReady;
+                nbPlayersReady++;
 
                 //If the room is full, launch the game
                 if (nbPlayersReady == NB_PLAYER_PER_GAME)
@@ -169,7 +173,7 @@ namespace SuecaContracts
 
             Console.WriteLine("[server] has distribute cards");
 
-            gameInfo.CreateGameInfoClient(listPlayers);
+            gameInfo.CreateGameInfoClient();
 
             /*
             new Thread(new ParameterizedThreadStart(
@@ -180,6 +184,22 @@ namespace SuecaContracts
             ).Start(this);
             */
 
+            /*
+            timer = new System.Timers.Timer(2000);
+            timer.Elapsed += (sender, e) =>
+            {
+                timer_Elapsed(this);
+            };
+            timer.Enabled = true;
+             * */
+        }
+
+        void timer_Elapsed(Room room)
+        {
+            if(DateTime.Now.Subtract(timeoutClientWeb).Milliseconds > 10000)
+            {
+                //A web client is deconnect
+            }
         }
 
         private void UpdateRoomForClient()
@@ -200,7 +220,7 @@ namespace SuecaContracts
         {
             gameInfo.PlayCard(playerToken, color, value);
 
-            gameInfo.CreateGameInfoClient(listPlayers);
+            gameInfo.CreateGameInfoClient();
         }
 
         public GameInfo getGameInfoForPlayerToken(string playerToken)
@@ -210,6 +230,7 @@ namespace SuecaContracts
             {
                 if (gameInfo.DictGameInfoPlayer.TryGetValue(playerToken, out gameInfoClient))
                 {
+                    timeoutClientWeb = DateTime.Now;
                     return gameInfoClient;
                 }
             }
