@@ -137,6 +137,7 @@ namespace SuecaContracts
                 listCardsTurn.AddLast(cardToRemove);
 
                 numberPlayersHavePlayed++;
+                numberPlayerTurn++;
                 if(numberPlayersHavePlayed >= 4)
                 {
                     CalculateTurn();
