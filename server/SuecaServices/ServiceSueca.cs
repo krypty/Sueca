@@ -63,7 +63,7 @@ namespace SuecaServices
             if (!dictRoom.TryGetValue(roomName, out currentRoom))
             {
                 Console.WriteLine("[Join room] room doesn't exist");
-                //throw new Exception("room with name [" + roomName + "] doesn't exist");
+                return "";
             }
 
             //Room room = this._listRooms.Find(r => r.Name == roomName);
@@ -101,7 +101,7 @@ namespace SuecaServices
             return this.dictRoom.Values.ToList();
         }
 
-        public Room GetRoom(string roomName)
+        public Room GetRoom(string playerToken, string roomName)
         {
             Room currentRoom;
             try
@@ -110,6 +110,10 @@ namespace SuecaServices
                 {
                     return null;
                 }
+
+                Player currentPlayer = currentRoom.ListPlayers.Where<Player>(p => p.Token == playerToken).First();
+                currentPlayer.TimeOutClientWeb = DateTime.Now;
+
                 return currentRoom;
                 
             }

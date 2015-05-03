@@ -56,10 +56,19 @@ namespace SuecaContracts
             listPlayers = new List<Player>();
             RoomState = StateRoom.WAITING_READY;
             IsPlayerDisconnectDuringParty = false;
+            
+            //Timer to know if a web client is disconnect during the game
+            timer = new System.Timers.Timer(CHECK_WEB_CLIENT_TIME);
+            timer.Elapsed += (sender, e) =>
+            {
+                timer_Elapsed(this);
+            };
+            timer.Enabled = true;
         }
 
         public void AddPlayer(Player player)
         {
+
             //CAREFULL : if somebody quit the game => not manage
             //Add a number to known when the user comes
             //First : 0, second : 1, third : 2, fourth : 3
@@ -184,15 +193,6 @@ namespace SuecaContracts
                 })
             ).Start(this);
             */
-
-
-            //Timer to know if a web client is disconnect during the game
-            timer = new System.Timers.Timer(CHECK_WEB_CLIENT_TIME);
-            timer.Elapsed += (sender, e) =>
-            {
-                timer_Elapsed(this);
-            };
-            timer.Enabled = true;
              
         }
 
