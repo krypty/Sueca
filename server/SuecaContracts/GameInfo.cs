@@ -16,6 +16,9 @@ namespace SuecaContracts
         public LinkedList<Card> ListCardsPlayed { get; set; }
 
         [DataMember]
+        public List<Card> ListCardsPlayer{get;set;}
+
+        [DataMember]
         public List<Player> ListPlayer { get; set; }
 
         [DataMember]

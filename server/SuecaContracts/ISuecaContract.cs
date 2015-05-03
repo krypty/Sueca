@@ -50,7 +50,7 @@ namespace SuecaContracts
         [OperationContract(IsTerminating = false, IsOneWay = false)]
         void PlayCard(string playerToken, CardColor color, CardValue value);
         [OperationContract(IsTerminating = false, IsOneWay = false)]
-        Room GetRoom(String roomName);
+        Room GetRoom(String playerToken, String roomName);
         [OperationContract(IsTerminating = false, IsOneWay = false)]
         GameInfo GetGameInfo(string playerToken, string roomId);
 

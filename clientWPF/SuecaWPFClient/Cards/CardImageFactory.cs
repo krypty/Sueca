@@ -12,20 +12,23 @@ namespace suecaWPFClient.Cards
         public static Card CreateRandomCard()
         {
             Array values = Enum.GetValues(typeof(CardValue));
-            CardValue randomCardValue = (CardValue)values.GetValue(random.Next(values.Length));
+            CardValue randomCardValue;
+            do
+            {
+                randomCardValue = (CardValue)values.GetValue(random.Next(values.Length));
+            } while (randomCardValue.Equals(CardValue.None));
+
             return CreateCard(CardColor.Hearts, randomCardValue);
         }
 
         public static Card CreateFaceDownCard()
         {
-            //return new Card(CardColor.None, CardValue.None, RootImagesPath + "DosCarte.png");
-            return new Card(CardColor.None, CardValue.Two, RootImagesPath + "DosCarte.png");
+            return new Card(CardColor.None, CardValue.None, RootImagesPath + "DosCarte.png");
         }
 
         public static Card CreateCard(CardColor cardColor, CardValue cardValue)
         {
-            //if (cardColor.Equals(CardColor.None) || cardValue.Equals(CardValue.None))
-            if (cardColor.Equals(CardColor.None))
+            if (cardColor.Equals(CardColor.None) || cardValue.Equals(CardValue.None))
             {
                 throw new ArgumentException("Impossible to create face down card here. Please use CreateFaceDownCard() method.");
             }

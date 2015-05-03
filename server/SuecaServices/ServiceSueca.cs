@@ -12,6 +12,9 @@ namespace SuecaServices
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
     public class ServiceSueca : ISuecaContract
     {
+        private const int CHECK_ROOM_TIME = 30000;
+        private System.Timers.Timer timerCheckRoom;
+
         //private List<Room> _listRooms;
         //private HashSet<String, Room>  
         private Dictionary<String, Room> dictRoom; 
@@ -24,6 +27,56 @@ namespace SuecaServices
         {
            // this._listRooms = new List<Room>();
             this.dictRoom = new Dictionary<string, Room>();
+            timerCheckRoom = new System.Timers.Timer(CHECK_ROOM_TIME);
+            timerCheckRoom.Elapsed += (sender, e) =>
+            {
+                timerCheckRoom_Elapsed(dictRoom);
+            }; 
+        }
+
+        void timerCheckRoom_Elapsed(Dictionary<string,Room> dict)
+        {
+            Console.WriteLine("[server] check if a room has to be killed");
+            foreach(Room r in dictRoom.Values)
+            {
+                if(r.PlayerDisconnectDuringParty != null)
+                {
+                    //If the party did not begin
+                    if(r.RoomState == Room.StateRoom.WAITING_READY)
+                    {
+                        //Permit to another user to come in the room by removing the other user
+                        r.ListPlayers.Remove(r.PlayerDisconnectDuringParty);
+
+                        //Reset the order of turn
+                        foreach(Player p in r.ListPlayers)
+                        {
+                            switch(r.PlayerDisconnectDuringParty.NumberTurn)
+                            {
+                                case 0:
+                                    p.NumberTurn--;
+                                    break;
+                                case 1:
+                                    if(p.NumberTurn > 0)
+                                        p.NumberTurn--;
+                                    break;
+                                case 2:
+                                    if(p.NumberTurn > 1)
+                                        p.NumberTurn--;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        Console.WriteLine("[server] the room " + r.Name + " has the player " + r.PlayerDisconnectDuringParty.Token + " disconnect and reset the order of turn");
+                    }
+                    else if(r.RoomState == Room.StateRoom.GAME_IN_PROGRESS)
+                    {
+                        //Kill the room
+                        Console.WriteLine("[server] the room " + r.Name + " has to be killed because player " + r.PlayerDisconnectDuringParty.Token + " is disconnect");
+                    }
+                }
+            }
         }
 
         public string CreateRoom(string password = "")
@@ -43,7 +96,7 @@ namespace SuecaServices
             if (!dictRoom.TryGetValue(roomName, out currentRoom))
             {
                 Console.WriteLine("[Join room] room doesn't exist");
-                //throw new Exception("room with name [" + roomName + "] doesn't exist");
+                return "";
             }
 
             //Room room = this._listRooms.Find(r => r.Name == roomName);
@@ -81,7 +134,7 @@ namespace SuecaServices
             return this.dictRoom.Values.ToList();
         }
 
-        public Room GetRoom(string roomName)
+        public Room GetRoom(string playerToken, string roomName)
         {
             Room currentRoom;
             try
@@ -90,6 +143,10 @@ namespace SuecaServices
                 {
                     return null;
                 }
+
+                Player currentPlayer = currentRoom.ListPlayers.Where<Player>(p => p.Token == playerToken).First();
+                currentPlayer.TimeOutClientWeb = DateTime.Now;
+
                 return currentRoom;
                 
             }

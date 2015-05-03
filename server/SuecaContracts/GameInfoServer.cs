@@ -76,6 +76,7 @@ namespace SuecaContracts
 
             //Initialize the list to contain all cards play in a turn 
             listCardsTurn = new LinkedList<Card>();
+            dictCardPlayerForTurn = new Dictionary<Card, string>();
         }
 
         public void PlayCard(string playerToken, CardColor color, CardValue value)
@@ -126,13 +127,17 @@ namespace SuecaContracts
 
         private void PlayCardForPlayer(Player player, Card card)
         {
-            if(player.ListCardsHolding.Remove(card))
+            Card cardToRemove = player.ListCardsHolding.First<Card>(c => c.Value == card.Value & c.Color == card.Color);
+
+
+            if (player.ListCardsHolding.Remove(cardToRemove))
             {
                 //Dictionary to know which card a player has played
-                dictCardPlayerForTurn.Add(card,player.Token);
-                listCardsTurn.AddLast(card);
+                dictCardPlayerForTurn.Add(cardToRemove, player.Token);
+                listCardsTurn.AddLast(cardToRemove);
 
                 numberPlayersHavePlayed++;
+                numberPlayerTurn++;
                 if(numberPlayersHavePlayed >= 4)
                 {
                     CalculateTurn();
@@ -219,37 +224,9 @@ namespace SuecaContracts
                     game.FirstCard = listCardsTurn.First.Value;
 
                 game.ListCardsPlayed = listCardsTurn;
+                game.ListCardsPlayer = p.ListCardsHolding;
 
                 DictGameInfoPlayer.Add(p.Token, game);
-            }
-
-
-            new Thread(new ParameterizedThreadStart(
-                delegate(object dictGameInfo)
-                {
-                    Thread.Sleep(1000);
-
-                    Dictionary<string, GameInfo> dict = dictGameInfo as Dictionary<string, GameInfo>;
-                    
-                    callGameInfoClient(dict);
-                    
-                })
-            ).Start(DictGameInfoPlayer);
-
-        }
-
-        private void callGameInfoClient(Dictionary<string,GameInfo> dict)
-        {
-            if (dict != null)
-            {
-                foreach (GameInfo game in dict.Values)
-                {
-                    ISuecaCallbackContract callback = game.Player.Callback;
-                    if(callback != null)
-                    {
-                        callback.GameInfoUpdated(game);
-                    }
-                }
             }
         }
 
