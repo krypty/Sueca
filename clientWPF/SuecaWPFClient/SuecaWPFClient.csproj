@@ -61,7 +61,7 @@
       <DependentUpon>BoardPane.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cards\CardImageFactory.cs" />
-    <Compile Include="Cards\CardType.cs" />
+    <Compile Include="Cards\CardTools.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="CreateRoomWindow.xaml.cs">
       <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
@@ -69,8 +69,8 @@
     <Compile Include="GamePanes\GameEndPane.xaml.cs">
       <DependentUpon>GameEndPane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GamePanes\GameSummaryPane.xaml.cs">
-      <DependentUpon>GameSummaryPane.xaml</DependentUpon>
+    <Compile Include="GamePanes\InGamePane.xaml.cs">
+      <DependentUpon>InGamePane.xaml</DependentUpon>
     </Compile>
     <Compile Include="GamePanes\GameStatePaneA.cs" />
     <Compile Include="GamePanes\PaneSwitcher.cs" />
@@ -101,7 +101,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GamePanes\GameSummaryPane.xaml">
+    <Page Include="GamePanes\InGamePane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

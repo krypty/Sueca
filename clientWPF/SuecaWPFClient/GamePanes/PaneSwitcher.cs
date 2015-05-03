@@ -56,7 +56,7 @@ namespace suecaWPFClient.GamePanes
             _dictUserControls.Add(GameState.ListRoom, new RoomPane());
             _dictUserControls.Add(GameState.WaitingRoom, new RoomSummaryPane());
             _dictUserControls.Add(GameState.EndGame, new GameEndPane());
-            _dictUserControls.Add(GameState.InGame, new GameSummaryPane());
+            _dictUserControls.Add(GameState.InGame, new InGamePane());
         }
     }
 }

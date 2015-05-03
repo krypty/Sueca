@@ -1,6 +1,10 @@
 ﻿using System;
 using System.ServiceModel;
+using System.Threading;
+using System.Threading.Tasks;
+using suecaWPFClient.Cards;
 using suecaWPFClient.ServiceReference1;
+using Card = suecaWPFClient.ServiceReference1.Card;
 
 namespace suecaWPFClient
 {
@@ -44,10 +48,19 @@ namespace suecaWPFClient
             _suecaClient.SendReady(playerToken, isReady);
         }
 
-        internal Room[] ListRoom()
+        internal Task<Room[]> ListRoom()
         {
-            return _suecaClient.ListRoom();
+            return _suecaClient.ListRoomAsync();
         }
+
+
+        internal void PlayCard(String playerToken, suecaWPFClient.Cards.Card card)
+        {
+            Card convertedCard = CardTools.ToService(card);
+            _suecaClient.PlayCard(playerToken, convertedCard.Color, convertedCard.Value);
+        }
+
+        #region CALLBACK methods
 
         public void GameStarted(string message)
         {
@@ -69,5 +82,9 @@ namespace suecaWPFClient
                 OnGameInfoUpdated(gameInfo);
             }
         }
+
+        #endregion
     }
+
+
 }

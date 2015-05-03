@@ -14,13 +14,13 @@ namespace suecaWPFClient.Cards
             Width = 200;
         }
 
-        public CardColor CardColor { get; private set; }
-        public CardValue CardValue { get; private set; }
+        public ServiceReference1.CardColor CardColor { get; private set; }
+        public ServiceReference1.CardValue CardValue { get; private set; }
         public int OriginalZIndex { get; private set; }
 
         private readonly String _imagePath;
 
-        public Card(CardColor cardColor, CardValue cardValue, String imagePath)
+        public Card(ServiceReference1.CardColor cardColor, ServiceReference1.CardValue cardValue, String imagePath)
             : this()
         {
             CardColor = cardColor;
