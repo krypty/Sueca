@@ -7,17 +7,6 @@ using System.Timers;
 
 namespace SuecaContracts
 {
-    [DataContract(Name = "StateRoom")]
-    public enum StateRoom
-    {
-        [EnumMember]
-        WAITING_READY,
-        [EnumMember]
-        GAME_IN_PROGRESS,
-        [EnumMember]
-        END_GAME
-    };
-
     [DataContract]
     public class Room
     {
@@ -38,6 +27,13 @@ namespace SuecaContracts
         public string Name { get; set; }
 
         public string Password { get; set; }
+
+        public enum StateRoom
+        {
+            WAITING_READY,
+            GAME_IN_PROGRESS,
+            END_GAME
+        };
 
         [DataMember]
         public StateRoom RoomState
@@ -222,14 +218,16 @@ namespace SuecaContracts
         private void UpdateRoomForClient()
         {
             //new System.Threading.Timer(obj => { gameUpdated(this); }, null, 1000, System.Threading.Timeout.Infinite);
-            
-            new Thread(new ParameterizedThreadStart(
-                delegate(object room)
-                {
-                    Thread.Sleep(1000);
-                    gameUpdated((Room)room);
-                })
-            ).Start(this);
+            if(gameUpdated != null)
+            {
+                new Thread(new ParameterizedThreadStart(
+                    delegate(object room)
+                    {
+                        Thread.Sleep(1000);
+                        gameUpdated((Room)room);
+                    })
+                ).Start(this);
+            }
             
         }
 

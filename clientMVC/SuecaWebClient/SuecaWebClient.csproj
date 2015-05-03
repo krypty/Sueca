@@ -188,6 +188,47 @@
     <Content Include="Images\Cards\Spades\J.png" />
     <Content Include="Images\Cards\Spades\K.png" />
     <Content Include="Images\Cards\Spades\Q.png" />
+    <Content Include="Images\Cards\Svg\Clubs\2.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\3.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\4.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\5.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\6.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\7.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\As.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\J.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\K.svg" />
+    <Content Include="Images\Cards\Svg\Clubs\Q.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\2.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\3.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\4.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\5.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\6.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\7.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\As.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\J.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\k.svg" />
+    <Content Include="Images\Cards\Svg\Diamonds\Q.svg" />
+    <Content Include="Images\Cards\Svg\Back.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\2.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\3.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\4.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\5.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\6.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\7.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\As.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\J.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\K.svg" />
+    <Content Include="Images\Cards\Svg\Hearts\Q.svg" />
+    <Content Include="Images\Cards\Svg\Spades\2.svg" />
+    <Content Include="Images\Cards\Svg\Spades\3.svg" />
+    <Content Include="Images\Cards\Svg\Spades\4.svg" />
+    <Content Include="Images\Cards\Svg\Spades\5.svg" />
+    <Content Include="Images\Cards\Svg\Spades\6.svg" />
+    <Content Include="Images\Cards\Svg\Spades\7.svg" />
+    <Content Include="Images\Cards\Svg\Spades\As.svg" />
+    <Content Include="Images\Cards\Svg\Spades\J.svg" />
+    <Content Include="Images\Cards\Svg\Spades\K.svg" />
+    <Content Include="Images\Cards\Svg\Spades\Q.svg" />
     <Content Include="Images\GameBoard.png" />
     <Content Include="Images\tools\ajax-loader.gif" />
     <Content Include="Content\themes\bootstrap\bootstrap-theme.css" />
@@ -329,6 +370,9 @@
     <None Include="Service References\SuecaService\SuecaContracts1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Service References\SuecaService\SuecaWebClient.SuecaService.GameInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

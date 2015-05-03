@@ -16,24 +16,51 @@ namespace SuecaWebClient.Helper
         public SuecaServiceHelper()
         {
             client = new SuecaClient(new System.ServiceModel.InstanceContext(new InterfaceService()));
-
-        }
-
-        public RoomInfoModel joinRoom(string roomId, string password = "")
-        {
             
-            string playerToken = client.JoinRoom(roomId, password);
-            bool[] statesPlayers = new[] {true, true, false, false};
-            return new RoomInfoModel(roomId, playerToken, statesPlayers);
+        }
+
+        public String joinRoom(string roomId, string password = "")
+        {
+            if (roomId != "" && client != null)
+            {
+                try
+                {
+                    string playerToken = client.JoinRoom(roomId, password, false);
+                    return playerToken;
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
+            return "";
         }
 
 
 
-        public void getRoomState()
+        public RoomInfoModel getRoomState(string roomId, string playerToken)
         {
             //SuecaService.Room.StateRoom
             //client.JoinRoom();
-            
+            if (roomId != "" && client != null)
+            {
+                try
+                {
+
+
+                    Room r = client.GetRoom(roomId);
+                    if (r != null)
+                        return new RoomInfoModel(r.Name, playerToken, r.listPlayers);
+                    else
+                        return null;
+
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
+            return null;
         }
 
         public void sendClientReady(bool state)
@@ -80,7 +107,13 @@ namespace SuecaWebClient.Helper
 
             public void RoomUpdated(Room room)
             {
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
+            }
+
+
+            public void GameInfoUpdated(GameInfo gameInfo)
+            {
+                //throw new NotImplementedException();
             }
         }
 
