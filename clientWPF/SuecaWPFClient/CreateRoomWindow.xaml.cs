@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace suecaWPFClient
 {
@@ -7,10 +8,11 @@ namespace suecaWPFClient
     /// </summary>
     public partial class CreateRoomWindow : Window
     {
-        public CreateRoomWindow()
+        public CreateRoomWindow(string title)
         {
             InitializeComponent();
             PasswordTextBox.Focus();
+            Title = title;
         }
 
         public string RoomPassword

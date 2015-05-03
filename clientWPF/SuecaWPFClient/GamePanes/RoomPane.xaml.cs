@@ -22,13 +22,11 @@ namespace suecaWPFClient.GamePanes
 
         private void BtnCreateRoom_Click(object sender, RoutedEventArgs e)
         {
-            CreateRoomWindow roomWindow = new CreateRoomWindow();
+            CreateRoomWindow roomWindow = new CreateRoomWindow("Créer une salle");
 
-            string roomPassword = "";
-            if (roomWindow.ShowDialog() == true)
-            {
-                roomPassword = roomWindow.RoomPassword;
-            }
+            if (roomWindow.ShowDialog() != true) return;
+
+            string roomPassword = roomWindow.RoomPassword;
 
             Console.WriteLine("pass: " + roomPassword);
 
@@ -77,11 +75,11 @@ namespace suecaWPFClient.GamePanes
             Console.WriteLine("joinRoom");
 
             string roomPassword = "";
-            CreateRoomWindow roomWindow = new CreateRoomWindow();
-            if (roomWindow.ShowDialog() == true)
-            {
-                roomPassword = roomWindow.RoomPassword;
-            }
+            CreateRoomWindow roomWindow = new CreateRoomWindow("Rejoindre une salle");
+
+            if (roomWindow.ShowDialog() != true) return;
+
+            roomPassword = roomWindow.RoomPassword;
 
             Console.WriteLine("pass: " + roomPassword);
             var playerID = ServiceManager.GetInstance().JoinRoom(room.Name, roomPassword);
