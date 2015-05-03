@@ -238,34 +238,37 @@ namespace SuecaWebClient.SuecaService {
     public enum CardValue : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Two = 0,
+        None = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Three = 1,
+        Two = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Four = 2,
+        Three = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Five = 3,
+        Four = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Six = 4,
+        Five = 4,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Seven = 5,
+        Six = 5,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Jack = 6,
+        Seven = 6,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Queen = 7,
+        Jack = 7,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        King = 8,
+        Queen = 8,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Ace = 9,
+        King = 9,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Ace = 10,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -278,16 +281,22 @@ namespace SuecaWebClient.SuecaService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SuecaWebClient.SuecaService.Card FirstCardField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private SuecaWebClient.SuecaService.Card[] ListCardsPlayedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int NumberCardsWinField;
+        private SuecaWebClient.SuecaService.Player[] ListPlayerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int NumberPlayerToPlayField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PlayerTokenField;
+        private SuecaWebClient.SuecaService.Player PlayerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SuecaWebClient.SuecaService.Card[] tabCardsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -296,6 +305,19 @@ namespace SuecaWebClient.SuecaService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SuecaWebClient.SuecaService.Card FirstCard {
+            get {
+                return this.FirstCardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstCardField, value) != true)) {
+                    this.FirstCardField = value;
+                    this.RaisePropertyChanged("FirstCard");
+                }
             }
         }
         
@@ -313,14 +335,14 @@ namespace SuecaWebClient.SuecaService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int NumberCardsWin {
+        public SuecaWebClient.SuecaService.Player[] ListPlayer {
             get {
-                return this.NumberCardsWinField;
+                return this.ListPlayerField;
             }
             set {
-                if ((this.NumberCardsWinField.Equals(value) != true)) {
-                    this.NumberCardsWinField = value;
-                    this.RaisePropertyChanged("NumberCardsWin");
+                if ((object.ReferenceEquals(this.ListPlayerField, value) != true)) {
+                    this.ListPlayerField = value;
+                    this.RaisePropertyChanged("ListPlayer");
                 }
             }
         }
@@ -339,14 +361,27 @@ namespace SuecaWebClient.SuecaService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PlayerToken {
+        public SuecaWebClient.SuecaService.Player Player {
             get {
-                return this.PlayerTokenField;
+                return this.PlayerField;
             }
             set {
-                if ((object.ReferenceEquals(this.PlayerTokenField, value) != true)) {
-                    this.PlayerTokenField = value;
-                    this.RaisePropertyChanged("PlayerToken");
+                if ((object.ReferenceEquals(this.PlayerField, value) != true)) {
+                    this.PlayerField = value;
+                    this.RaisePropertyChanged("Player");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SuecaWebClient.SuecaService.Card[] tabCards {
+            get {
+                return this.tabCardsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tabCardsField, value) != true)) {
+                    this.tabCardsField = value;
+                    this.RaisePropertyChanged("tabCards");
                 }
             }
         }
@@ -370,6 +405,12 @@ namespace SuecaWebClient.SuecaService {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SuecaWebClient.SuecaService.CardColor ColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SuecaWebClient.SuecaService.CardValue ValueField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -377,6 +418,32 @@ namespace SuecaWebClient.SuecaService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SuecaWebClient.SuecaService.CardColor Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((this.ColorField.Equals(value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SuecaWebClient.SuecaService.CardValue Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((this.ValueField.Equals(value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
             }
         }
         

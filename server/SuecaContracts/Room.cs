@@ -201,14 +201,16 @@ namespace SuecaContracts
         private void UpdateRoomForClient()
         {
             //new System.Threading.Timer(obj => { gameUpdated(this); }, null, 1000, System.Threading.Timeout.Infinite);
-            
-            new Thread(new ParameterizedThreadStart(
-                delegate(object room)
-                {
-                    Thread.Sleep(1000);
-                    gameUpdated((Room)room);
-                })
-            ).Start(this);
+            if(gameUpdated != null)
+            {
+                new Thread(new ParameterizedThreadStart(
+                    delegate(object room)
+                    {
+                        Thread.Sleep(1000);
+                        gameUpdated((Room)room);
+                    })
+                ).Start(this);
+            }
             
         }
 

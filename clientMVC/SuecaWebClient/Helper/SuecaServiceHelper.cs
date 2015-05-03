@@ -15,7 +15,7 @@ namespace SuecaWebClient.Helper
 
         public SuecaServiceHelper()
         {
-            //client = new SuecaClient(new System.ServiceModel.InstanceContext(new InterfaceService()));
+            client = new SuecaClient(new System.ServiceModel.InstanceContext(new InterfaceService()));
             
         }
 
