@@ -127,26 +127,33 @@ namespace SuecaContracts
 
         private void PlayCardForPlayer(Player player, Card card)
         {
-            Card cardToRemove = player.ListCardsHolding.First<Card>(c => c.Value == card.Value & c.Color == card.Color);
-
-
-            if (player.ListCardsHolding.Remove(cardToRemove))
+            if(card.Value != CardValue.None && card.Color != CardColor.None)
             {
-                //Dictionary to know which card a player has played
-                dictCardPlayerForTurn.Add(cardToRemove, player.Token);
-                listCardsTurn.AddLast(cardToRemove);
+                Card cardToRemove = player.ListCardsHolding.First<Card>(c => c.Value == card.Value & c.Color == card.Color);
 
-                numberPlayersHavePlayed++;
-                numberPlayerTurn++;
-                if(numberPlayersHavePlayed >= 4)
+
+                if (player.ListCardsHolding.Remove(cardToRemove))
                 {
-                    CalculateTurn();
-                    numberPlayersHavePlayed = 0;
+                    //Dictionary to know which card a player has played
+                    dictCardPlayerForTurn.Add(cardToRemove, player.Token);
+                    listCardsTurn.AddLast(cardToRemove);
+
+                    numberPlayersHavePlayed++;
+                    numberPlayerTurn++;
+                    if(numberPlayersHavePlayed >= 4)
+                    {
+                        CalculateTurn();
+                        numberPlayersHavePlayed = 0;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("[server] an error has occured when player "+player.Token+" has played card "+card.Color+" : "+card.Value+" !");
                 }
             }
             else
             {
-                Console.WriteLine("[server] an error has occured when player "+player.Token+" has played card "+card.Color+" : "+card.Value+" !");
+                Console.WriteLine("[server] player " + player.Token+ " played no card");
             }
         }
 
@@ -208,7 +215,7 @@ namespace SuecaContracts
                 Console.WriteLine("[server] an error has occured at the end of the calculation of winner for the turn");
             }
 
-            
+
         }
 
         public void CreateGameInfoClient()
@@ -230,10 +237,7 @@ namespace SuecaContracts
             }
         }
 
-        private void EndOfGame()
-        {
 
-        }
 
         /// <summary>
         /// Mix a list of cards in a real randomness

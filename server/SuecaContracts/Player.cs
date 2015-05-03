@@ -26,6 +26,9 @@ namespace SuecaContracts
         [DataMember]
         int takenCards;
 
+        [DataMember]
+        public int Score{get;set;}
+
         ISuecaCallbackContract callback;
         public string Token
         {
@@ -68,7 +71,8 @@ namespace SuecaContracts
 
         public Player()
         {
-            this.isReady = false;
+            this.Score = 0;
+            this.IsReady = false;
             this.ListCardsHolding = new List<Card>();
             this.ListCardsWin = new List<Card>();
             this.Callback = null;
