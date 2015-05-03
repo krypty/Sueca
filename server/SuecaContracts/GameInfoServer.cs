@@ -76,6 +76,7 @@ namespace SuecaContracts
 
             //Initialize the list to contain all cards play in a turn 
             listCardsTurn = new LinkedList<Card>();
+            dictCardPlayerForTurn = new Dictionary<Card, string>();
         }
 
         public void PlayCard(string playerToken, CardColor color, CardValue value)
@@ -126,11 +127,14 @@ namespace SuecaContracts
 
         private void PlayCardForPlayer(Player player, Card card)
         {
-            if(player.ListCardsHolding.Remove(card))
+            Card cardToRemove = player.ListCardsHolding.First<Card>(c => c.Value == card.Value & c.Color == card.Color);
+
+
+            if (player.ListCardsHolding.Remove(cardToRemove))
             {
                 //Dictionary to know which card a player has played
-                dictCardPlayerForTurn.Add(card,player.Token);
-                listCardsTurn.AddLast(card);
+                dictCardPlayerForTurn.Add(cardToRemove, player.Token);
+                listCardsTurn.AddLast(cardToRemove);
 
                 numberPlayersHavePlayed++;
                 if(numberPlayersHavePlayed >= 4)
