@@ -99,6 +99,24 @@ function updateData() {
                                 //console.log("token : " + data.playerToken);
                                 console.log(data);
 
+                                for (var i = 0; i < data.listPlayerCards.length; i++) {
+                                    if (data.listPlayerCards[i] != null)
+                                    {
+                                        var contains = false;
+                                        for (var j = 0; j < _playerCards.length; j++)
+                                        {
+                                            if (_playerCards[i] != null) {
+                                                if (_playerCards[i].CardColor == data.listPlayerCards[i].color && _playerCards[i].CardValue == data.listPlayerCards[i].value) {
+                                                    contains = true;
+                                                }
+                                            }
+                                        }
+                                        if (!contains) {
+                                            addHandHeldCard(cardsHand[data.listPlayerCards[i].color][data.listPlayerCards[i].value], i);
+                                        }  
+                                    }
+                                }
+
 
                             }
                         });

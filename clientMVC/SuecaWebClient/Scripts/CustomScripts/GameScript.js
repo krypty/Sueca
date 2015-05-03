@@ -458,11 +458,11 @@ function scaleCard(card, scaling) {
 function drawPlayerHand(cardList) {
 
 
-    for (var i = 0; i < cardList.length; i++) {
+    /*for (var i = 0; i < cardList.length; i++) {
         addHandHeldCard(cardList[i]);
 
 
-    }
+    }*/
 
 
 }
@@ -536,7 +536,7 @@ function updatePlayerCards(userCards) {
 
 
 
-function addHandHeldCard(card) {
+function addHandHeldCard(card, id) {
     
     card.selectable = true;
     //scaleCard(bitmap, playerHandScalling);
@@ -551,6 +551,7 @@ function addHandHeldCard(card) {
         }
     });
 
+    _playerCards[id] = card;
 
     card.addEventListener("pressup", function (evt) {
         if (card.selectable) {
