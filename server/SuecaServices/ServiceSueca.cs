@@ -41,6 +41,7 @@ namespace SuecaServices
             {
                 if(r.PlayerDisconnectDuringParty != null)
                 {
+                    //If the party did not begin
                     if(r.RoomState == Room.StateRoom.WAITING_READY)
                     {
                         //Permit to another user to come in the room by removing the other user
@@ -67,12 +68,13 @@ namespace SuecaServices
                             }
                         }
 
+                        Console.WriteLine("[server] the room " + r.Name + " has the player " + r.PlayerDisconnectDuringParty.Token + " disconnect and reset the order of turn");
                     }
                     else if(r.RoomState == Room.StateRoom.GAME_IN_PROGRESS)
                     {
                         //Kill the room
+                        Console.WriteLine("[server] the room " + r.Name + " has to be killed because player " + r.PlayerDisconnectDuringParty.Token + " is disconnect");
                     }
-                    Console.WriteLine("[server] the room "+r.Name+" has to be killed because player " + r.PlayerDisconnectDuringParty.Token+" is disconnect");
                 }
             }
         }
