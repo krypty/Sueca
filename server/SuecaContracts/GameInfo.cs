@@ -24,6 +24,9 @@ namespace SuecaContracts
         [DataMember]
         public int FirstPlayerNumber { get; set; }
 
+        [DataMember]
+        public Card FirstCard { get; set; }
+
         public GameInfo(Player player, LinkedList<Player> listPlayers, LinkedList<Card> listCards, bool isMyTurn) 
         {
             //User for who the gameinfo is

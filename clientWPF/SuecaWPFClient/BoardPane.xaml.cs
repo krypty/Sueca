@@ -56,7 +56,7 @@ namespace suecaWPFClient
             UpdatePlayerCards(gameInfo.ListCardsPlayer); // player South
             UpdateLaidCards(gameInfo.ListCardsPlayed);
 
-            _canPlayerPlay = gameInfo.NumberPlayerToPlay == gameInfo.Player.NumberTurn;
+            _canPlayerPlay = gameInfo.IsMyTurn;
 
             YourTurnLabel.Visibility = _canPlayerPlay ? Visibility.Visible : Visibility.Hidden;
 
@@ -67,16 +67,19 @@ namespace suecaWPFClient
         {
             //throw new NotImplementedException();
 
-            Console.Write("list played cards: ");
+            Console.Write("list played cards: " + listCards.Length);
             int i = 0;
 
             ClearLaidsCardCanvas();
+
             foreach (var card in listCards)
             {
-                Console.Write(card.Value + " of " + card.Color + ", ");
-                Card convertedCard = CardTools.FromService(card);
-                ReplaceLaidCard(convertedCard, _listCanvas[i]);
-
+                if(card != null)
+                { 
+                    Console.Write(card.Value + " of " + card.Color + ", ");
+                    Card convertedCard = CardTools.FromService(card);
+                    ReplaceLaidCard(convertedCard, _listCanvas[i]);
+                }
                 i++;
             }
             Console.WriteLine();
@@ -90,14 +93,28 @@ namespace suecaWPFClient
             }
         }
 
-        private void UpdateOthersPlayersCards(IEnumerable<Player> players)
+        private void UpdateOthersPlayersCards(Player[] tabPlayers)
         {
-            Console.WriteLine("players size: " + players.ToArray().Count());
+            Console.WriteLine("players size: " + tabPlayers.Count());
             List<Canvas> listCanvas = new List<Canvas>();
             listCanvas.Add(NorthPlayerCanvas);
             listCanvas.Add(EastPlayerCanvas);
             listCanvas.Add(WestPlayerCanvas);
 
+            for(int i=0; i < listCanvas.Count; i++)
+            {
+                List<Card> listCards = new List<Card>();
+
+                Console.WriteLine("holding cards: " + tabPlayers[i+1].HoldingCards);
+                for (int j = 0; j < tabPlayers[i+1].HoldingCards; j++)
+                {
+                    listCards.Add(CardImageFactory.CreateFaceDownCard());
+                }
+
+                DrawAllPlayersCards(listCanvas[i], listCards);
+            }
+
+            /*
             Player[] tabPlayers = players.ToArray();
 
             for (int i = 0; i < listCanvas.Count; i++)
@@ -112,6 +129,8 @@ namespace suecaWPFClient
 
                 DrawAllPlayersCards(listCanvas[i], listCards);
             }
+             * 
+             */
 
         }
 

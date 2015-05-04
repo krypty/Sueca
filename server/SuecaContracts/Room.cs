@@ -48,6 +48,8 @@ namespace SuecaContracts
             set { listPlayers = value; }
         }
 
+
+
         public Room(string password = "")
         {
             Password = password;
@@ -149,7 +151,6 @@ namespace SuecaContracts
         {
             Console.WriteLine("[server] Start the game");
 
-
             Console.WriteLine("[server] construct party");
             //Initialize the gameInfoServer
             gameInfo = new GameInfoServer(listPlayers);
@@ -165,31 +166,10 @@ namespace SuecaContracts
             Console.WriteLine("[server] has distribute cards");
 
             CreateGameInfoClient();
-             
-        }
-
-        void timer_Elapsed(Room room)
-        {
-            foreach(Player p in room.ListPlayers)
-            {
-                if(p.TimeOutClientWeb.HasValue)
-                {
-                    Console.WriteLine("[server] check web client player " + p.Token);
-                    if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).Milliseconds > 10000)
-                    {
-                        //A web client is deconnect
-                        IsPlayerDisconnectDuringParty = true;
-                        PlayerDisconnectDuringParty = p;
-                    }
-                }
-            }
-
-            Console.WriteLine("[server] check web client");
         }
 
         private void UpdateRoomForClient()
         {
-            //new System.Threading.Timer(obj => { gameUpdated(this); }, null, 1000, System.Threading.Timeout.Infinite);
             if(gameUpdated != null)
             {
                 new Thread(new ParameterizedThreadStart(

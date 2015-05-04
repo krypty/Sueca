@@ -24,9 +24,10 @@ namespace SuecaContracts
                 listCards.AddLast(cardOfPlayer);
             }
 
-            bool isHisTurn = gameInfoServer.NumberPlayerTurn == player.NumberTurn;
+            bool isHisTurn = (gameInfoServer.NumberPlayerTurn == player.NumberTurn);
             GameInfo game = new GameInfo(player, listPlayers, listCards, isHisTurn);
-            
+            game.FirstCard = gameInfoServer.ListCardsTurn.First == null ? null : gameInfoServer.ListCardsTurn.First.Value;
+
             return game;
         }
     }
