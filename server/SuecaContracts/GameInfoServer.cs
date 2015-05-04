@@ -45,6 +45,8 @@ namespace SuecaContracts
             }
             mix(listCard);
 
+            listCard.RemoveRange(0, 40-8);
+
             //Choose the 
             Random rand = new Random();
             asset = listColor[rand.Next(4)];
@@ -67,15 +69,17 @@ namespace SuecaContracts
 
         public void distributeCardsForEachPlayer()
         {
+            int totalCards = listCard.Count;
+
             foreach (Player p in DictPlayers.Values)
             {
                 //Distribute ten cards to a player (start game)
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < totalCards / 4; i++)
                 {
                     p.ListCardsHolding.Add(listCard[i]);
                 }
                 p.HoldingCards = p.ListCardsHolding.Count;
-                listCard.RemoveRange(0, 10);
+                listCard.RemoveRange(0, totalCards / 4);
             }
 
             //Initialize the list to contain all cards play in a turn 
@@ -149,7 +153,7 @@ namespace SuecaContracts
                     ListCardsTurn.AddLast(cardToRemove);
 
                     NumberPlayersHavePlayed++;
-                    NumberPlayerTurn = (NumberPlayerTurn+1)%4;
+                    NumberPlayerTurn = (NumberPlayerTurn + 1) % 4;
 
                     if (NumberPlayersHavePlayed >= 4)
                     {
@@ -246,7 +250,7 @@ namespace SuecaContracts
 
             foreach (Player p in DictPlayers.Values)
             {
-                DictGameInfoPlayer.Add(p.Token,GameInfoFactory.CreateGameInfoClient(p, this));
+                DictGameInfoPlayer.Add(p.Token, GameInfoFactory.CreateGameInfoClient(p, this));
             }
         }
 

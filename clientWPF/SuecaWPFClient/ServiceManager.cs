@@ -60,6 +60,12 @@ namespace suecaWPFClient
             _suecaClient.PlayCard(playerToken, convertedCard.Color, convertedCard.Value);
         }
 
+
+        internal void SendEndGameReceived(string playerToken)
+        {
+            _suecaClient.SendEndGameReceived(playerToken);
+        }
+
         #region CALLBACK methods
 
         public void GameStarted(string message)
