@@ -65,13 +65,13 @@
             <!-- END PLAYERS HAND -->
 
             <!-- LAIDS CARDS -->
-            <Canvas Name="LaidCardWest"  Canvas.Left="1304" Canvas.Top="870" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}">
+            <Canvas Name="LaidCardEast"  Canvas.Left="1304" Canvas.Top="870" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}">
                 <Canvas.LayoutTransform>
                     <RotateTransform Angle="-90"></RotateTransform>
                 </Canvas.LayoutTransform>
             </Canvas>
 
-            <Canvas Name="LaidCardEast" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}" Canvas.Left="318" Canvas.Top="870">
+            <Canvas Name="LaidCardWest" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}" Canvas.Left="318" Canvas.Top="870">
                 <Canvas.LayoutTransform>
                     <RotateTransform Angle="90"></RotateTransform>
                 </Canvas.LayoutTransform>

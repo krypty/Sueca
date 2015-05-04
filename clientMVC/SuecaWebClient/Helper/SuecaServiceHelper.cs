@@ -19,6 +19,111 @@ namespace SuecaWebClient.Helper
             
         }
 
+
+        public static string CardColorToString(CardColor c)
+        {
+            switch (c)
+            {
+                case CardColor.Clubs:
+                    return "Clubs";
+                case CardColor.Diamonds:
+                    return "Diamonds";
+                case CardColor.Hearts:
+                    return "Hearts";
+                case CardColor.Spades:
+                    return "Spades";
+            }
+            return "";
+        }
+
+        public static CardColor StringToCardColor(string color)
+        {
+            switch(color)
+            {
+                case "Clubs":
+                    return CardColor.Clubs;
+                case "Diamonds":
+                    return CardColor.Diamonds;
+                case "Hearts":
+                    return CardColor.Hearts;
+                case "Spades":
+                    return CardColor.Spades;
+            }
+            return CardColor.None;
+        }
+
+        public static string CardValueToString(CardValue c)
+        {
+            switch (c)
+            {
+                case CardValue.Ace:
+                    return "As";
+                case CardValue.Two:
+                    return "2";
+                case CardValue.Three:
+                    return "3";
+                case CardValue.Four:
+                    return "4";
+                case CardValue.Five:
+                    return "5";
+                case CardValue.Six:
+                    return "6";
+                case CardValue.Seven:
+                    return "7";
+                case CardValue.Jack:
+                    return "J";
+                case CardValue.Queen:
+                    return "Q";
+                case CardValue.King:
+                    return "K";
+            }
+            return "";
+        }
+
+        public static CardValue StringToCardValue(string value)
+        {
+            switch (value)
+            {
+                case "As":
+                    return CardValue.Ace;
+                case "2":
+                    return CardValue.Two;
+                case "3":
+                    return CardValue.Three;
+                case "4":
+                    return CardValue.Four;
+                case "5":
+                    return CardValue.Five;
+                case "6":
+                    return CardValue.Six;
+                case "7":
+                    return CardValue.Seven;
+                case "J":
+                    return CardValue.Jack;
+                case "Q":
+                    return CardValue.Queen;
+                case "K":
+                    return CardValue.King;
+
+
+            }
+            return CardValue.None;
+
+        }
+
+
+
+
+
+        public bool playCard(String playerToken, string color, string value)
+        {
+
+            
+            client.PlayCard(playerToken, StringToCardColor(color), StringToCardValue(value));
+            return true;
+
+        }
+
         public String joinRoom(string roomId, string password = "")
         {
             if (roomId != "" && client != null)

@@ -38,8 +38,6 @@ namespace suecaWPFClient.Cards
             builder.Append(cardColor);
             builder.Append(@"\");
 
-            Console.WriteLine(cardColor);
-
             switch (cardValue)
             {
                 case CardValue.Two:

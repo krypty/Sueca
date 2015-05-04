@@ -16,30 +16,20 @@ namespace suecaWPFClient.GamePanes
         public RoomPane()
         {
             InitializeComponent();
-            ServiceManager.GetInstance().OnGameInfoUpdated += GameInfoUpdated;
             RefreshRoomList();
         }
 
         private void BtnCreateRoom_Click(object sender, RoutedEventArgs e)
         {
-            CreateRoomWindow roomWindow = new CreateRoomWindow();
+            CreateRoomWindow roomWindow = new CreateRoomWindow("Créer une salle");
 
-            string roomPassword = "";
-            if (roomWindow.ShowDialog() == true)
-            {
-                roomPassword = roomWindow.RoomPassword;
-            }
+            if (roomWindow.ShowDialog() != true) return;
 
-            Console.WriteLine("pass: " + roomPassword);
+            string roomPassword = roomWindow.RoomPassword;
 
             var roomName = ServiceManager.GetInstance().CreateRoom(roomPassword);
             MessageBox.Show("Une salle a été créée avec le nom: " + roomName);
             RefreshRoomList();
-        }
-
-        private void GameInfoUpdated(GameInfo gameInfo)
-        {
-            Console.WriteLine("RoomPane: gameinfo: " + gameInfo.ToString());
         }
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
@@ -77,13 +67,12 @@ namespace suecaWPFClient.GamePanes
             Console.WriteLine("joinRoom");
 
             string roomPassword = "";
-            CreateRoomWindow roomWindow = new CreateRoomWindow();
-            if (roomWindow.ShowDialog() == true)
-            {
-                roomPassword = roomWindow.RoomPassword;
-            }
+            CreateRoomWindow roomWindow = new CreateRoomWindow("Rejoindre une salle");
 
-            Console.WriteLine("pass: " + roomPassword);
+            if (roomWindow.ShowDialog() != true) return;
+
+            roomPassword = roomWindow.RoomPassword;
+
             var playerID = ServiceManager.GetInstance().JoinRoom(room.Name, roomPassword);
             ServiceManager.GetInstance().PlayerToken = playerID;
 

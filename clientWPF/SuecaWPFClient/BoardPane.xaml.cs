@@ -29,6 +29,7 @@ namespace suecaWPFClient
         private Card _firstCardPlayedThisTurn;
 
         private bool _canPlayerPlay;
+        private List<Canvas> _listCanvas;
 
         public BoardPane()
         {
@@ -38,21 +39,22 @@ namespace suecaWPFClient
 
             ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
             _canPlayerPlay = false;
+
+            _listCanvas = new List<Canvas>();
+            _listCanvas.Add(LaidCardSouth);
+            _listCanvas.Add(LaidCardWest);
+            _listCanvas.Add(LaidCardNorth);
+            _listCanvas.Add(LaidCardEast);
         }
 
         private void OnGameInfoUpdated(GameInfo gameInfo)
         {
-            Console.WriteLine("MainWindow: gameinfo" + gameInfo.ToString());
+            _firstCardPlayedThisTurn = gameInfo.FirstCard != null ? CardTools.FromService(gameInfo.FirstCard) : null;
 
-            if (gameInfo.FirstCard != null)
-            {
-                _firstCardPlayedThisTurn = CardTools.FromService(gameInfo.FirstCard);
-            }
-
-            //TODO: populate _listCard with cards from gameInfo
-            UpdateOthersPlayersCards(gameInfo.ListPlayer.Where(p => p.NumberTurn != gameInfo.Player.NumberTurn)); // player North, West, East
+            // update laid cards and players cards
+            UpdateOthersPlayersCards(gameInfo.ListPlayer); // player North, West, East
             UpdatePlayerCards(gameInfo.ListCardsPlayer); // player South
-
+            UpdateLaidCards(gameInfo.ListCardsPlayed);
 
             _canPlayerPlay = gameInfo.NumberPlayerToPlay == gameInfo.Player.NumberTurn;
 
@@ -61,9 +63,56 @@ namespace suecaWPFClient
             _playerToken = ServiceManager.GetInstance().PlayerToken;
         }
 
+        private void UpdateLaidCards(ServiceReference1.Card[] listCards)
+        {
+            //throw new NotImplementedException();
+
+            Console.Write("list played cards: ");
+            int i = 0;
+
+            ClearLaidsCardCanvas();
+            foreach (var card in listCards)
+            {
+                Console.Write(card.Value + " of " + card.Color + ", ");
+                Card convertedCard = CardTools.FromService(card);
+                ReplaceLaidCard(convertedCard, _listCanvas[i]);
+
+                i++;
+            }
+            Console.WriteLine();
+        }
+
+        private void ClearLaidsCardCanvas()
+        {
+            foreach (var canvas in _listCanvas)
+            {
+                canvas.Children.Clear();
+            }
+        }
+
         private void UpdateOthersPlayersCards(IEnumerable<Player> players)
         {
-            //TODO...
+            Console.WriteLine("players size: " + players.ToArray().Count());
+            List<Canvas> listCanvas = new List<Canvas>();
+            listCanvas.Add(NorthPlayerCanvas);
+            listCanvas.Add(EastPlayerCanvas);
+            listCanvas.Add(WestPlayerCanvas);
+
+            Player[] tabPlayers = players.ToArray();
+
+            for (int i = 0; i < listCanvas.Count; i++)
+            {
+                List<Card> listCards = new List<Card>();
+
+                Console.WriteLine("holding cards: " + tabPlayers[i].holdingCards);
+                for (int j = 0; j < tabPlayers[i].holdingCards; j++)
+                {
+                    listCards.Add(CardImageFactory.CreateFaceDownCard());
+                }
+
+                DrawAllPlayersCards(listCanvas[i], listCards);
+            }
+
         }
 
         private void UpdatePlayerCards(ServiceReference1.Card[] listCardsPlayer)
@@ -76,7 +125,7 @@ namespace suecaWPFClient
             }
             AddCardsInGameBoard();
 
-            DrawAllPlayersCards();
+            DrawAllPlayersCards(SouthPlayerCanvas, _listCards);
         }
 
         //private void ResetCards()
@@ -119,18 +168,18 @@ namespace suecaWPFClient
             HighlightCard(card, false);
         }
 
-        private void DrawAllPlayersCards()
+        private void DrawAllPlayersCards(Canvas playerCanvas, List<Card> listCards)
         {
-            double canvasWidth = SouthPlayerCanvas.Width;
+            double canvasWidth = playerCanvas.Width;
             double cardWidth = (1.0 / 12.0) * canvasWidth;
 
             double x = 0;
-            double offset = (3.0 / 4.0) * cardWidth + ((MaxCard - _listCards.Count) / 2.0) * cardWidth;
-            for (int i = 0; i < _listCards.Count; i++)
+            double offset = (3.0 / 4.0) * cardWidth + ((MaxCard - listCards.Count) / 2.0) * cardWidth;
+            for (int i = 0; i < listCards.Count; i++)
             {
                 if (i == 0) x += offset;
 
-                Card card = _listCards[i];
+                Card card = listCards[i];
                 card.SetValue(Canvas.LeftProperty, x);
                 card.SetValue(Canvas.TopProperty, 0.0);
 
@@ -181,7 +230,6 @@ namespace suecaWPFClient
 
         private void Card_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("hello from custom card !");
             Card card = (Card)sender;
             //Console.WriteLine(card.ToString());
 
@@ -204,7 +252,7 @@ namespace suecaWPFClient
             return (card.CardColor == _firstCardPlayedThisTurn.CardColor || !_listCards.Exists(c => c.CardColor == _firstCardPlayedThisTurn.CardColor));
         }
 
-        private void ReplaceLaidCard(Card card)
+        private void ReplaceLaidCard(Card card, Canvas canvas)
         {
             card.MouseDown -= Card_OnMouseDown;
             card.MouseEnter -= CardOnMouseEnter;
@@ -212,8 +260,8 @@ namespace suecaWPFClient
             card.SetValue(Canvas.LeftProperty, 0.0);
             card.SetValue(Canvas.TopProperty, 0.0);
 
-            LaidCardSouth.Children.Clear();
-            LaidCardSouth.Children.Add(card);
+            canvas.Children.Clear();
+            canvas.Children.Add(card);
         }
     }
 }
