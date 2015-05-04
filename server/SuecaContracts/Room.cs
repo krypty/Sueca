@@ -13,9 +13,10 @@ namespace SuecaContracts
         private System.Timers.Timer timer;
 
         public bool IsPlayerDisconnectDuringParty {get;set;}
-        public Player PlayerDisconnectDuringParty { get; set; }
+        public List<Player> ListPlayerDisconnectDuringParty { get; set; }
 
-        private const int CHECK_WEB_CLIENT_TIME = 30000;
+        private const int TIME_SEND_GAME_INFO_CLIENT = 1000;
+        private const int TIME_SEND_GAME_INFO_CLIENT_END_TURN = 5000;
         private const int NB_PLAYER_PER_GAME = 4;
         public delegate void CallbackDelegate<T>(T t);
         public CallbackDelegate<string> gameStarted;
@@ -48,14 +49,13 @@ namespace SuecaContracts
             set { listPlayers = value; }
         }
 
-
-
         public Room(string password = "")
         {
             Password = password;
             Name = GenerateName();
 
             listPlayers = new List<Player>();
+            ListPlayerDisconnectDuringParty = new List<Player>();
 
             ResetRoom();
         }
@@ -165,7 +165,7 @@ namespace SuecaContracts
 
             Console.WriteLine("[server] has distribute cards");
 
-            CreateGameInfoClient();
+            CreateGameInfoClient(TIME_SEND_GAME_INFO_CLIENT);
         }
 
         private void UpdateRoomForClient()
@@ -176,7 +176,23 @@ namespace SuecaContracts
                     delegate(object room)
                     {
                         Thread.Sleep(1000);
-                        gameUpdated((Room)room);
+                        
+                        Room r = (Room)room;
+                        gameUpdated(r);
+                         /*   
+                        foreach(Player p in r.ListPlayers)
+                        {
+                            try
+                            {
+                            p.Callback.RoomUpdated(r);
+                            }
+                            catch 
+                            {
+                                ListPlayerDisconnectDuringParty.Add(p);
+                                Console.WriteLine("[server] error when room updated WPF client");
+                            }
+                        }   
+                          * */
                     })
                 ).Start(this);
             }
@@ -192,7 +208,7 @@ namespace SuecaContracts
                 EndOfGame();
             }
 
-            CreateGameInfoClient();
+            CreateGameInfoClient(TIME_SEND_GAME_INFO_CLIENT);
 
             return isSuccess;
         }
@@ -235,14 +251,14 @@ namespace SuecaContracts
             //ResetRoom();
         }
 
-        private void CreateGameInfoClient()
+        private void CreateGameInfoClient(int timeInMillis)
         {
             gameInfo.CreateGameInfoClient();
 
             new Thread(new ParameterizedThreadStart(
                 delegate(object dictGameInfo)
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(timeInMillis);
 
                     Dictionary<string, GameInfo> dict = dictGameInfo as Dictionary<string, GameInfo>;
 
@@ -256,22 +272,30 @@ namespace SuecaContracts
         {
             if (dict != null)
             {
-                foreach (GameInfo game in dict.Values)
+                try
                 {
-                    ISuecaCallbackContract callback = game.Player.Callback;
-                    if (callback != null)
+                    foreach (GameInfo game in dict.Values)
                     {
-                        //Check is a wpf client is disconnect during party
-                        try
+                        ISuecaCallbackContract callback = game.Player.Callback;
+                        if (callback != null)
                         {
-                            callback.GameInfoUpdated(game);
-                        }
-                        catch
-                        {
-                            PlayerDisconnectDuringParty = game.Player;
+                            //Check is a wpf client is disconnect during party
+                            try
+                            {
+                                callback.GameInfoUpdated(game);
+                            }
+                            catch
+                            {
+                                ListPlayerDisconnectDuringParty.Add(game.Player);
+                            }
                         }
                     }
                 }
+                catch
+                {
+                    Console.WriteLine("[server] error when send callback gameinfo");
+                }
+                
             }
         }
 

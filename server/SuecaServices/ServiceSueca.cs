@@ -50,47 +50,39 @@ namespace SuecaServices
                             {
                                 //A web client is deconnect
                                 r.IsPlayerDisconnectDuringParty = true;
-                                r.PlayerDisconnectDuringParty = p;
+                                r.ListPlayerDisconnectDuringParty.Add(p);
+                                Console.WriteLine("[server] the player " + p.Token+" is disconnect");
                             }
                         }
                     }
                 }
                 
 
-                if(r.PlayerDisconnectDuringParty != null)
+                if(r.ListPlayerDisconnectDuringParty.Count > 0)
                 {
-                    Console.WriteLine("[server] the room " + r.Name + " has the player " + r.PlayerDisconnectDuringParty.Token + " disconnect and reset the order of turn");
-                    
                     //Permit to another user to come in the room by removing the other user
-                    r.ListPlayers.Remove(r.PlayerDisconnectDuringParty);
+                    foreach(Player p in r.ListPlayerDisconnectDuringParty)
+                    {
+                        r.ListPlayers.Remove(p);
+                        Console.WriteLine("[server] remove the player " + p.Token+" from the list players");
+                    }
 
+
+                    int i = 0;
                     //Reset the order of turn
                     foreach (Player p in r.ListPlayers)
                     {
-                        switch (r.PlayerDisconnectDuringParty.NumberTurn)
-                        {
-                            case 0:
-                                p.NumberTurn--;
-                                break;
-                            case 1:
-                                if (p.NumberTurn > 1)
-                                    p.NumberTurn--;
-                                break;
-                            case 2:
-                                if (p.NumberTurn > 2)
-                                    p.NumberTurn--;
-                                break;
-                            default:
-                                break;
-                        }
+                        p.NumberTurn = i;
+                        i++;
                     }
+                    
                     
                     if(r.RoomState == Room.StateRoom.GAME_IN_PROGRESS)
                     {
-                        //Reset the room
                         r.ResetRoom();
-                        Console.WriteLine("[server] the room " + r.Name + " has to be relaunch because player " + r.PlayerDisconnectDuringParty.Token + " is disconnect");
+                        Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
                     }
+
                 }
             }
         }
