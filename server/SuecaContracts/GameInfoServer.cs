@@ -74,7 +74,7 @@ namespace SuecaContracts
                 {
                     p.ListCardsHolding.Add(listCard[i]);
                 }
-
+                p.HoldingCards = p.ListCardsHolding.Count;
                 listCard.RemoveRange(0, 10);
             }
 

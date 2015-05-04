@@ -199,6 +199,9 @@ namespace SuecaContracts
 
         private void EndOfGame()
         {
+
+            Console.WriteLine("[server] End of Game");
+
             RoomState = StateRoom.END_GAME;
 
             //Calculate the score for the round
@@ -225,6 +228,8 @@ namespace SuecaContracts
                 {
                     p.Score += 4;
                 }
+
+                Console.WriteLine("[server] Player "+ p.Token+" make a score of "+p.Score);
             }
 
             //ResetRoom();
