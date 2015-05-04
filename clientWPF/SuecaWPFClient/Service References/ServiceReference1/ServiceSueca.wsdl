@@ -210,6 +210,7 @@
       <xs:complexType name="Player">
         <xs:sequence>
           <xs:element minOccurs="0" name="NumberTurn" type="xs:int" />
+          <xs:element minOccurs="0" name="Score" type="xs:int" />
           <xs:element minOccurs="0" name="holdingCards" type="xs:int" />
           <xs:element minOccurs="0" name="isReady" type="xs:boolean" />
           <xs:element minOccurs="0" name="takenCards" type="xs:int" />

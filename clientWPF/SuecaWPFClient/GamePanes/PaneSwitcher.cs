@@ -46,8 +46,6 @@ namespace suecaWPFClient.GamePanes
                 bool isBoardEnable = state.Equals(GameState.InGame);
                 BoardEnabled(isBoardEnable);
             }
-
-            Console.WriteLine("state changed " + state.ToString());
             _control.Content = _dictUserControls[state];
         }
 

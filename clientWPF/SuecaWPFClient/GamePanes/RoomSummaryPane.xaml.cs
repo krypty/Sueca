@@ -20,7 +20,6 @@ namespace suecaWPFClient.GamePanes
 
         private void OnGameInfoUpdated(GameInfo gameInfo)
         {
-            Console.WriteLine("roomsummarypane: gameinfo updated");
             ChangeState(GameState.InGame);
         }
 

@@ -16,7 +16,6 @@ namespace suecaWPFClient.GamePanes
         public RoomPane()
         {
             InitializeComponent();
-            ServiceManager.GetInstance().OnGameInfoUpdated += GameInfoUpdated;
             RefreshRoomList();
         }
 
@@ -28,16 +27,9 @@ namespace suecaWPFClient.GamePanes
 
             string roomPassword = roomWindow.RoomPassword;
 
-            Console.WriteLine("pass: " + roomPassword);
-
             var roomName = ServiceManager.GetInstance().CreateRoom(roomPassword);
             MessageBox.Show("Une salle a été créée avec le nom: " + roomName);
             RefreshRoomList();
-        }
-
-        private void GameInfoUpdated(GameInfo gameInfo)
-        {
-            Console.WriteLine("RoomPane: gameinfo: " + gameInfo.ToString());
         }
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
@@ -81,7 +73,6 @@ namespace suecaWPFClient.GamePanes
 
             roomPassword = roomWindow.RoomPassword;
 
-            Console.WriteLine("pass: " + roomPassword);
             var playerID = ServiceManager.GetInstance().JoinRoom(room.Name, roomPassword);
             ServiceManager.GetInstance().PlayerToken = playerID;
 

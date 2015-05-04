@@ -36,7 +36,6 @@ namespace suecaWPFClient
 
         private void ExpanderChanged(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(SideMenuPaneExpander.IsExpanded);
             LeftSideColumn.Width = SideMenuPaneExpander.IsExpanded ? new GridLength(3, GridUnitType.Star) : new GridLength(23);
             RightSideColumn.Width = new GridLength(5, GridUnitType.Star);
 

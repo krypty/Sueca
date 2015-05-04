@@ -25,12 +25,9 @@ namespace suecaWPFClient.GamePanes
 
         protected void ChangeState(GameState state)
         {
-            Console.WriteLine("GameStatePaneA 1");
             if (OnStateChanged != null)
             {
-                Console.WriteLine("GameStatePaneA 2");
                 OnStateChanged(state);
-
                 //TODO: if GameState.ListRoom --> Remove content on ServiceManager ?
             }
         }

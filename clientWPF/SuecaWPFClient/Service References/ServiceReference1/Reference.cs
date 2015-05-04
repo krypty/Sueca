@@ -117,6 +117,9 @@ namespace suecaWPFClient.ServiceReference1 {
         private int NumberTurnField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ScoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int holdingCardsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -147,6 +150,19 @@ namespace suecaWPFClient.ServiceReference1 {
                 if ((this.NumberTurnField.Equals(value) != true)) {
                     this.NumberTurnField = value;
                     this.RaisePropertyChanged("NumberTurn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Score {
+            get {
+                return this.ScoreField;
+            }
+            set {
+                if ((this.ScoreField.Equals(value) != true)) {
+                    this.ScoreField = value;
+                    this.RaisePropertyChanged("Score");
                 }
             }
         }
