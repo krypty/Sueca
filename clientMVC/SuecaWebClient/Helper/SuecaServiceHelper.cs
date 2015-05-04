@@ -254,6 +254,12 @@ namespace SuecaWebClient.Helper
             {
                 //throw new NotImplementedException();
             }
+
+
+            public void CheckConnection()
+            {
+                //throw new NotImplementedException();
+            }
         }
 
 

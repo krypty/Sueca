@@ -93,7 +93,9 @@ function _getRoomState()
                         _playerTurn = data.playerTurn;
 
                         //TODO ADD CARDS ON BOARD
-
+                        
+                        newCardsOnBoard(data.listPlayedCards);
+                        
 
 
                         //Ajout des cartes en main

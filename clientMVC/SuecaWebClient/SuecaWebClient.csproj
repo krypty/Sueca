@@ -364,14 +364,14 @@
     <Content Include="Service References\SuecaService\SuecaWebClient.SuecaService.GameInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\SuecaService\service1.wsdl" />
-    <None Include="Service References\SuecaService\service2.xsd">
+    <None Include="Service References\SuecaService\service.wsdl" />
+    <None Include="Service References\SuecaService\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SuecaService\service21.xsd">
+    <None Include="Service References\SuecaService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SuecaService\SuecaContracts1.xsd">
+    <None Include="Service References\SuecaService\SuecaContracts.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

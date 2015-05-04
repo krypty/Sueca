@@ -102,6 +102,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendEndGameReceived">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="playerToken" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendEndGameReceivedResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GameStarted">
     <xs:complexType>
       <xs:sequence>
@@ -121,6 +133,11 @@
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="gameInfo" nillable="true" type="q7:GameInfo" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckConnection">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>
