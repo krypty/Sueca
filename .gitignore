@@ -181,3 +181,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# custom
+
+clientWPF/SuecaWPFClient/Service References/ServiceReference1/*
