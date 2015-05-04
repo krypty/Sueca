@@ -62,6 +62,7 @@ namespace SuecaContracts
         {
             RoomState = StateRoom.WAITING_READY;
             IsPlayerDisconnectDuringParty = false;
+            gameInfo = null;
 
             foreach(Player p in listPlayers)
             {
@@ -123,6 +124,7 @@ namespace SuecaContracts
             {
                 if (RoomState == StateRoom.GAME_IN_PROGRESS)
                 {
+                    /*
                     RoomState = StateRoom.WAITING_READY;
                     
                     //If the user send not ready during a game, it means that he leaves the game
@@ -132,6 +134,8 @@ namespace SuecaContracts
 
                     gameInfo = null;
                     gameUpdated = null;
+                     * 
+                     */
                 }
             }
 
@@ -199,9 +203,9 @@ namespace SuecaContracts
             
         }
 
-        public void PlayCard(string playerToken, CardColor color, CardValue value)
+        public bool PlayCard(string playerToken, CardColor color, CardValue value)
         {
-            gameInfo.PlayCard(playerToken, color, value);
+            bool isSuccess = gameInfo.PlayCard(playerToken, color, value);
             
             if (listPlayers.Count<Player>(p => p.ListCardsHolding.Count > 0) <= 0)
             {
@@ -209,22 +213,41 @@ namespace SuecaContracts
             }
 
             CreateGameInfoClient();
+
+            return isSuccess;
         }
 
         private void EndOfGame()
         {
             RoomState = StateRoom.END_GAME;
 
-            //Calculate the score
+            //Calculate the score for the round
             foreach(Player p in listPlayers)
             {
                 foreach(Card c in p.ListCardsWin)
                 {
-                    p.Score += c.RealValue;
+                    p.ScoreParty += c.RealValue;
                 }
             }
 
-            ResetRoom();
+            //Calculate the final score for the round
+            foreach(Player p in listPlayers)
+            {
+                if(p.ScoreParty > 60 & p.ScoreParty <= 89)
+                {
+                    p.Score += 1;
+                }
+                else if(p.ScoreParty >= 90 & p.ScoreParty < 120)
+                {
+                    p.Score += 2;
+                }
+                else if(p.ScoreParty >= 120)
+                {
+                    p.Score += 4;
+                }
+            }
+
+            //ResetRoom();
         }
 
         private void CreateGameInfoClient()

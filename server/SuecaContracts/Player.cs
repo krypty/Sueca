@@ -21,13 +21,15 @@ namespace SuecaContracts
         bool isReady;
 
         [DataMember]
-        int holdingCards;
+        public int HoldingCards{get;set;}
 
         [DataMember]
-        int takenCards;
+        public int TakenCards { get; set; }
 
         [DataMember]
         public int Score{get;set;}
+
+        public int ScoreParty { get; set; }
 
         ISuecaCallbackContract callback;
         public string Token
@@ -49,14 +51,14 @@ namespace SuecaContracts
         {
             get { return listCardsWin; }
             set { listCardsWin = value;
-            takenCards = listCardsWin.Count;
+            TakenCards = listCardsWin.Count;
             }
         }
         internal List<Card> ListCardsHolding
         {
             get { return listCardsHolding; }
             set { listCardsHolding = value;
-            holdingCards = listCardsHolding.Count;
+            HoldingCards = listCardsHolding.Count;
             }
         }
 
@@ -74,6 +76,7 @@ namespace SuecaContracts
             this.Score = 0;
             this.IsReady = false;
             this.ListCardsHolding = new List<Card>();
+            
             this.ListCardsWin = new List<Card>();
             this.Callback = null;
             this.TimeOutClientWeb = null;
@@ -82,6 +85,17 @@ namespace SuecaContracts
         public Player(string playerToken) : this()
         {
             this.token = playerToken;
+        }
+
+        public Player(Player player) : this(player.token)
+        {
+            this.Score = player.Score;
+            this.isReady = player.isReady;
+            this.ListCardsHolding = player.listCardsHolding.ToList();
+            this.ListCardsWin = player.listCardsWin.ToList();
+            this.Callback = player.Callback;
+            this.TimeOutClientWeb = player.TimeOutClientWeb;
+            this.numberTurn = player.numberTurn;
         }
 
     }

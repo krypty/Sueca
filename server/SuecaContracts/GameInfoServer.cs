@@ -10,35 +10,37 @@ namespace SuecaContracts
     {
         List<Card> listCard;
         CardColor asset;
-        Dictionary<string, Player> dictPlayers;
+        public Dictionary<string, Player> DictPlayers { get; set; }
         //0-3
-        private int numberPlayerTurn;
+        public int NumberPlayerTurn { get; set; }
         //1-4
-        private int numberPlayersHavePlayed;
+        public int NumberPlayersHavePlayed { get; set; }
+        //Number of first player of the round
+        public int FirstPlayerToPlay { get; set; }
 
-        private LinkedList<Card> listCardsTurn;
+        public LinkedList<Card> ListCardsTurn;
         //Dictionnary to known who's player have this card on a turn
-        private Dictionary<Card, string> dictCardPlayerForTurn;
+        public Dictionary<string, Card> DictCardPlayerForTurn { get; set; }
 
         public Dictionary<string, GameInfo> DictGameInfoPlayer { get; set; }
 
         public GameInfoServer()
         {
             listCard = new List<Card>();
-            dictPlayers = new Dictionary<string, Player>();
+            DictPlayers = new Dictionary<string, Player>();
             DictGameInfoPlayer = new Dictionary<string, GameInfo>();
 
             List<CardColor> listColor = new List<CardColor>();
-            
+
             //List not static to permit the mix
             foreach (CardColor color in Enum.GetValues(typeof(CardColor)))
             {
-                foreach(CardValue value in Enum.GetValues(typeof(CardValue)))
+                foreach (CardValue value in Enum.GetValues(typeof(CardValue)))
                 {
-                    if(color != CardColor.None & value != CardValue.None)
-                        listCard.Add(new Card(color,value));
+                    if (color != CardColor.None & value != CardValue.None)
+                        listCard.Add(new Card(color, value));
                 }
-                if(color != CardColor.None)
+                if (color != CardColor.None)
                     listColor.Add(color);
             }
             mix(listCard);
@@ -49,21 +51,23 @@ namespace SuecaContracts
         }
 
 
-        public GameInfoServer(List<Player> listPlayers) : this()
+        public GameInfoServer(List<Player> listPlayers)
+            : this()
         {
-            foreach(Player p in listPlayers)
+            foreach (Player p in listPlayers)
             {
-                dictPlayers.Add(p.Token,p);
+                DictPlayers.Add(p.Token, p);
             }
 
             //Define the first player to play and the number of players who have played
-            numberPlayerTurn = 0; //Player to the right of the first player
-            numberPlayersHavePlayed = 0;
+            NumberPlayerTurn = 0; //Player to the right of the first player
+            NumberPlayersHavePlayed = 0;
+            FirstPlayerToPlay = NumberPlayerTurn;
         }
 
         public void distributeCardsForEachPlayer()
         {
-            foreach(Player p in dictPlayers.Values)
+            foreach (Player p in DictPlayers.Values)
             {
                 //Distribute ten cards to a player (start game)
                 for (int i = 0; i < 10; i++)
@@ -75,32 +79,34 @@ namespace SuecaContracts
             }
 
             //Initialize the list to contain all cards play in a turn 
-            listCardsTurn = new LinkedList<Card>();
-            dictCardPlayerForTurn = new Dictionary<Card, string>();
+            ListCardsTurn = new LinkedList<Card>();
+            DictCardPlayerForTurn = new Dictionary<string, Card>();
         }
 
-        public void PlayCard(string playerToken, CardColor color, CardValue value)
+        public bool PlayCard(string playerToken, CardColor color, CardValue value)
         {
+            bool isSuccess = false;
+
             Player player;
-            if(dictPlayers.TryGetValue(playerToken, out player))
+            if (DictPlayers.TryGetValue(playerToken, out player))
             {
                 //If it's the turn of this player
-                if(player.NumberTurn == numberPlayerTurn)
+                if (player.NumberTurn == NumberPlayerTurn)
                 {
                     //Card played
                     Card card = new Card(color, value);
-                    if(listCardsTurn.Count > 0)
+                    if (ListCardsTurn.Count > 0)
                     {
                         //If it's the right color to play
-                        Card firstCard = (listCardsTurn.First).Value;
-                        if(color == firstCard.Color)
+                        Card firstCard = (ListCardsTurn.First).Value;
+                        if (color == firstCard.Color)
                         {
-                            PlayCardForPlayer(player, card);
+                            isSuccess = PlayCardForPlayer(player, card);
                         }
                         //Else if the player has no card of this color, he has the right to put a card of another color
-                        else if(player.ListCardsHolding.Count<Card>(c => c.Color == firstCard.Color) <= 0)
+                        else if (player.ListCardsHolding.Count<Card>(c => c.Color == firstCard.Color) <= 0)
                         {
-                            PlayCardForPlayer(player, card);
+                            isSuccess = PlayCardForPlayer(player, card);
                         }
                         else
                         {
@@ -110,69 +116,76 @@ namespace SuecaContracts
                     else
                     {
                         //First card on the turn
-                        PlayCardForPlayer(player, card);
+                        isSuccess = PlayCardForPlayer(player, card);
                     }
                 }
                 else
                 {
                     Console.WriteLine("[server] the false user attempt to play");
                 }
-                
+
             }
             else
             {
                 Console.WriteLine("[server] an unknown user attempt to play");
             }
+
+            return isSuccess;
         }
 
-        private void PlayCardForPlayer(Player player, Card card)
+        private bool PlayCardForPlayer(Player player, Card card)
         {
-            if(card.Value != CardValue.None && card.Color != CardColor.None)
+            bool isSuccess = false;
+            if (card.Value != CardValue.None && card.Color != CardColor.None)
             {
                 Card cardToRemove = player.ListCardsHolding.First<Card>(c => c.Value == card.Value & c.Color == card.Color);
 
-
                 if (player.ListCardsHolding.Remove(cardToRemove))
                 {
+                    isSuccess = true;
+                    player.HoldingCards = player.ListCardsHolding.Count;
                     //Dictionary to know which card a player has played
-                    dictCardPlayerForTurn.Add(cardToRemove, player.Token);
-                    listCardsTurn.AddLast(cardToRemove);
+                    DictCardPlayerForTurn.Add(player.Token, cardToRemove);
+                    ListCardsTurn.AddLast(cardToRemove);
 
-                    numberPlayersHavePlayed++;
-                    numberPlayerTurn++;
-                    if(numberPlayersHavePlayed >= 4)
+                    NumberPlayersHavePlayed++;
+                    NumberPlayerTurn = (NumberPlayerTurn+1)%4;
+
+                    if (NumberPlayersHavePlayed >= 4)
                     {
                         CalculateTurn();
-                        numberPlayersHavePlayed = 0;
+                        NumberPlayersHavePlayed = 0;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("[server] an error has occured when player "+player.Token+" has played card "+card.Color+" : "+card.Value+" !");
+                    Console.WriteLine("[server] an error has occured when player " + player.Token + " has played card " + card.Color + " : " + card.Value + " !");
                 }
             }
             else
             {
-                Console.WriteLine("[server] player " + player.Token+ " played no card");
+                Console.WriteLine("[server] player " + player.Token + " played no card");
             }
+
+            return isSuccess;
         }
 
-        
+
         private void CalculateTurn()
         {
-            Card firstCard = (listCardsTurn.First).Value;
+            Card firstCard = (ListCardsTurn.First).Value;
             Card bestCard = firstCard;
 
-            foreach(Card card in listCardsTurn)
+            foreach (Card card in ListCardsTurn)
             {
                 //If the card has not the same color and is not an asset, the card has no chance of win
-                if(card.Color == firstCard.Color || card.Color == asset)
+                if (card.Color == firstCard.Color || card.Color == asset)
                 {
-                    if(card.Color == asset)
+                    if (card.Color == asset)
                     {
-                        if(bestCard.Color == asset)
+                        if (bestCard.Color == asset)
                         {
-                            if(card.RealValue > bestCard.RealValue)
+                            if (card.RealValue > bestCard.RealValue)
                             {
                                 bestCard = card;
                             }
@@ -184,7 +197,7 @@ namespace SuecaContracts
                     }
                     else
                     {
-                        if(card.RealValue > bestCard.RealValue)
+                        if (card.RealValue > bestCard.RealValue)
                         {
                             bestCard = card;
                         }
@@ -192,29 +205,38 @@ namespace SuecaContracts
                 }
             }
 
-            string winnerToken;
-            if(dictCardPlayerForTurn.TryGetValue(bestCard,out winnerToken))
+            try
             {
-                Player winner;
-                if(dictPlayers.TryGetValue(winnerToken, out winner))
+                string winnerToken = DictCardPlayerForTurn.First(x => x.Value == bestCard).Key;
+
+                if (winnerToken != null)
                 {
-                    Console.WriteLine("[server] the best card of the turn is : "+bestCard.Color+" : "+bestCard.Value+" and the player who win is : " + winnerToken);
-                    winner.ListCardsWin.AddRange(listCardsTurn);
-                    numberPlayerTurn = winner.NumberTurn;
+                    Player winner;
+                    if (DictPlayers.TryGetValue(winnerToken, out winner))
+                    {
+                        Console.WriteLine("[server] the best card of the turn is : " + bestCard.Color + " : " + bestCard.Value + " and the player who win is : " + winnerToken);
+                        winner.ListCardsWin.AddRange(ListCardsTurn);
+                        winner.TakenCards = winner.ListCardsWin.Count;
+                        NumberPlayerTurn = winner.NumberTurn;
+                        FirstPlayerToPlay = NumberPlayerTurn;
+                    }
+                    else
+                    {
+                        Console.WriteLine("[server] an error has occured at the end of the calculation of winner for the turn");
+                    }
+
+                    ListCardsTurn.Clear();
+                    DictCardPlayerForTurn.Clear();
                 }
                 else
                 {
                     Console.WriteLine("[server] an error has occured at the end of the calculation of winner for the turn");
                 }
-
-                listCardsTurn.Clear();
-                dictCardPlayerForTurn.Clear();
             }
-            else
+            catch
             {
-                Console.WriteLine("[server] an error has occured at the end of the calculation of winner for the turn");
+                Console.WriteLine("[server] an error has occured when server tried to get the winner of the turn");
             }
-
 
         }
 
@@ -222,18 +244,9 @@ namespace SuecaContracts
         {
             DictGameInfoPlayer.Clear();
 
-            foreach(Player p in dictPlayers.Values)
+            foreach (Player p in DictPlayers.Values)
             {
-                GameInfo game = new GameInfo(p, dictPlayers.Values.ToList(), numberPlayerTurn);
-
-                //If at least one card is put on the table, get the first to know the color for others players
-                if (listCardsTurn.Count > 0)
-                    game.FirstCard = listCardsTurn.First.Value;
-
-                game.ListCardsPlayed = listCardsTurn;
-                game.ListCardsPlayer = p.ListCardsHolding;
-
-                DictGameInfoPlayer.Add(p.Token, game);
+                DictGameInfoPlayer.Add(p.Token,GameInfoFactory.CreateGameInfoClient(p, this));
             }
         }
 

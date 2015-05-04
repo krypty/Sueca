@@ -185,14 +185,16 @@ namespace SuecaServices
             
         }
 
-        public void PlayCard(string playerToken, CardColor color, CardValue value)
+        public bool PlayCard(string playerToken, CardColor color, CardValue value)
         {
             Room currentRoom = GetRoomFromPlayerToken(playerToken);
 
             if(currentRoom != null)
             {
-                currentRoom.PlayCard(playerToken,color,value);
+                return currentRoom.PlayCard(playerToken,color,value);
             }
+
+            return false;
         }
 
         private Room GetRoomFromPlayerToken(string playerToken)

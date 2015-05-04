@@ -10,7 +10,7 @@ namespace SuecaContracts
         public Player Player { get; set; }
 
         [DataMember]
-        public int NumberPlayerToPlay { get; set; }
+        public bool IsMyTurn { get; set; }
 
         [DataMember]
         public LinkedList<Card> ListCardsPlayed { get; set; }
@@ -19,24 +19,22 @@ namespace SuecaContracts
         public List<Card> ListCardsPlayer{get;set;}
 
         [DataMember]
-        public List<Player> ListPlayer { get; set; }
+        public LinkedList<Player> ListPlayer { get; set; }
 
         [DataMember]
-        public Card[] tabCards;
+        public int FirstPlayerNumber { get; set; }
 
-        [DataMember]
-        public Card FirstCard {get;set;}
-
-        public GameInfo(Player player, List<Player> listPlayers, int numberPlayerToPlay) 
+        public GameInfo(Player player, LinkedList<Player> listPlayers, LinkedList<Card> listCards, bool isMyTurn) 
         {
             //User for who the gameinfo is
             Player = player;
+            ListCardsPlayer = player.ListCardsHolding;
 
             //List of other players
             ListPlayer = listPlayers;
-            ListPlayer.Remove(Player);
+            ListCardsPlayed = listCards;
 
-            NumberPlayerToPlay = numberPlayerToPlay;
+            IsMyTurn = isMyTurn;
         }
 
     }
