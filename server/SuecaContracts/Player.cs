@@ -12,7 +12,9 @@ namespace SuecaContracts
     {
         private List<Card> listCardsHolding;
         private List<Card> listCardsWin;
-        private int numberTurn;
+        
+        [DataMember]
+        public int NumberTurn { get; set; }
 
         [DataMember]
         string token;
@@ -64,13 +66,6 @@ namespace SuecaContracts
 
         public DateTime? TimeOutClientWeb {get;set;}
 
-        [DataMember]
-        public int NumberTurn
-        {
-            get { return numberTurn; }
-            set { numberTurn = value; }
-        }
-
         public Player()
         {
             this.Score = 0;
@@ -95,7 +90,7 @@ namespace SuecaContracts
             this.ListCardsWin = player.listCardsWin.ToList();
             this.Callback = player.Callback;
             this.TimeOutClientWeb = player.TimeOutClientWeb;
-            this.numberTurn = player.numberTurn;
+            this.NumberTurn = player.NumberTurn;
         }
 
     }

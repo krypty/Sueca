@@ -9,7 +9,7 @@ using System.Threading;
 namespace SuecaServices
 {
     // Only one instance of the service is running. Only one call by client at a time but multiple clients allowed 
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single,AddressFilterMode = AddressFilterMode.Any)]
     public class ServiceSueca : ISuecaContract
     {
         private const int CHECK_ROOM_TIME = 30000;
@@ -31,7 +31,9 @@ namespace SuecaServices
             timerCheckRoom.Elapsed += (sender, e) =>
             {
                 timerCheckRoom_Elapsed(dictRoom);
-            }; 
+            };
+
+            timerCheckRoom.Enabled = true;
         }
 
         void timerCheckRoom_Elapsed(Dictionary<string,Room> dict)
@@ -39,6 +41,7 @@ namespace SuecaServices
             Console.WriteLine("[server] check if a room has to be killed");
             foreach(Room r in dictRoom.Values)
             {
+                /*
                 if (r.ListPlayers.Where<Player>(p => p.Callback == null).Count() > 0)
                 { 
                     foreach(Player p in r.ListPlayers)
@@ -50,47 +53,68 @@ namespace SuecaServices
                             {
                                 //A web client is deconnect
                                 r.IsPlayerDisconnectDuringParty = true;
-                                r.PlayerDisconnectDuringParty = p;
+                                r.ListPlayerDisconnectDuringParty.Add(p);
+                                Console.WriteLine("[server] the player " + p.Token+" is disconnect");
                             }
                         }
+                    }
+                }*/
+
+                foreach(Player p in r.ListPlayers)
+                {
+                    if (p.TimeOutClientWeb.HasValue)
+                    {
+                        Console.WriteLine("[server] check web client player " + p.Token);
+                        if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).Milliseconds > 10000)
+                        {
+                            //A web client is deconnect
+                            r.IsPlayerDisconnectDuringParty = true;
+                            r.ListPlayerDisconnectDuringParty.Add(p);
+                            Console.WriteLine("[server] the player " + p.Token + " is disconnect");
+                        }
+                    }
+                    else if(p.Callback != null)
+                    {
+                        
+                        try
+                        {
+                            p.Callback.CheckConnection();
+                        }
+                        catch
+                        {
+                            r.ListPlayerDisconnectDuringParty.Add(p);
+                        }
+                         
                     }
                 }
                 
 
-                if(r.PlayerDisconnectDuringParty != null)
+                if(r.ListPlayerDisconnectDuringParty.Count > 0)
                 {
-                    Console.WriteLine("[server] the room " + r.Name + " has the player " + r.PlayerDisconnectDuringParty.Token + " disconnect and reset the order of turn");
-                    
                     //Permit to another user to come in the room by removing the other user
-                    r.ListPlayers.Remove(r.PlayerDisconnectDuringParty);
+                    foreach(Player p in r.ListPlayerDisconnectDuringParty)
+                    {
+                        r.ListPlayers.Remove(p);
+                        Console.WriteLine("[server] remove the player " + p.Token+" from the list players");
+                    }
 
+
+                    int i = 0;
                     //Reset the order of turn
                     foreach (Player p in r.ListPlayers)
                     {
-                        switch (r.PlayerDisconnectDuringParty.NumberTurn)
-                        {
-                            case 0:
-                                p.NumberTurn--;
-                                break;
-                            case 1:
-                                if (p.NumberTurn > 1)
-                                    p.NumberTurn--;
-                                break;
-                            case 2:
-                                if (p.NumberTurn > 2)
-                                    p.NumberTurn--;
-                                break;
-                            default:
-                                break;
-                        }
+                        p.NumberTurn = i;
+                        i++;
                     }
+
+                    r.ListPlayerDisconnectDuringParty.Clear();
                     
-                    if(r.RoomState == Room.StateRoom.GAME_IN_PROGRESS)
+                    if(r.RoomState == Room.StateRoom.GAME_IN_PROGRESS || r.RoomState == Room.StateRoom.END_GAME)
                     {
-                        //Reset the room
                         r.ResetRoom();
-                        Console.WriteLine("[server] the room " + r.Name + " has to be relaunch because player " + r.PlayerDisconnectDuringParty.Token + " is disconnect");
+                        Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
                     }
+
                 }
             }
         }
@@ -166,7 +190,7 @@ namespace SuecaServices
                 return currentRoom;
                 
             }
-            catch(Exception e)
+            catch
             {
                 return null;
             }
@@ -195,6 +219,32 @@ namespace SuecaServices
             }
 
             return false;
+        }
+
+        public void SendEndGameReceived(string playerToken)
+        {
+            if(playerToken != "")
+            {
+                try
+                {
+                    Room currentRoom = GetRoomFromPlayerToken(playerToken);
+                    if (currentRoom != null)
+                    {
+                        Player player = currentRoom.ListPlayersReceivedEndGame.Where<Player>(p => p.Token == playerToken).First();
+                        if (player != null)
+                            currentRoom.ListPlayersReceivedEndGame.Add(player);
+
+                        if(currentRoom.ListPlayersReceivedEndGame.Count >= 4)
+                        {
+                            currentRoom.ResetRoom();
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+            } 
         }
 
         private Room GetRoomFromPlayerToken(string playerToken)

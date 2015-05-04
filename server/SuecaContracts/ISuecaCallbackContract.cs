@@ -21,5 +21,8 @@ namespace SuecaContracts
         //To update the game, send the gameinfo
         [OperationContract(IsOneWay = true)]
         void GameInfoUpdated(GameInfo gameInfo);
+        
+        [OperationContract(IsOneWay = true)]
+        void CheckConnection();
     }
 }

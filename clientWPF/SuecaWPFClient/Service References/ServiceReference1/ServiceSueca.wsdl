@@ -117,6 +117,18 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="SendEndGameReceived">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="playerToken" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SendEndGameReceivedResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
       <xs:element name="GameStarted">
         <xs:complexType>
           <xs:sequence>
@@ -136,6 +148,11 @@
           <xs:sequence>
             <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SuecaContracts" minOccurs="0" name="gameInfo" nillable="true" type="q7:GameInfo" />
           </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CheckConnection">
+        <xs:complexType>
+          <xs:sequence />
         </xs:complexType>
       </xs:element>
     </xs:schema>
@@ -315,6 +332,12 @@
   <wsdl:message name="Sueca_GetGameInfo_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetGameInfoResponse" />
   </wsdl:message>
+  <wsdl:message name="Sueca_SendEndGameReceived_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendEndGameReceived" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_SendEndGameReceived_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendEndGameReceivedResponse" />
+  </wsdl:message>
   <wsdl:message name="Sueca_GameStarted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GameStarted" />
   </wsdl:message>
@@ -323,6 +346,9 @@
   </wsdl:message>
   <wsdl:message name="Sueca_GameInfoUpdated_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:GameInfoUpdated" />
+  </wsdl:message>
+  <wsdl:message name="Sueca_CheckConnection_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CheckConnection" />
   </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="Sueca">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateRoom">
@@ -353,6 +379,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/Sueca/GetGameInfo" message="tns:Sueca_GetGameInfo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GetGameInfoResponse" message="tns:Sueca_GetGameInfo_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendEndGameReceived">
+      <wsdl:input wsaw:Action="http://tempuri.org/Sueca/SendEndGameReceived" message="tns:Sueca_SendEndGameReceived_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/SendEndGameReceivedResponse" message="tns:Sueca_SendEndGameReceived_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameStarted">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameStarted" message="tns:Sueca_GameStarted_OutputCallbackMessage" />
     </wsdl:operation>
@@ -361,6 +391,9 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GameInfoUpdated">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/GameInfoUpdated" message="tns:Sueca_GameInfoUpdated_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CheckConnection">
+      <wsdl:output wsaw:Action="http://tempuri.org/Sueca/CheckConnection" message="tns:Sueca_CheckConnection_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_Sueca" type="tns:Sueca">
@@ -429,6 +462,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SendEndGameReceived">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/SendEndGameReceived" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GameStarted">
       <soap12:operation soapAction="http://tempuri.org/Sueca/GameStarted" style="document" />
       <wsdl:output>
@@ -443,6 +485,12 @@
     </wsdl:operation>
     <wsdl:operation name="GameInfoUpdated">
       <soap12:operation soapAction="http://tempuri.org/Sueca/GameInfoUpdated" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckConnection">
+      <soap12:operation soapAction="http://tempuri.org/Sueca/CheckConnection" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

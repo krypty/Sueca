@@ -19,7 +19,7 @@ namespace SuecaContracts
                 listPlayers.AddLast(gameInfoServer.DictPlayers.Values.ToList().Where<Player>(p => p.NumberTurn == ((player.NumberTurn + i) % 4)).First());
                 Card cardOfPlayer;
 
-                gameInfoServer.DictCardPlayerForTurn.TryGetValue(player.Token, out cardOfPlayer);
+                gameInfoServer.DictCardPlayerForTurn.TryGetValue(listPlayers.ElementAt(i).Token, out cardOfPlayer);
 
                 listCards.AddLast(cardOfPlayer);
             }
