@@ -41,25 +41,6 @@ namespace SuecaServices
             Console.WriteLine("[server] check if a room has to be killed");
             foreach(Room r in dictRoom.Values)
             {
-                /*
-                if (r.ListPlayers.Where<Player>(p => p.Callback == null).Count() > 0)
-                { 
-                    foreach(Player p in r.ListPlayers)
-                    {
-                        if (p.TimeOutClientWeb.HasValue)
-                        {
-                            Console.WriteLine("[server] check web client player " + p.Token);
-                            if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).Milliseconds > 10000)
-                            {
-                                //A web client is deconnect
-                                r.IsPlayerDisconnectDuringParty = true;
-                                r.ListPlayerDisconnectDuringParty.Add(p);
-                                Console.WriteLine("[server] the player " + p.Token+" is disconnect");
-                            }
-                        }
-                    }
-                }*/
-
                 foreach(Player p in r.ListPlayers)
                 {
                     if (p.TimeOutClientWeb.HasValue)
@@ -75,13 +56,14 @@ namespace SuecaServices
                     }
                     else if(p.Callback != null)
                     {
-                        
+                        Console.WriteLine("[server] check wpf client player " + p.Token);
                         try
                         {
                             p.Callback.CheckConnection();
                         }
                         catch
                         {
+                            Console.WriteLine("[server] client player disconnect");
                             r.ListPlayerDisconnectDuringParty.Add(p);
                         }
                          

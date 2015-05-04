@@ -22,7 +22,7 @@ namespace SuecaContracts
         [OperationContract(IsOneWay = true)]
         void GameInfoUpdated(GameInfo gameInfo);
         
-        [OperationContract(IsOneWay = true)]
-        void CheckConnection();
+        [OperationContract(IsOneWay = false)]
+        bool CheckConnection();
     }
 }

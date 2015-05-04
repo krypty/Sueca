@@ -83,9 +83,9 @@ namespace suecaWPFClient
             }
         }
 
-        public void CheckConnection()
+        public bool CheckConnection()
         {
-            //rien
+            return true;
         }
         #endregion
 

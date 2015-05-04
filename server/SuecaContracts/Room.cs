@@ -248,24 +248,21 @@ namespace SuecaContracts
                 }
             }
 
+            listPlayers.Sort(delegate(Player x, Player y)
+            {
+                return x.ScoreParty.CompareTo(y.ScoreParty);
+            });
+
+            int i = 4;
             //Calculate the final score for the round
             foreach(Player p in listPlayers)
             {
-                if(p.ScoreParty > 60 & p.ScoreParty <= 89)
-                {
-                    p.Score += 1;
-                }
-                else if(p.ScoreParty >= 90 & p.ScoreParty < 120)
-                {
-                    p.Score += 2;
-                }
-                else if(p.ScoreParty >= 120)
-                {
-                    p.Score += 4;
-                }
-
+                p.Score += i;
+                i /= 2;
                 Console.WriteLine("[server] Player "+ p.Token+" make a score of "+p.Score);
             }
+
+            UpdateRoomForClient();
 
             //ResetRoom();
         }
