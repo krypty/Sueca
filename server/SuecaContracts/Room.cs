@@ -14,7 +14,7 @@ namespace SuecaContracts
 
         public bool IsPlayerDisconnectDuringParty {get;set;}
         public List<Player> ListPlayerDisconnectDuringParty { get; set; }
-        //public Dictionary<string,bool> 
+        public List<Player> ListPlayersReceivedEndGame { get; set; } 
 
         private const int TIME_SEND_GAME_INFO_CLIENT = 1000;
         private const int TIME_SEND_GAME_INFO_CLIENT_END_TURN = 5000;
@@ -57,20 +57,25 @@ namespace SuecaContracts
 
             listPlayers = new List<Player>();
             ListPlayerDisconnectDuringParty = new List<Player>();
+            ListPlayersReceivedEndGame = new List<Player>();
 
             ResetRoom();
         }
 
         public void ResetRoom()
         {
-            RoomState = StateRoom.WAITING_READY;
+            ListPlayerDisconnectDuringParty.Clear();
             IsPlayerDisconnectDuringParty = false;
             gameInfo = null;
+            ListPlayersReceivedEndGame.Clear();
 
             foreach(Player p in listPlayers)
             {
                 p.IsReady = false;
+                p.ScoreParty = 0;
             }
+
+            RoomState = StateRoom.WAITING_READY;
         }
 
         public void AddPlayer(Player player)
@@ -177,9 +182,15 @@ namespace SuecaContracts
                     delegate(object room)
                     {
                         Thread.Sleep(1000);
-                        
-                        Room r = (Room)room;
-                        gameUpdated(r);
+                        try
+                        {
+                            Room r = (Room)room;
+                            gameUpdated(r);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("[server] error when callback gameupdated");
+                        }
                          /*   
                         foreach(Player p in r.ListPlayers)
                         {
@@ -203,8 +214,15 @@ namespace SuecaContracts
         public bool PlayCard(string playerToken, CardColor color, CardValue value)
         {
             bool isSuccess = gameInfo.PlayCard(playerToken, color, value);
-            
-            if (listPlayers.Count<Player>(p => p.ListCardsHolding.Count > 0) <= 0)
+
+            int nbPlayerFinish = 0;
+            foreach(Player p in listPlayers)
+            {
+                if (p.ListCardsHolding.Count <= 0)
+                    nbPlayerFinish++;
+            }
+
+            if (nbPlayerFinish >= NB_PLAYER_PER_GAME)
             {
                 EndOfGame();
             }
@@ -287,7 +305,7 @@ namespace SuecaContracts
                             }
                             catch
                             {
-                                ListPlayerDisconnectDuringParty.Add(game.Player);
+                                //ListPlayerDisconnectDuringParty.Add(game.Player);
                             }
                         }
                     }

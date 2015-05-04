@@ -31,7 +31,9 @@ namespace SuecaServices
             timerCheckRoom.Elapsed += (sender, e) =>
             {
                 timerCheckRoom_Elapsed(dictRoom);
-            }; 
+            };
+
+            timerCheckRoom.Enabled = true;
         }
 
         void timerCheckRoom_Elapsed(Dictionary<string,Room> dict)
@@ -39,6 +41,7 @@ namespace SuecaServices
             Console.WriteLine("[server] check if a room has to be killed");
             foreach(Room r in dictRoom.Values)
             {
+                /*
                 if (r.ListPlayers.Where<Player>(p => p.Callback == null).Count() > 0)
                 { 
                     foreach(Player p in r.ListPlayers)
@@ -54,6 +57,34 @@ namespace SuecaServices
                                 Console.WriteLine("[server] the player " + p.Token+" is disconnect");
                             }
                         }
+                    }
+                }*/
+
+                foreach(Player p in r.ListPlayers)
+                {
+                    if (p.TimeOutClientWeb.HasValue)
+                    {
+                        Console.WriteLine("[server] check web client player " + p.Token);
+                        if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).Milliseconds > 10000)
+                        {
+                            //A web client is deconnect
+                            r.IsPlayerDisconnectDuringParty = true;
+                            r.ListPlayerDisconnectDuringParty.Add(p);
+                            Console.WriteLine("[server] the player " + p.Token + " is disconnect");
+                        }
+                    }
+                    else if(p.Callback != null)
+                    {
+                        
+                        try
+                        {
+                            p.Callback.CheckConnection();
+                        }
+                        catch
+                        {
+                            r.ListPlayerDisconnectDuringParty.Add(p);
+                        }
+                         
                     }
                 }
                 
@@ -75,9 +106,10 @@ namespace SuecaServices
                         p.NumberTurn = i;
                         i++;
                     }
+
+                    r.ListPlayerDisconnectDuringParty.Clear();
                     
-                    
-                    if(r.RoomState == Room.StateRoom.GAME_IN_PROGRESS)
+                    if(r.RoomState == Room.StateRoom.GAME_IN_PROGRESS || r.RoomState == Room.StateRoom.END_GAME)
                     {
                         r.ResetRoom();
                         Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
@@ -193,8 +225,22 @@ namespace SuecaServices
         {
             if(playerToken != "")
             {
-                Room currentRoom = GetRoomFromPlayerToken(playerToken);
-                if(currentRoom != null)
+                try
+                {
+                    Room currentRoom = GetRoomFromPlayerToken(playerToken);
+                    if (currentRoom != null)
+                    {
+                        Player player = currentRoom.ListPlayersReceivedEndGame.Where<Player>(p => p.Token == playerToken).First();
+                        if (player != null)
+                            currentRoom.ListPlayersReceivedEndGame.Add(player);
+
+                        if(currentRoom.ListPlayersReceivedEndGame.Count >= 4)
+                        {
+                            currentRoom.ResetRoom();
+                        }
+                    }
+                }
+                catch
                 {
 
                 }

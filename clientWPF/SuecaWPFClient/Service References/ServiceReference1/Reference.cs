@@ -534,6 +534,12 @@ namespace suecaWPFClient.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/GetGameInfo", ReplyAction="http://tempuri.org/Sueca/GetGameInfoResponse")]
         System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.GameInfo> GetGameInfoAsync(string playerToken, string roomId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/SendEndGameReceived", ReplyAction="http://tempuri.org/Sueca/SendEndGameReceivedResponse")]
+        void SendEndGameReceived(string playerToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/SendEndGameReceived", ReplyAction="http://tempuri.org/Sueca/SendEndGameReceivedResponse")]
+        System.Threading.Tasks.Task SendEndGameReceivedAsync(string playerToken);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -547,6 +553,9 @@ namespace suecaWPFClient.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/GameInfoUpdated")]
         void GameInfoUpdated(suecaWPFClient.ServiceReference1.GameInfo gameInfo);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/CheckConnection")]
+        void CheckConnection();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -631,6 +640,14 @@ namespace suecaWPFClient.ServiceReference1 {
         
         public System.Threading.Tasks.Task<suecaWPFClient.ServiceReference1.GameInfo> GetGameInfoAsync(string playerToken, string roomId) {
             return base.Channel.GetGameInfoAsync(playerToken, roomId);
+        }
+        
+        public void SendEndGameReceived(string playerToken) {
+            base.Channel.SendEndGameReceived(playerToken);
+        }
+        
+        public System.Threading.Tasks.Task SendEndGameReceivedAsync(string playerToken) {
+            return base.Channel.SendEndGameReceivedAsync(playerToken);
         }
     }
 }

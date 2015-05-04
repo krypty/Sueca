@@ -83,7 +83,13 @@ namespace suecaWPFClient
             }
         }
 
+        public void CheckConnection()
+        {
+            //rien
+        }
         #endregion
+
+
     }
 
 
