@@ -25,7 +25,7 @@ namespace SuecaWebClient.Models
         }
 
 
-        public int playerTurn { get; set; }
+        public bool playerTurn { get; set; }
 
         public CardInfo[] listPlayedCards { get; set; }
 
@@ -37,42 +37,38 @@ namespace SuecaWebClient.Models
 
 
 
-        public GameInfoModel(int playerTurn)
-        {
-            this.playerTurn = playerTurn;
-        }
-
         public GameInfoModel(SuecaService.GameInfo gameInfo)
         {
-            playerTurn = gameInfo.NumberPlayerToPlay;
-
-
-            listPlayedCards = new CardInfo[4];
-            int i = 0;
-            foreach (Card c in gameInfo.ListCardsPlayed)
-            {
-                listPlayedCards[i] = new CardInfo(c.Color,c.Value);
-                i++;
-            }
+            playerTurn = gameInfo.IsMyTurn;
 
             nbCards = new int[4];
-            i = 0;
-            foreach(Player p in gameInfo.ListPlayer)
+            listPlayedCards = new CardInfo[4];
+            for (int i = 0; i < 4;i++)
             {
-                nbCards[i] = p.holdingCards;
-                i++;
+                if(gameInfo.ListCardsPlayed[i] != null)
+                {
+                    Card c = gameInfo.ListCardsPlayed[i];
+                    
+                    listPlayedCards[i] = new CardInfo(c.Color, c.Value);
+                    
+                }
+               
+                Player p = gameInfo.ListPlayer[i];
+                nbCards[i] = p.HoldingCards;
+               
 
             }
-            //gameInfo.ListPlayer
-
-            //listCards = gameInfo.ListCardsPlayed;
+           
+            
+            
 
             listPlayerCards = new CardInfo[10];
-            i = 0;
+
+            int j = 0;
             foreach (Card c in gameInfo.ListCardsPlayer)
             {
-                listPlayerCards[i] = new CardInfo(c.Color, c.Value);
-                i++;
+                listPlayerCards[j] = new CardInfo(c.Color, c.Value);
+                j++;
             }
             
         }

@@ -361,6 +361,9 @@
     <Content Include="Service References\SuecaService\SuecaWebClient.SuecaService.Room.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\SuecaService\SuecaWebClient.SuecaService.GameInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\SuecaService\service1.wsdl" />
     <None Include="Service References\SuecaService\service2.xsd">
       <SubType>Designer</SubType>
@@ -371,9 +374,6 @@
     <None Include="Service References\SuecaService\SuecaContracts1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Service References\SuecaService\SuecaWebClient.SuecaService.GameInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

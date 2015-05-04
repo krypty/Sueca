@@ -42,6 +42,15 @@ namespace SuecaWebClient.Controllers
 
         }
 
+        [HttpPost]
+        public void PlayCard(string color, string value, string playerToken, string roomId)
+        {
+            SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
+            serviceHelper.playCard(playerToken, color, value);
+
+
+        }
+
 
         [HttpPost]
         [CustomHandleErrorAttribute]

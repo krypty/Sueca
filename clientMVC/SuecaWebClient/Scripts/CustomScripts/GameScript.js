@@ -248,7 +248,8 @@ function setPlayersState(playersState, state, id) {
 }
 
 
-
+//Handle played card
+var boardCards = [null, null, null, null];
 
 
 function drawScene(evt) {
@@ -287,27 +288,21 @@ function drawScene(evt) {
             break;
         case 1:
 
-            _roomState.text = "Au tour de : Joueur 1";
+            if (_playerTurn)
+            {
+                _roomState.text = "C'est à vous de jouer!";
+            }
+            else
+            {
+                _roomState.text = "Partie en cours";
+            }
             drawPlayersCards();
             drawCardsOnBoard();
             _titlePlayer1.text = "J1";
             _titlePlayer2.text = "J2";
             _titlePlayer3.text = "J3";
 
-            //Handle played card
-            var boardCards = [null,null,null,null];
-            /*boardCards[0] = new Object();
-            boardCards[0].color = "Hearts";
-            boardCards[0].value = "2";
-            boardCards[1] = new Object();
-            boardCards[1].color = "Spades";
-            boardCards[1].value = "5";
-            boardCards[2] = new Object();
-            boardCards[2].color = "Clubs";
-            boardCards[2].value = "J";
-            boardCards[3] = new Object();
-            boardCards[3].color = "Diamonds";
-            boardCards[3].value = "K";*/
+            
 
             newCardsOnBoard(boardCards);
 
@@ -352,8 +347,6 @@ function newCardsOnBoard(boardCards)
     for (var i = 0; i < 4; i++) {
         if (boardCards[i] != null) {
             cardsOnBoard[i] = cardsColor[boardCards[i].color][boardCards[i].value];
-
-            
         }
     }
 }
@@ -471,14 +464,38 @@ _playerTurn = false;
 
 function placeCards(card) {
 
-    console.log("CARD : " + card.savedX + " / " + card.savedY);
-
     if (stage.canvas.width * myArea.x < card.x && card.x < (myArea.x + myArea.width) * stage.canvas.width &&
         stage.canvas.height * myArea.y < card.y && card.y < (myArea.y + myArea.height) * stage.canvas.height) {
         card.savedX = card.x;
         card.savedY = card.y;
 
-    } else {
+    } else if (_playerTurn) {
+        
+        if (stage.canvas.width * boardArea.x < card.x && card.x < (boardArea.x + boardArea.width) * stage.canvas.width &&
+        stage.canvas.height * boardArea.y < card.y && card.y < (boardArea.y + boardArea.height) * stage.canvas.height)
+        {
+            playCard(card);
+            for (var i = 0; i < _playerCards.length; i++)
+            {
+                if(_playerCards[i].CardColor == card.CardColor && _playerCards[i].CardValue == _playerCards[i].CardValue)
+                {
+                    _playerCards[i] = null;
+                }
+
+            }
+            console.log("Playing Card !");
+            stage.removeChild(card);
+        }
+        else
+        {
+            card.x = card.savedX;
+            card.y = card.savedY;
+        }
+
+        
+    }
+    else
+    {
         card.x = card.savedX;
         card.y = card.savedY;
     }
@@ -539,10 +556,17 @@ function updatePlayerCards(userCards) {
 function addHandHeldCard(card, id) {
     
     card.selectable = true;
-    //scaleCard(bitmap, playerHandScalling);
     card.scaleX = card.scaleY = 0.5;
-    card.savedX = 0;
-    card.savedY = 0;
+
+    var positionSrcX = myArea.x * stage.canvas.width;
+    var positionSrcY = (myArea.y) * stage.canvas.height;
+    var offsetX = myArea.width * stage.canvas.width / 10;
+    //var offsetY = myArea.height * stage.canvas.height / 10;
+
+    card.x = card.savedX = positionSrcX + offsetX*id;
+    card.y = card.savedY = positionSrcY;
+    console.log("Adding card" + card);
+
     card.addEventListener("mousedown", function (evt) {
         if (card.selectable) {
             var o = evt.target;

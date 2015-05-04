@@ -22,10 +22,10 @@
     <MetadataSource Address="http://localhost:8731/SuecaServices/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="ba4cac05-fcd5-483f-b911-239367266769" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
-    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="77bed899-1e47-45ed-be8f-86072906d612" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
-    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="e6cd6d2e-c504-4b88-99cf-772d2e466f02" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
-    <MetadataFile FileName="SuecaContracts1.xsd" MetadataType="Schema" ID="0bda9083-195c-444c-bba2-93f4fd6f2534" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="3af52338-3910-494b-9323-549c21266736" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="33f16198-929a-42a9-aed5-c7d4df9e8c92" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="62c5ace5-bfa4-434e-b8fd-c6e2e11df48a" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
+    <MetadataFile FileName="SuecaContracts1.xsd" MetadataType="Schema" ID="36ff305d-fb24-4241-8d5c-90adc9632fbd" SourceId="1" SourceUrl="http://localhost:8731/SuecaServices/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
