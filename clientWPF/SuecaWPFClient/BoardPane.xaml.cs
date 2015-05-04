@@ -43,7 +43,7 @@ namespace suecaWPFClient
 
             _listLaidCardsCanvas = new List<Canvas> { LaidCardSouth, LaidCardWest, LaidCardNorth, LaidCardEast };
 
-            _listPlayersCanvas = new List<Canvas> { NorthPlayerCanvas, EastPlayerCanvas, WestPlayerCanvas };
+            _listPlayersCanvas = new List<Canvas> { EastPlayerCanvas, NorthPlayerCanvas, WestPlayerCanvas };
         }
 
         private void OnGameInfoUpdated(GameInfo gameInfo)
@@ -64,22 +64,24 @@ namespace suecaWPFClient
 
         private void UpdateLaidCards(ServiceReference1.Card[] listCards)
         {
-            //throw new NotImplementedException();
+            //foreach (var card in listCards.Where(card => card != null))
+            //{
+            //    Console.WriteLine("card played: " + card.Value + " of " + card.Color);
+            //}
 
-            Console.Write("list played cards: " + listCards.Length);
-            int i = 0;
+            //Console.Write("list played cards: " + listCards.Length);
 
             ClearLaidsCardCanvas();
 
-            foreach (var card in listCards)
+            for (int i = 0; i < listCards.Length; i++)
             {
+                ServiceReference1.Card card = listCards[i];
                 if (card != null)
                 {
                     Console.Write(card.Value + " of " + card.Color + ", ");
                     Card convertedCard = CardTools.FromService(card);
                     ReplaceLaidCard(convertedCard, _listLaidCardsCanvas[i]);
                 }
-                i++;
             }
             Console.WriteLine();
         }
