@@ -9,7 +9,7 @@ using System.Threading;
 namespace SuecaServices
 {
     // Only one instance of the service is running. Only one call by client at a time but multiple clients allowed 
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single,AddressFilterMode = AddressFilterMode.Any)]
     public class ServiceSueca : ISuecaContract
     {
         private const int CHECK_ROOM_TIME = 30000;
@@ -158,7 +158,7 @@ namespace SuecaServices
                 return currentRoom;
                 
             }
-            catch(Exception e)
+            catch
             {
                 return null;
             }
@@ -187,6 +187,18 @@ namespace SuecaServices
             }
 
             return false;
+        }
+
+        public void SendEndGameReceived(string playerToken)
+        {
+            if(playerToken != "")
+            {
+                Room currentRoom = GetRoomFromPlayerToken(playerToken);
+                if(currentRoom != null)
+                {
+
+                }
+            } 
         }
 
         private Room GetRoomFromPlayerToken(string playerToken)

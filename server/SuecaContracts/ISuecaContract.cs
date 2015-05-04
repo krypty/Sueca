@@ -54,6 +54,8 @@ namespace SuecaContracts
         [OperationContract(IsTerminating = false, IsOneWay = false)]
         GameInfo GetGameInfo(string playerToken, string roomId);
 
+        [OperationContract(IsTerminating = false, IsOneWay = false)]
+        void SendEndGameReceived(string playerToken);
         #endregion
     }
 }

@@ -12,6 +12,8 @@ namespace SuecaContracts
     {
         private List<Card> listCardsHolding;
         private List<Card> listCardsWin;
+        
+        [DataMember]
         public int NumberTurn { get; set; }
 
         [DataMember]

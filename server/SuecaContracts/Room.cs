@@ -14,6 +14,7 @@ namespace SuecaContracts
 
         public bool IsPlayerDisconnectDuringParty {get;set;}
         public List<Player> ListPlayerDisconnectDuringParty { get; set; }
+        //public Dictionary<string,bool> 
 
         private const int TIME_SEND_GAME_INFO_CLIENT = 1000;
         private const int TIME_SEND_GAME_INFO_CLIENT_END_TURN = 5000;
@@ -310,7 +311,7 @@ namespace SuecaContracts
                     return gameInfoClient;
                 }
             }
-            catch(Exception e)
+            catch
             {
                 return null;
             }
