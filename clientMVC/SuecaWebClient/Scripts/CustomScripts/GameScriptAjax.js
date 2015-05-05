@@ -48,6 +48,50 @@ function sendReady() {
 var _playerToken = "";
 var _roomId = "";
 
+
+function setCouleur(color) {
+    var imageBlock = $("#imageCouleur");
+    if (color == "")
+    {
+        if (!imageBlock.hasClass("hidden")) {
+            imageBlock.addClass("hidden");
+        }
+
+    }
+    else
+    {
+        if (imageBlock.hasClass("hidden")) {
+            imageBlock.removeClass("hidden");
+        }
+    }
+    
+
+    switch(color)
+    {
+        case "Hearts":
+            imageBlock.attr("src", "/Images/Colors/Hearts.png");
+            break;
+        case "Clubs":
+            imageBlock.attr("src", "/Images/Colors/Clubs.png");
+            break;
+        case "Diamonds":
+            imageBlock.attr("src", "/Images/Colors/Diamonds.png");
+            break;
+        case "Spades":
+            imageBlock.attr("src", "/Images/Colors/Spades.png");
+            break;
+        default:
+            imageBlock.attr("src", "");
+           
+            
+            break;
+    }
+
+
+}
+
+
+
 function _getRoomState()
 {
     $.ajax({
@@ -80,37 +124,51 @@ function _getRoomState()
                     url: getGameState,
                     data: { roomId: _roomId, playerToken: _playerToken },
                     type: 'POST',
-                    success: function (data) {
+                    success: function (dataRoom) {
 
                         //Object { roomState: 0, getPlayerState: Array[4], roomId: "bee5a4d3", playerToken: "ec7362e1-09db-449b-bff1-6da20f6e1d32", playerNumber: 0 }
                         //console.log("token : " + data.playerToken);
-                        console.log(data);
-                        player1Cards = data.nbCards[1];
-                        player2Cards = data.nbCards[2];
-                        player3Cards = data.nbCards[2];
+                        console.log(dataRoom);
+                        //console.log("NO UPDATE WAT ? ");
+                        player1Cards = dataRoom.nbCards[1];
+                        player2Cards = dataRoom.nbCards[2];
+                        player3Cards = dataRoom.nbCards[2];
 
 
-                        _playerTurn = data.playerTurn;
+                        _playerTurn = dataRoom.playerTurn;
 
                         //TODO ADD CARDS ON BOARD
                         
-                        newCardsOnBoard(data.listPlayedCards);
+                        //newCardsOnBoard(data.listPlayedCards);
+                        //console.log("forboucle?");
+                        if (dataRoom.listPlayedCards != null)
+                        {
+                            for (var i = 0; i < 4; i++) {
+                                if (dataRoom.listPlayedCards[i] != null)
+                                    drawCardsOnBoard(i, cardsColor[dataRoom.listPlayedCards[i].color][dataRoom.listPlayedCards[i].value]);
+                                else
+                                    drawCardsOnBoard(i, null);
+                            }
+                        }
                         
+                        
+                        //_roundColor = dataRoom.colorGame;
+                        setCouleur(dataRoom.colorGame);
 
 
                         //Ajout des cartes en main
-                        for (var i = 0; i < data.listPlayerCards.length; i++) {
-                            if (data.listPlayerCards[i] != null) {
+                        for (var i = 0; i < dataRoom.listPlayerCards.length; i++) {
+                            if (dataRoom.listPlayerCards[i] != null) {
                                 var contains = false;
                                 for (var j = 0; j < _playerCards.length; j++) {
                                     if (_playerCards[i] != null) {
-                                        if (_playerCards[i].CardColor == data.listPlayerCards[i].color && _playerCards[i].CardValue == data.listPlayerCards[i].value) {
+                                        if (_playerCards[i].CardColor == dataRoom.listPlayerCards[i].color && _playerCards[i].CardValue == dataRoom.listPlayerCards[i].value) {
                                             contains = true;
                                         }
                                     }
                                 }
                                 if (!contains) {
-                                    addHandHeldCard(cardsHand[data.listPlayerCards[i].color][data.listPlayerCards[i].value], i);
+                                    addHandHeldCard(cardsHand[dataRoom.listPlayerCards[i].color][dataRoom.listPlayerCards[i].value], i);
                                 }
                             }
                         }
@@ -120,6 +178,22 @@ function _getRoomState()
                 });
 
 
+            }else if(_gameState == 2)
+            {
+                _roundColor = "";
+                setCouleur("");
+                alert("SCORE !");
+            }
+            else {
+                for (var i = 0; i < 4; i++) {
+                    drawCardsOnBoard(i, null);
+                }
+                _roundColor = "";
+                player1Cards = 0;
+                player2Cards = 0;
+                player3Cards = 0;
+                clearPlayerCards();
+                setCouleur("");
             }
 
         }
@@ -129,10 +203,12 @@ function _getRoomState()
 function updateData() {
     var playerToken = $("#tokenInput").val();
     _playerToken = playerToken;
-    if (playerToken != "") {
-        var roomId = getUrlParameter("roomId");
-        _roomId = roomId;
-        if (_roomId != "") {
+    var roomId = getUrlParameter("roomId");
+    _roomId = roomId;
+    if (_roomId != "") {
+        
+        
+        if (_playerToken != "") {
             var btnReady = $("#btnReady");
             btnReady.removeClass('hidden');
             btnReady.click(function () {
@@ -143,8 +219,19 @@ function updateData() {
         console.log(_roomId);
         setInterval(function () {
             _getRoomState();
-        }, 7000);
+        }, 5000);
         }
+        else
+        {
+            $("#c").addClass("hidden");
+            $("#gameFullRow").removeClass("hidden");
+            
+        }
+    }
+    else
+    {
+        $("#c").addClass("hidden");
+        $("#noRoomRow").removeClass("hidden");
     }
 }
 

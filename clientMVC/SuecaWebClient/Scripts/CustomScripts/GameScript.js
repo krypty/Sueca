@@ -8,10 +8,7 @@ cardsColor = {};
 cardsHand = {};
 var colors = ["Hearts", "Spades", "Diamonds", "Clubs"];
 
-
-
-
-function handleImageLoad(color, value) {
+/*function handleImageLoad(color, value) {
     //var canvas = document.getElementById("canvas");
     var bmp;
     //stage = new createjs.Stage(canvas);
@@ -21,20 +18,13 @@ function handleImageLoad(color, value) {
     bmp.y = 20;
     cardsColor[color][value] = bmp;
 
-}
-
-
-
-
+}*/
 
 for (var i = 0; i < 4; i++) {
     cardsForColor = {};
     cardsForColor["As"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/As.png");
     cardsForColor["As"].CardColor = colors[i];
     cardsForColor["As"].CardValue = "As";
-    
-
-
     cardsForColor["2"] = new createjs.Bitmap("/Images/Cards/" + colors[i] + "/2.png");
     cardsForColor["2"].CardColor = colors[i];
     cardsForColor["2"].CardValue = "2";
@@ -174,11 +164,7 @@ var playersCard = [];
 
 function clearPlayersCards() {
 
-    /*while (playersCard.length > 0) {
-        var c = playersCard.pop();
-        stage.removeChild(c);
-
-    }*/
+   
     
 
 }
@@ -189,8 +175,6 @@ function getPlayerOriginalAndPositions(playerArea) {
     var playerOffsetX = playerArea.width * stage.canvas.width / 10;
     var playerOffsetY = playerArea.height * stage.canvas.height / 10;
     return { card: card, ox: playerOx, oy: playerOy, offsetX: playerOffsetX, offsetY: playerOffsetY };
-
-
 
 }
 
@@ -203,7 +187,7 @@ var _playerPlaying = 0;
 var _playerNumer;
 
 var _roomPlaying = 2;
-var _roundColor = "Hearts";
+var _roundColor = "";
 var _imReady = false;
 var _playerCards = [];
 
@@ -225,8 +209,6 @@ var playerReady = [0, 0, 0, 0];
 
 function setPlayersState(playersState, state, id) {
 
-
-    
     switch (state) {
         case 0:
             playersState.text = "-";
@@ -238,29 +220,12 @@ function setPlayersState(playersState, state, id) {
             playersState.text = "J" + id + " - " + "Prêt";
             break;
         
-        
         }
-
-    
-    
-    
-
-
-
 }
 
 
 
 
-/*void updateGameBoardCard(id, card)
-{
-    if()
-
-}*/
-
-
-//Handle played card
-var boardCards = [null, null, null, null];
 
 
 function drawScene(evt) {
@@ -269,7 +234,7 @@ function drawScene(evt) {
      *      gameState : 0 - Waiting / 1 - InGame / 2 - Score
      */
     clearPlayersCards();
-    clearCardsOnBoard();
+    //clearCardsOnBoard();
     var widthFactor = getScalingFactor(stage.canvas.width, boardArea.width, gameBoard.image.width);
     var heightFactor = getScalingFactor(stage.canvas.height, boardArea.height, gameBoard.image.height);
     gameBoard.x = stage.canvas.width * boardArea.x;
@@ -302,6 +267,7 @@ function drawScene(evt) {
             if (_playerTurn)
             {
                 _roomState.text = "C'est à vous de jouer!";
+                
             }
             else
             {
@@ -315,7 +281,7 @@ function drawScene(evt) {
 
             
 
-            newCardsOnBoard(boardCards);
+            //newCardsOnBoard(boardCards);
 
 
             break;
@@ -366,63 +332,106 @@ function newCardsOnBoard(boardCards)
         }
     }
 }
-
+cardsOnBoard = [null, null, null, null];
 function drawCardsOnBoard(id, card) {
-    
-    if (cardsOnBoard[i] != null) {
-        var c = cardsOnBoard[id];
-        
-                /*if(c == null)
-                {
-                    if(card != null)
-                    {
-                        cardsOnBoard[id] = card;
+        var c = cardsOnBoard[id]
+
+        if (card != null)
+        {
+            if(c == null)
+            {
+                console.log("Drawing card");
+                
+                cardsOnBoard[id] = card;
+                cardsOnBoard[id].scaleX = cardsOnBoard[id].scaleY = 0.5;
+                console.log(cardsOnBoard[id]);
+                switch (id) {
+                    case 0:
+
+                        cardsOnBoard[id].x = stage.canvas.width / 2 - cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                        cardsOnBoard[id].y = stage.canvas.height * 0.5 + 2;
+                        break;
+                    case 1:
+
+                        cardsOnBoard[id].x = 2 * stage.canvas.width / 5 - cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                        cardsOnBoard[id].y = stage.canvas.height / 2 - cardsOnBoard[id].getBounds().width / 2 * 0.5;
+                        cardsOnBoard[id].rotation = 90;
+                        break;
+                    case 2:
+
+                        cardsOnBoard[id].x = stage.canvas.width / 2 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                        cardsOnBoard[id].y = stage.canvas.height * 0.5 - 2;
+                        cardsOnBoard[id].rotation = 180;
+                        break;
+                    case 3:
                         cardsOnBoard[id].scaleX = cardsOnBoard[i].scaleY = 0.5;
-                        switch(id) {
-                            case 0:
-                               
-                                cardsOnBoard[id].x = stage.canvas.width / 2 - cardsOnBoard[id].getBounds().width*0.5/2;
-                                cardsOnBoard[id].y = stage.canvas.height*0.5+2;
-                                break;
-                            case 1:
-                                
-                                cardsOnBoard[id].x = 2*stage.canvas.width / 5 - cardsOnBoard[id].getBounds().width * 0.5 / 2;
-                                cardsOnBoard[id].y = stage.canvas.height/2 - cardsOnBoard[id].getBounds().width/2*0.5;
-                                cardsOnBoard[id].rotation = 90;
-                                break;
-                            case 2:
-                                
-                                cardsOnBoard[id].x = stage.canvas.width / 2 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
-                                cardsOnBoard[id].y = stage.canvas.height * 0.5 - 2;
-                                cardsOnBoard[id].rotation = 180;
-                                break;
-                            case 3:
-                                cardsOnBoard[id].scaleX = cardsOnBoard[i].scaleY = 0.5;
-                                cardsOnBoard[id].x = 3 * stage.canvas.width / 5 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
-                                cardsOnBoard[id].y = stage.canvas.height / 2 + cardsOnBoard[id].getBounds().width / 2 * 0.5;
-                                cardsOnBoard[id].rotation = -90;
-                                break;
+                        cardsOnBoard[id].x = 3 * stage.canvas.width / 5 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                        cardsOnBoard[id].y = stage.canvas.height / 2 + cardsOnBoard[id].getBounds().width / 2 * 0.5;
+                        cardsOnBoard[id].rotation = -90;
+                        break;
 
-                        }
-                        
-                        stage.addChild(c);
-                    }
                 }
-                else
-                {
-                    if(c.CardColor != card.CardColor)
-                }*/
-                
-                
-        
+
+                stage.addChild(cardsOnBoard[id]);
+            }
+            else if (c.CardColor != card.CardColor || c.CardValue != card.CardValue) {
+                stage.removeChild(c);
+                cardsOnBoard[id] = card;
+                cardsOnBoard[id].scaleX = cardsOnBoard[id].scaleY = 0.5;
+                switch (id) {
+                    case 0:
+
+                        cardsOnBoard[id].x = stage.canvas.width / 2 - cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                        cardsOnBoard[id].y = stage.canvas.height * 0.5 + 2;
+                        break;
+                    case 1:
+
+                        cardsOnBoard[id].x = 2 * stage.canvas.width / 5 - cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                        cardsOnBoard[id].y = stage.canvas.height / 2 - cardsOnBoard[id].getBounds().width / 2 * 0.5;
+                        cardsOnBoard[id].rotation = 90;
+                        break;
+                    case 2:
+
+                        cardsOnBoard[id].x = stage.canvas.width / 2 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                        cardsOnBoard[id].y = stage.canvas.height * 0.5 - 2;
+                        cardsOnBoard[id].rotation = 180;
+                        break;
+                    case 3:
+                        
+                        cardsOnBoard[id].x = 3 * stage.canvas.width / 5 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                        cardsOnBoard[id].y = stage.canvas.height / 2 + cardsOnBoard[id].getBounds().width / 2 * 0.5;
+                        cardsOnBoard[id].rotation = -90;
+                        break;
+
+                }
+                stage.addChild(cardsOnBoard[id]);
+
+            }
+        }
+        else
+        {
+            if (c != null)
+            {
+                cardsOnBoard[id] = null;
+                stage.removeChild(c);
+            }
             
-        
-        
+            
+        }
 
 
-
-    }
-    
+        /*if(c == null)
+        {
+            if(card != null)
+            {
+                
+            }
+        }
+        else
+        {
+            
+        }*/
+        stage.update();
 }
 
 
@@ -510,6 +519,7 @@ function placeCards(card) {
         stage.canvas.height * boardArea.y < card.y && card.y < (boardArea.y + boardArea.height) * stage.canvas.height)
         {
             playCard(card);
+            stage.removeChild(card);
             for (var i = 0; i < _playerCards.length; i++)
             {
                 if(_playerCards[i].CardColor == card.CardColor && _playerCards[i].CardValue == _playerCards[i].CardValue)
@@ -519,7 +529,7 @@ function placeCards(card) {
 
             }
             console.log("Playing Card !");
-            stage.removeChild(card);
+            
         }
         else
         {
@@ -575,7 +585,15 @@ function getAreaFromPosition(xPers, yPers, card) {
 }
 
 function clearPlayerCards() {
-    //drawPlayerHand
+    for(var i = 0;i<_playerCards.length;i++)
+    {
+        if(_playerCards[i] != null)
+        {
+            stage.removeChild(_playerCards[i]);
+            _playerCards[i] = null;
+        }
+
+    }
 
 }
 
@@ -585,6 +603,7 @@ function updatePlayerCards(userCards) {
 
 
 }
+
 
 
 
@@ -667,11 +686,7 @@ function init() {
     stage.enableMouseOver(10);
     //var circle = new createjs.Shape();
     //circle.graphics.beginFill("red").drawCircle(0, 0, 50);
-    
-
-    
-
-    
+   
 
     stage.addChild(_titlePlayer1);
     stage.addChild(_titlePlayer2);
@@ -680,121 +695,8 @@ function init() {
     stage.addChild(_roomState);
     createjs.Ticker.addEventListener("tick", drawScene);
 
-    
-    /**
-     
-     addHandHeldCard(cardsHand["Hearts"]["As"]);
-    addHandHeldCard(cardsHand["Spades"]["As"]);
-    addHandHeldCard(cardsHand["Clubs"]["As"]);
-    */
+
 }
-
-
-
-
-//var CanvasWidth;
-//var CanvasHeight;
-
-//var imageBaseWidth = 1260;
-//var imageBaseHeight = 1760;
-
-//function loadCards(context, cardObj)
-//{
-//    base_image = new Image();
-//    base_image.src = cardObj.image;
-//    base_image.onload = function () {
-//        //context.drawImage(base_image, 0, 0, 100, 100 * imageBaseHeight / imageBaseWidth)
-//        imageResize(base_image, imageBaseWidth, 100, document.getElementById('c'), context);
-
-//    }
-//    return;
-//}
-
-
-
-//function imageResize(img, sourceWidth, targetWidth, canvas, context)
-//{
-
-//    var steps = Math.ceil(Math.log(sourceWidth / targetWidth) / Math.log(2))
-
-//    /// step 1 - create off-screen canvas
-//    var oc = document.createElement('canvas');
-//    var octx = oc.getContext('2d');
-
-//    oc.width  = img.width  * 0.5;
-//    oc.height = img.height * 0.5;
-
-//    octx.drawImage(img, 0, 0, oc.width, oc.height);
-
-//    //Step 2 reuses the off-screen canvas and draws the image reduced to half again:
-    
-
-
-//    /// step 2
-//    for (var i = 1; i < steps; i++)
-//    {
-
-//        octx.drawImage(oc, 0, 0, oc.width, oc.height);
-//    }
-
-//    //And we draw once more to main canvas, again reduced to half but to the final size:
-
-//    /// step 3
-//    context.drawImage(oc, 0, 0, oc.width, oc.height, 0, 0, canvas.width,   canvas.height);
-
-//}
-
-
-
-
-
-
-//function canvasHandle()
-//{
-    
-
-
-//}
-//(function () {
-//    var
-//        htmlCanvas = document.getElementById('c'),
-
-//        context = htmlCanvas.getContext('2d');
-
-//    // Start listening to resize events and
-//    // draw canvas.
-//     initialize();
-
-//    function initialize() {
-//        // Register an event listener to
-//        // call the resizeCanvas() function each time 
-//        // the window is resized.
-//        window.addEventListener('resize', resizeCanvas, false);
-
-//        // Draw canvas border for the first time.
-//        resizeCanvas();
-
-//        loadCards(context, card);
-
-
-
-//    }
-
-//    function redraw()
-//    {
-
-//    }
-
-
-//    function resizeCanvas() {
-//        var canevas = document.getElementById('c');
-//        CanvasWidth = canevas.width;
-//        CanvasHeight = canevas.height;
-//        redraw();
-//    }
-
-//})();
-
 
 
 

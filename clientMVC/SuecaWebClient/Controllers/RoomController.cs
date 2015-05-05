@@ -20,9 +20,10 @@ namespace SuecaWebClient.Controllers
         {
             SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
             //RoomInfoModel values = new RoomInfoModel(roomId, playerToken);
-            serviceHelper.GetGameState(roomId, playerToken);
 
-            return Json(serviceHelper.GetGameState(roomId, playerToken));
+            GameInfoModel model = serviceHelper.GetGameState(roomId, playerToken);
+            serviceHelper.close();
+            return Json(model);
         }
         [HttpPost]
         public bool SendReady(string playerToken, bool state)
@@ -47,7 +48,7 @@ namespace SuecaWebClient.Controllers
         {
             SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
             serviceHelper.playCard(playerToken, color, value);
-
+            serviceHelper.close();
 
         }
 
@@ -59,7 +60,9 @@ namespace SuecaWebClient.Controllers
             SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
             if (roomId != "" && playerToken != "")
             {
-                return Json(serviceHelper.getRoomState(roomId, playerToken));    
+                RoomInfoModel model = serviceHelper.getRoomState(roomId, playerToken);
+                serviceHelper.close();
+                return Json(model);    
             }
             //throw new HttpException(404, "Bad Room");
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -96,6 +99,7 @@ namespace SuecaWebClient.Controllers
                 SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
                 ViewData["playerTokenServer"] = serviceHelper.joinRoom(roomId, password);
                 ViewData["connected"] = true;
+                serviceHelper.close();
                 //ViewData["playerTokenServer"] = roomInfo.playerToken;
             }
             else
@@ -103,6 +107,7 @@ namespace SuecaWebClient.Controllers
                 ViewData["playerTokenServer"] = "";
                 ViewData["connected"] = false;
             }
+            
             return View();
         }
 

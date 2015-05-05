@@ -11,7 +11,8 @@
 
 <center>
     <div class="btn-group">
-        @Html.ActionLink("Créer une chambre", "CreateRoom", null, new { @class = "btn btn-default" })
-        @Html.ActionLink("Rejoindre une chambre", "RoomList", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Créer une chambre", "CreateRoom", "Listing", new { controller = "Listing" }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Rejoindre une chambre", "RoomList", "Listing", new { }, new { @class = "btn btn-default" })
+        
     </div>
 </center>

@@ -230,6 +230,10 @@
     <Content Include="Images\Cards\Svg\Spades\J.svg" />
     <Content Include="Images\Cards\Svg\Spades\K.svg" />
     <Content Include="Images\Cards\Svg\Spades\Q.svg" />
+    <Content Include="Images\Colors\Clubs.png" />
+    <Content Include="Images\Colors\Diamonds.png" />
+    <Content Include="Images\Colors\Hearts.png" />
+    <Content Include="Images\Colors\Spades.png" />
     <Content Include="Images\GameBoard.png" />
     <Content Include="Images\tools\ajax-loader.gif" />
     <Content Include="Content\themes\bootstrap\bootstrap-theme.css" />

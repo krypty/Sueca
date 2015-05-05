@@ -8,11 +8,33 @@
 <h2></h2>
 
 <input type="hidden" name="tokenInput" value="@Html.Encode(@ViewData["playerTokenServer"])" id="tokenInput" />
-<div class="row">
+<div class="row" id="gameRow">
     <div class="col-md-12">
         <canvas id='c' class="canvas"></canvas>
     </div>
-    <input type="button" class="btn btn-primary hidden" id="btnReady" value="Je suis prêt"/>
+    
+    <div class="col-md-4">
+        <input type="button" class="btn btn-primary hidden" id="btnReady" value="Je suis prêt" />
+    </div>
+    <div class="col-md-4">
+        <img src="" width="40px" id="imageCouleur" />
+    </div>
+    
+</div>
+<div class="row hidden" id="gameFullRow">
+    La chambre ou que vous avez tenter de rejoindre est pleine ou n'existe pas !<br/>
+    <div class="btn-group">
+        @Html.ActionLink("Créer une chambre", "CreateRoom","Listing", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Rejoindre une chambre", "RoomList", "Listing",  null, new { @class = "btn btn-default" })
+    </div>
+</div>
+<div class="row hidden" id="noRoomRow">
+    Veuillez entrer un nom de room valide !<br/>
+    Vous pouvez retenter une des options suivantes :
+    <div class="btn-group">
+        @Html.ActionLink("Créer une chambre", "CreateRoom", "Listing", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Rejoindre une chambre", "RoomList", "Listing", null, new { @class = "btn btn-default" })
+    </div>
 </div>
     @Scripts.Render("~/Scripts/jquery-1.9.1.min.js")
     @Scripts.Render("~/Scripts/easeljs-0.8.0.combined.js")

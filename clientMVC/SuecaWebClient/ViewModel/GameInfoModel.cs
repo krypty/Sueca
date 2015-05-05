@@ -29,6 +29,7 @@ namespace SuecaWebClient.Models
 
         public CardInfo[] listPlayedCards { get; set; }
 
+        public string colorGame { get; set; }
 
         public CardInfo[] listPlayerCards { get; set; }
 
@@ -40,7 +41,7 @@ namespace SuecaWebClient.Models
         public GameInfoModel(SuecaService.GameInfo gameInfo)
         {
             playerTurn = gameInfo.IsMyTurn;
-
+            colorGame = SuecaServiceHelper.CardColorToString(gameInfo.Asset);
             nbCards = new int[4];
             listPlayedCards = new CardInfo[4];
             for (int i = 0; i < 4;i++)

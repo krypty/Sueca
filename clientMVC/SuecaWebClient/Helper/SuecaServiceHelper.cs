@@ -19,6 +19,14 @@ namespace SuecaWebClient.Helper
             
         }
 
+        public void close()
+        {
+            if(client!= null)
+            {
+                client.Close();
+            }
+        }
+
 
         public static string CardColorToString(CardColor c)
         {
