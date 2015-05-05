@@ -12,7 +12,10 @@ namespace SuecaServices
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single, AddressFilterMode = AddressFilterMode.Any)]
     public class ServiceSueca : ISuecaContract
     {
+
         private const int CHECK_ROOM_TIME = 30000;
+        private const int CHECK_ROOM_TIMEOUT = 500000;
+        
         private const int CHECK_WEB_CLIENT_TIME = 60000;
         private System.Timers.Timer timerCheckRoom;
 
@@ -44,10 +47,16 @@ namespace SuecaServices
                             select x).ToDictionary(x => x.Key, x => x.Value);
 
             Console.WriteLine("[server] check if a room has to be killed ");
+            List<Room> deleteRooms = new List<Room>();
+
             foreach (Room r in dictCopy.Values)
             {
                 lock (r)
                 {
+                    if (DateTime.Now.Subtract(r.TimeOutRoom).TotalMilliseconds > CHECK_ROOM_TIMEOUT)
+                    {
+                        deleteRooms.Add(r);
+                    }
 
                     foreach (Player p in r.ListPlayers)
                     {
@@ -101,10 +110,27 @@ namespace SuecaServices
 
                         if (r.RoomState == Room.StateRoom.GAME_IN_PROGRESS || r.RoomState == Room.StateRoom.END_GAME)
                         {
-                            r.ResetRoom();
-                            Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
+                            if(r.ListPlayers.Count <= 0)
+                            {
+                                deleteRooms.Add(r);
+                            }
+                            else
+                            { 
+                                r.ResetRoom();
+                                Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
+                            }
                         }
                     }
+                }
+
+            }
+
+            if(deleteRooms.Count > 0)
+            {
+                foreach(Room r in deleteRooms)
+                {
+                    Console.WriteLine("[server] the room " + r.Name + " is deleted !!! ");
+                    dictRoom.Remove(r.Name);
                 }
             }
 

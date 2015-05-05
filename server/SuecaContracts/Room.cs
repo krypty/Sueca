@@ -11,13 +11,13 @@ namespace SuecaContracts
     public class Room
     {
         private System.Timers.Timer timer;
+        public DateTime TimeOutRoom;
 
         public bool IsPlayerDisconnectDuringParty { get; set; }
         public List<Player> ListPlayerDisconnectDuringParty { get; set; }
         public List<Player> ListPlayersReceivedEndGame { get; set; }
 
-        private const int TIME_SEND_GAME_INFO_CLIENT = 1000;
-        private const int TIME_SEND_GAME_INFO_CLIENT_END_TURN = 5000;
+        private const int TIME_SEND_CALLBACK_CLIENT = 1000;
         public const int NB_PLAYER_PER_GAME = 4;
         public delegate void CallbackDelegate<T>(T t);
         public CallbackDelegate<string> gameStarted;
@@ -76,6 +76,7 @@ namespace SuecaContracts
             }
 
             RoomState = StateRoom.WAITING_READY;
+            
 
             UpdateRoomForClient();
         }
@@ -139,7 +140,6 @@ namespace SuecaContracts
             {
                 if (RoomState == StateRoom.GAME_IN_PROGRESS)
                 {
-                    /*
                     RoomState = StateRoom.WAITING_READY;
                     
                     //If the user send not ready during a game, it means that he leaves the game
@@ -149,8 +149,6 @@ namespace SuecaContracts
 
                     gameInfo = null;
                     gameUpdated = null;
-                     * 
-                     */
                 }
             }
 
@@ -178,17 +176,19 @@ namespace SuecaContracts
 
             Console.WriteLine("[server] has distribute cards");
 
-            CreateGameInfoClient(TIME_SEND_GAME_INFO_CLIENT);
+            CreateGameInfoClient(TIME_SEND_CALLBACK_CLIENT);
         }
 
         private void UpdateRoomForClient()
         {
+            TimeOutRoom = DateTime.Now;
+
             if (gameUpdated != null)
             {
                 new Thread(new ParameterizedThreadStart(
                     delegate(object room)
                     {
-                        Thread.Sleep(1000);
+                        Thread.Sleep(TIME_SEND_CALLBACK_CLIENT);
                         try
                         {
                             Room r = (Room)room;
@@ -198,20 +198,6 @@ namespace SuecaContracts
                         {
                             Console.WriteLine("[server] error when callback gameupdated");
                         }
-                        /*   
-                       foreach(Player p in r.ListPlayers)
-                       {
-                           try
-                           {
-                           p.Callback.RoomUpdated(r);
-                           }
-                           catch 
-                           {
-                               ListPlayerDisconnectDuringParty.Add(p);
-                               Console.WriteLine("[server] error when room updated WPF client");
-                           }
-                       }   
-                         * */
                     })
                 ).Start(this);
             }
@@ -234,7 +220,7 @@ namespace SuecaContracts
                 EndOfGame();
             }
 
-            CreateGameInfoClient(TIME_SEND_GAME_INFO_CLIENT);
+            CreateGameInfoClient(TIME_SEND_CALLBACK_CLIENT);
 
             UpdateRoomForClient();
 
@@ -276,6 +262,8 @@ namespace SuecaContracts
 
         private void CreateGameInfoClient(int timeInMillis)
         {
+            TimeOutRoom = DateTime.Now;
+
             gameInfo.CreateGameInfoClient();
 
             new Thread(new ParameterizedThreadStart(
