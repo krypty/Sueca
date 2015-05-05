@@ -28,10 +28,11 @@ namespace suecaWPFClient.GamePanes
         private void OnGameInfoUpdated(GameInfo gameInfo)
         {
             ResetPane();
-            //if (_lastRoomState == Room.StateRoom.GAME_IN_PROGRESS)
-            //{
-            ChangeState(GameState.InGame);
-            //}
+            if (_lastRoomState != Room.StateRoom.END_GAME)
+            {
+                Console.WriteLine("game state roomsummarypane: " + _lastRoomState);
+                ChangeState(GameState.InGame);
+            }
         }
 
         private void ResetPane()
