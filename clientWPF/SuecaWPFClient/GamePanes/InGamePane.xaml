@@ -36,21 +36,17 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0"  Grid.Column="0" Content="Joueur 1: "></Label>
-                <Label Grid.Row="0" Grid.Column="1" Name="PlayerNorthTakenCards" Content="-"></Label>
+                <Label Grid.Row="0"  Grid.Column="0" Content="Joueur Nord: "></Label>
+                <Label Grid.Row="0" Grid.Column="1" Name="PlayerNorthScore" Content="-"></Label>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Joueur 2: "></Label>
-                <Label Grid.Row="1" Grid.Column="1" Name="PlayerEastTakenCards"  Content="-"></Label>
+                <Label Grid.Row="1" Grid.Column="0" Content="Joueur Est: "></Label>
+                <Label Grid.Row="1" Grid.Column="1" Name="PlayerEastScore"  Content="-"></Label>
 
-                <Label Grid.Row="2" Grid.Column="0" Content="Joueur 3: "></Label>
-                <Label Grid.Row="2" Grid.Column="1" Name="PlayerSouthTakenCards"  Content="-"></Label>
+                <Label Grid.Row="2" Grid.Column="0" Content="Joueur Sud (vous): "></Label>
+                <Label Grid.Row="2" Grid.Column="1" Name="PlayerSouthScore"  Content="-"></Label>
 
-                <Label Grid.Row="3" Grid.Column="0" Content="Joueur 4: "></Label>
-                <Label Grid.Row="3" Grid.Column="1" Name="PlayerWestTakenCards"  Content="-"></Label>
-
-                <Label Grid.Row="4" Grid.Column="0" Content="Vous êtes le joueur: "></Label>
-                <Label Grid.Row="4" Grid.Column="1" Name="UserPlayerNumber"  Content="-"></Label>
-
+                <Label Grid.Row="3" Grid.Column="0" Content="Joueur Ouest: "></Label>
+                <Label Grid.Row="3" Grid.Column="1" Name="PlayerWestScore"  Content="-"></Label>
             </Grid>
         </StackPanel>
     </DockPanel>

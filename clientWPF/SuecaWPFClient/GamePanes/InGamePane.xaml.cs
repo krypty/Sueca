@@ -15,14 +15,27 @@ namespace suecaWPFClient.GamePanes
             InitializeComponent();
 
             ServiceManager.GetInstance().OnRoomUpdated += OnRoomUpdated;
+            ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
+        }
+
+        private void OnGameInfoUpdated(GameInfo gameInfo)
+        {
+            var listPlayer = gameInfo.ListPlayer;
+            if (listPlayer.Length != 4) return;
+
+            PlayerSouthScore.Content = listPlayer[0].Score;
+            PlayerWestScore.Content = listPlayer[1].Score;
+            PlayerNorthScore.Content = listPlayer[2].Score;
+            PlayerEastScore.Content = listPlayer[3].Score;
         }
 
         private void OnRoomUpdated(Room room)
         {
-            foreach (var player in room.listPlayers.Where(player => player.token == ServiceManager.GetInstance().PlayerToken))
-            {
-                UserPlayerNumber.Content = player.token;
-            }
+            var player = room.listPlayers.FirstOrDefault(p => p.token == ServiceManager.GetInstance().PlayerToken);
+
+            if (player != null)
+                Console.WriteLine("player token: " + player.token);
+
 
             if (room.RoomState == Room.StateRoom.END_GAME)
             {
