@@ -27,8 +27,7 @@ namespace suecaWPFClient.GamePanes
 
             string roomPassword = roomWindow.RoomPassword;
 
-            var roomName = ServiceManager.GetInstance().CreateRoom(roomPassword);
-            MessageBox.Show("Une salle a été créée avec le nom: " + roomName);
+            ServiceManager.GetInstance().CreateRoom(roomPassword);
             RefreshRoomList();
         }
 
