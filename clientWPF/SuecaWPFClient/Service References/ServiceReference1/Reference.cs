@@ -3,8 +3,8 @@
 //     Ce code a été généré par un outil.
 //     Version du runtime :4.0.30319.34209
 //
-//     Les modifications apportées à ce fichier peuvent provoquer un comportement incorrect et seront perdues si
-//     le code est régénéré.
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
 
@@ -297,6 +297,9 @@ namespace suecaWPFClient.ServiceReference1 {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private suecaWPFClient.ServiceReference1.CardColor AssetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private suecaWPFClient.ServiceReference1.Card FirstCardField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -324,6 +327,19 @@ namespace suecaWPFClient.ServiceReference1 {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public suecaWPFClient.ServiceReference1.CardColor Asset {
+            get {
+                return this.AssetField;
+            }
+            set {
+                if ((this.AssetField.Equals(value) != true)) {
+                    this.AssetField = value;
+                    this.RaisePropertyChanged("Asset");
+                }
             }
         }
         

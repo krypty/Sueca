@@ -24,8 +24,9 @@ namespace SuecaContracts
                 listCards.AddLast(cardOfPlayer);
             }
 
+            CardColor asset = gameInfoServer.Asset;
             bool isHisTurn = (gameInfoServer.NumberPlayerTurn == player.NumberTurn);
-            GameInfo game = new GameInfo(player, listPlayers, listCards, isHisTurn);
+            GameInfo game = new GameInfo(player, listPlayers, listCards, isHisTurn, asset);
             game.FirstCard = gameInfoServer.ListCardsTurn.First == null ? null : gameInfoServer.ListCardsTurn.First.Value;
 
             return game;

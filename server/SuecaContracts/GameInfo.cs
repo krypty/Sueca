@@ -16,7 +16,7 @@ namespace SuecaContracts
         public LinkedList<Card> ListCardsPlayed { get; set; }
 
         [DataMember]
-        public List<Card> ListCardsPlayer{get;set;}
+        public List<Card> ListCardsPlayer { get; set; }
 
         [DataMember]
         public LinkedList<Player> ListPlayer { get; set; }
@@ -27,8 +27,13 @@ namespace SuecaContracts
         [DataMember]
         public Card FirstCard { get; set; }
 
-        public GameInfo(Player player, LinkedList<Player> listPlayers, LinkedList<Card> listCards, bool isMyTurn) 
+        [DataMember]
+        public CardColor Asset { get; set; }
+
+        public GameInfo(Player player, LinkedList<Player> listPlayers, LinkedList<Card> listCards, bool isMyTurn, CardColor asset) 
         {
+            Asset = asset;
+
             //User for who the gameinfo is
             Player = player;
             ListCardsPlayer = player.ListCardsHolding;

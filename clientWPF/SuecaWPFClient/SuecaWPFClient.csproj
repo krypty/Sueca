@@ -145,6 +145,15 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\ServiceReference1\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\item31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\item32.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ServiceReference1\ServiceSueca.wsdl" />
     <None Include="Service References\ServiceReference1\suecaWPFClient.ServiceReference1.GameInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -205,7 +214,6 @@
     <Resource Include="Images\Cartes\Diamonds\K.png" />
     <Resource Include="Images\Cartes\Diamonds\Q.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\Cartes\Hearts\2.png" />
     <Resource Include="Images\Cartes\Hearts\3.png" />
@@ -229,6 +237,9 @@
     <Resource Include="Images\Cartes\Spades\J.png" />
     <Resource Include="Images\Cartes\Spades\K.png" />
     <Resource Include="Images\Cartes\Spades\Q.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference1\item1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

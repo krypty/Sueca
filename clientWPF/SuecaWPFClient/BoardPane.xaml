@@ -12,18 +12,25 @@
         <system:Double x:Key="cardWidth">200</system:Double>
     </UserControl.Resources>
 
+    <DockPanel>
 
-    <Viewbox>
-        <Canvas x:Name="MonCanvas" Width="1900" Height="1900" ClipToBounds="True" IsEnabled="{Binding ElementName=BoardControl, Path=IsEnabled}">
-            <Canvas.Background>
-                <ImageBrush ImageSource="Images/GameBoard.png"></ImageBrush>
-            </Canvas.Background>
+        <DockPanel DockPanel.Dock="Bottom" MinHeight="25">
+            <Label>L'atout est :</Label>
+            <Label x:Name="AssetCardLabel">-</Label>
 
-            <Label x:Name="YourTurnLabel" Content="C'est à vous de jouer !" FontSize="36" Canvas.Right="0" Canvas.Top="10" Visibility="Hidden"></Label>
+            <Label x:Name="YourTurnLabel" HorizontalContentAlignment="Right" Foreground="Red" Visibility="Hidden">C'est à vous de jouer !</Label>
 
-            <Rectangle x:Name="DisablingRectangle" Canvas.Left="0" Canvas.Top="0" Width="{Binding ElementName=MonCanvas, Path=Width}" Height="{Binding ElementName=MonCanvas, Path=Height}" Fill="Gray" Opacity=".8" Visibility="Visible"></Rectangle>
+        </DockPanel>
 
-            <!--<Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="243" Canvas.Top="1694"></Image>
+        <Viewbox>
+            <Canvas x:Name="MonCanvas" Width="1900" Height="1900" ClipToBounds="True" IsEnabled="{Binding ElementName=BoardControl, Path=IsEnabled}">
+                <Canvas.Background>
+                    <ImageBrush ImageSource="Images/GameBoard.png"></ImageBrush>
+                </Canvas.Background>
+
+                <Rectangle x:Name="DisablingRectangle" Canvas.Left="0" Canvas.Top="0" Width="{Binding ElementName=MonCanvas, Path=Width}" Height="{Binding ElementName=MonCanvas, Path=Height}" Fill="Gray" Opacity=".8" Visibility="Visible"></Rectangle>
+
+                <!--<Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="243" Canvas.Top="1694"></Image>
                 <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="390" Canvas.Top="1694"></Image>
                 <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="499" Canvas.Top="1694"></Image>
                 <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="624" Canvas.Top="1694"></Image>
@@ -35,52 +42,53 @@
                 <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="1404" Canvas.Top="1694"></Image>-->
 
 
-            <!-- PLAYERS HAND -->
-            <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Left="135" Canvas.Top="1714" x:Name="SouthPlayerCanvas">
-            </Canvas>
+                <!-- PLAYERS HAND -->
+                <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Left="135" Canvas.Top="1714" x:Name="SouthPlayerCanvas">
+                </Canvas>
 
-            <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Left="135" Canvas.Bottom="1714" x:Name="NorthPlayerCanvas" RenderTransformOrigin="0.5,0.5">
-                <Canvas.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                    </TransformGroup>
-                </Canvas.RenderTransform>
-            </Canvas>
+                <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Left="135" Canvas.Bottom="1714" x:Name="NorthPlayerCanvas" RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                </Canvas>
 
-            <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Left="-802" Canvas.Top="813" x:Name="WestPlayerCanvas" RenderTransformOrigin="0.5,0.5">
-                <Canvas.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="90"/>
-                    </TransformGroup>
-                </Canvas.RenderTransform>
-            </Canvas>
+                <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Left="-802" Canvas.Top="813" x:Name="WestPlayerCanvas" RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                </Canvas>
 
-            <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Right="-802" Canvas.Top="813" x:Name="EastPlayerCanvas" RenderTransformOrigin="0.5,0.5">
-                <Canvas.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="-90"/>
-                    </TransformGroup>
-                </Canvas.RenderTransform>
-            </Canvas>
-            <!-- END PLAYERS HAND -->
+                <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Right="-802" Canvas.Top="813" x:Name="EastPlayerCanvas" RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-90"/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                </Canvas>
+                <!-- END PLAYERS HAND -->
 
-            <!-- LAIDS CARDS -->
-            <Canvas Name="LaidCardEast"  Canvas.Left="1304" Canvas.Top="870" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}">
-                <Canvas.LayoutTransform>
-                    <RotateTransform Angle="-90"></RotateTransform>
-                </Canvas.LayoutTransform>
-            </Canvas>
+                <!-- LAIDS CARDS -->
+                <Canvas Name="LaidCardEast"  Canvas.Left="1304" Canvas.Top="870" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}">
+                    <Canvas.LayoutTransform>
+                        <RotateTransform Angle="-90"></RotateTransform>
+                    </Canvas.LayoutTransform>
+                </Canvas>
 
-            <Canvas Name="LaidCardWest" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}" Canvas.Left="318" Canvas.Top="870">
-                <Canvas.LayoutTransform>
-                    <RotateTransform Angle="90"></RotateTransform>
-                </Canvas.LayoutTransform>
-            </Canvas>
-            <Canvas Name="LaidCardNorth" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}" Canvas.Left="851" Canvas.Top="336"></Canvas>
+                <Canvas Name="LaidCardWest" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}" Canvas.Left="318" Canvas.Top="870">
+                    <Canvas.LayoutTransform>
+                        <RotateTransform Angle="90"></RotateTransform>
+                    </Canvas.LayoutTransform>
+                </Canvas>
+                <Canvas Name="LaidCardNorth" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}" Canvas.Left="851" Canvas.Top="336"></Canvas>
 
-            <Canvas Name="LaidCardSouth" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}" Canvas.Left="851" Canvas.Top="1324">
+                <Canvas Name="LaidCardSouth" Width="{StaticResource cardWidth}" Height="{StaticResource cardHeight}" Canvas.Left="851" Canvas.Top="1324">
+                </Canvas>
+                <!-- END LAIDS CARDS -->
             </Canvas>
-            <!-- END LAIDS CARDS -->
-        </Canvas>
-    </Viewbox>
+        </Viewbox>
+    </DockPanel>
 </UserControl>

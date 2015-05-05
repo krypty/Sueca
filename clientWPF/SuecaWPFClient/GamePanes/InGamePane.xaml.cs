@@ -23,6 +23,12 @@ namespace suecaWPFClient.GamePanes
             {
                 UserPlayerNumber.Content = player.token;
             }
+
+            if (room.RoomState == Room.StateRoom.END_GAME)
+            {
+                Console.WriteLine("yolo spaghetti");
+                ChangeState(GameState.EndGame);
+            }
         }
 
         protected override void Quit()

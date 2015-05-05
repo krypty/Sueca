@@ -27,6 +27,7 @@ namespace suecaWPFClient.GamePanes
         {
             if (OnStateChanged != null)
             {
+                Console.WriteLine("yolo poulet ");
                 OnStateChanged(state);
                 //TODO: if GameState.ListRoom --> Remove content on ServiceManager ?
             }
