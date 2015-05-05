@@ -60,6 +60,37 @@ namespace suecaWPFClient
             YourTurnLabel.Visibility = _canPlayerPlay ? Visibility.Visible : Visibility.Hidden;
 
             _playerToken = ServiceManager.GetInstance().PlayerToken;
+
+            UpdateAssetCard(gameInfo.Asset);
+        }
+
+        private void UpdateAssetCard(CardColor cardColor)
+        {
+            if (cardColor == null || cardColor == CardColor.None)
+            {
+                AssetCardLabel.Content = "-";
+            }
+            else
+            {
+                switch (cardColor)
+                {
+                    case CardColor.Clubs:
+                        AssetCardLabel.Content = "Trèfles";
+                        break;
+
+                    case CardColor.Diamonds:
+                        AssetCardLabel.Content = "Carreaux";
+                        break;
+
+                    case CardColor.Hearts:
+                        AssetCardLabel.Content = "Coeurs";
+                        break;
+
+                    case CardColor.Spades:
+                        AssetCardLabel.Content = "Piques";
+                        break;
+                }
+            }
         }
 
         private void UpdateLaidCards(ServiceReference1.Card[] listCards)

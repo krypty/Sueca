@@ -9,7 +9,7 @@ namespace SuecaContracts
     class GameInfoServer
     {
         List<Card> listCard;
-        public CardColor Asset{get;set;}
+        public CardColor Asset { get; private set; }
         public Dictionary<string, Player> DictPlayers { get; set; }
         //0-3
         public int NumberPlayerTurn { get; set; }
@@ -45,7 +45,7 @@ namespace SuecaContracts
             }
             mix(listCard);
 
-            listCard.RemoveRange(0, 40-8);
+            listCard.RemoveRange(0, 40 - 8);
 
             //Choose the 
             Random rand = new Random();
