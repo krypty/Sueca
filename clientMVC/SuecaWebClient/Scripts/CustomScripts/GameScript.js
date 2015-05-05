@@ -174,11 +174,13 @@ var playersCard = [];
 
 function clearPlayersCards() {
 
-    while (playersCard.length > 0) {
+    /*while (playersCard.length > 0) {
         var c = playersCard.pop();
         stage.removeChild(c);
 
-    }
+    }*/
+    
+
 }
 function getPlayerOriginalAndPositions(playerArea) {
     var card = backCard.clone();
@@ -248,6 +250,15 @@ function setPlayersState(playersState, state, id) {
 }
 
 
+
+
+void updateGameBoardCard(id, card)
+{
+    if()
+
+}
+
+
 //Handle played card
 var boardCards = [null, null, null, null];
 
@@ -297,7 +308,7 @@ function drawScene(evt) {
                 _roomState.text = "Partie en cours";
             }
             drawPlayersCards();
-            drawCardsOnBoard();
+            //drawCardsOnBoard();
             _titlePlayer1.text = "J1";
             _titlePlayer2.text = "J2";
             _titlePlayer3.text = "J3";
@@ -356,38 +367,57 @@ function newCardsOnBoard(boardCards)
     }
 }
 
-function drawCardsOnBoard() {
-    for (var i = 0; i < 4; i++) {
-        if (cardsOnBoard[i] != null) {
-            var c = cardsOnBoard[i];
-            switch(i) {
-                case 0:
-                    cardsOnBoard[i].scaleX = cardsOnBoard[i].scaleY = 0.5;
-                    cardsOnBoard[i].x = stage.canvas.width / 2 - cardsOnBoard[i].getBounds().width*0.5/2;
-                    cardsOnBoard[i].y = stage.canvas.height*0.5+2;
-                    break;
-                case 1:
-                    cardsOnBoard[i].scaleX = cardsOnBoard[i].scaleY = 0.5;
-                    cardsOnBoard[i].x = 2*stage.canvas.width / 5 - cardsOnBoard[i].getBounds().width * 0.5 / 2;
-                    cardsOnBoard[i].y = stage.canvas.height/2 - cardsOnBoard[i].getBounds().width/2*0.5;
-                    cardsOnBoard[i].rotation = 90;
-                    break;
-                case 2:
-                    cardsOnBoard[i].scaleX = cardsOnBoard[i].scaleY = 0.5;
-                    cardsOnBoard[i].x = stage.canvas.width / 2 + cardsOnBoard[i].getBounds().width * 0.5 / 2;
-                    cardsOnBoard[i].y = stage.canvas.height * 0.5 - 2;
-                    cardsOnBoard[i].rotation = 180;
-                    break;
-                case 3:
-                    cardsOnBoard[i].scaleX = cardsOnBoard[i].scaleY = 0.5;
-                    cardsOnBoard[i].x = 3 * stage.canvas.width / 5 + cardsOnBoard[i].getBounds().width * 0.5 / 2;
-                    cardsOnBoard[i].y = stage.canvas.height / 2 + cardsOnBoard[i].getBounds().width / 2 * 0.5;
-                    cardsOnBoard[i].rotation = -90;
-                    break;
-            }
-            
-            stage.addChild(c);
+function drawCardsOnBoard(id, card) {
+    
+    if (cardsOnBoard[i] != null) {
+        var c = cardsOnBoard[id];
+        
+                if(c == null)
+                {
+                    if(card != null)
+                    {
+                        cardsOnBoard[id] = card;
+                        cardsOnBoard[id].scaleX = cardsOnBoard[i].scaleY = 0.5;
+                        switch(id) {
+                            case 0:
+                               
+                                cardsOnBoard[id].x = stage.canvas.width / 2 - cardsOnBoard[id].getBounds().width*0.5/2;
+                                cardsOnBoard[id].y = stage.canvas.height*0.5+2;
+                                break;
+                            case 1:
+                                
+                                cardsOnBoard[id].x = 2*stage.canvas.width / 5 - cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                                cardsOnBoard[id].y = stage.canvas.height/2 - cardsOnBoard[id].getBounds().width/2*0.5;
+                                cardsOnBoard[id].rotation = 90;
+                                break;
+                            case 2:
+                                
+                                cardsOnBoard[id].x = stage.canvas.width / 2 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                                cardsOnBoard[id].y = stage.canvas.height * 0.5 - 2;
+                                cardsOnBoard[id].rotation = 180;
+                                break;
+                            case 3:
+                                cardsOnBoard[id].scaleX = cardsOnBoard[i].scaleY = 0.5;
+                                cardsOnBoard[id].x = 3 * stage.canvas.width / 5 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
+                                cardsOnBoard[id].y = stage.canvas.height / 2 + cardsOnBoard[id].getBounds().width / 2 * 0.5;
+                                cardsOnBoard[id].rotation = -90;
+                                break;
+
+                        }
+                        
+                        stage.addChild(c);
+                    }
+                }
+                else
+                {
+                    if(c.CardColor != card.CardColor)
+                }
+                
+                
         }
+            
+        
+        
 
 
 

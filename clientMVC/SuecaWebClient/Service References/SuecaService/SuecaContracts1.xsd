@@ -67,6 +67,7 @@
   <xs:element name="CardValue" nillable="true" type="tns:CardValue" />
   <xs:complexType name="GameInfo">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Asset" type="tns:CardColor" />
       <xs:element minOccurs="0" name="FirstCard" nillable="true" type="tns:Card" />
       <xs:element minOccurs="0" name="FirstPlayerNumber" type="xs:int" />
       <xs:element minOccurs="0" name="IsMyTurn" type="xs:boolean" />

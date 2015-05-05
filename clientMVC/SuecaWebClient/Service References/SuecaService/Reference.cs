@@ -297,6 +297,9 @@ namespace SuecaWebClient.SuecaService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private SuecaWebClient.SuecaService.CardColor AssetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private SuecaWebClient.SuecaService.Card FirstCardField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -324,6 +327,19 @@ namespace SuecaWebClient.SuecaService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public SuecaWebClient.SuecaService.CardColor Asset {
+            get {
+                return this.AssetField;
+            }
+            set {
+                if ((this.AssetField.Equals(value) != true)) {
+                    this.AssetField = value;
+                    this.RaisePropertyChanged("Asset");
+                }
             }
         }
         
