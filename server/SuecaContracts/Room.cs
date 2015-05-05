@@ -257,14 +257,16 @@ namespace SuecaContracts
                 }
             }
 
-            listPlayers.Sort(delegate(Player x, Player y)
+            List<Player> listCopy = new List<Player>(listPlayers);
+
+            listCopy.Sort(delegate(Player x, Player y)
             {
                 return x.ScoreParty.CompareTo(y.ScoreParty);
             });
 
             int i = 4;
             //Calculate the final score for the round
-            foreach (Player p in listPlayers)
+            foreach (Player p in listCopy)
             {
                 p.Score += i;
                 i /= 2;

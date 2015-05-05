@@ -13,6 +13,7 @@ namespace SuecaServices
     public class ServiceSueca : ISuecaContract
     {
         private const int CHECK_ROOM_TIME = 30000;
+        private const int CHECK_WEB_CLIENT_TIME = 60000;
         private System.Timers.Timer timerCheckRoom;
 
         //private List<Room> _listRooms;
@@ -23,7 +24,6 @@ namespace SuecaServices
         public delegate void CallbackDelegate<T>(T t);
         public static CallbackDelegate<string> gameStarted;
 
-        private int NB_CALL = 0;
 
         public ServiceSueca()
         {
@@ -43,7 +43,7 @@ namespace SuecaServices
             var dictCopy = (from x in dictRoom
                             select x).ToDictionary(x => x.Key, x => x.Value);
 
-            Console.WriteLine("[server] check if a room has to be killed " + NB_CALL);
+            Console.WriteLine("[server] check if a room has to be killed ");
             foreach (Room r in dictCopy.Values)
             {
                 lock (r)
@@ -54,11 +54,10 @@ namespace SuecaServices
                         if (p.TimeOutClientWeb.HasValue)
                         {
                             Console.WriteLine("[server] check web client player " + p.Token);
-                            
-                            if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).TotalMilliseconds > 10000)
+
+                            if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).TotalMilliseconds > CHECK_WEB_CLIENT_TIME)
                             {
                                 //A web client is deconnect
-                                r.IsPlayerDisconnectDuringParty = true;
                                 r.ListPlayerDisconnectDuringParty.Add(p);
                                 Console.WriteLine("[server] the player " + p.Token + " is disconnect");
                             }
@@ -105,13 +104,9 @@ namespace SuecaServices
                             r.ResetRoom();
                             Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
                         }
-
-                       
                     }
                 }
             }
-
-            NB_CALL++;
 
         }
 
