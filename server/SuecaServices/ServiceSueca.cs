@@ -54,7 +54,8 @@ namespace SuecaServices
                         if (p.TimeOutClientWeb.HasValue)
                         {
                             Console.WriteLine("[server] check web client player " + p.Token);
-                            if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).Milliseconds > 10000)
+                            
+                            if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).TotalMilliseconds > 10000)
                             {
                                 //A web client is deconnect
                                 r.IsPlayerDisconnectDuringParty = true;

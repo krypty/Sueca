@@ -13,7 +13,7 @@ namespace ConsoleHost
             using (ServiceHost hote = new ServiceHost(typeof(ServiceSueca)))
             {
                 hote.Open();
-
+                
                 Console.WriteLine("Service started");
                 Console.ReadLine();
             }

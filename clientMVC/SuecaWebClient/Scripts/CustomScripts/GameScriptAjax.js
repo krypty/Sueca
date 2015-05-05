@@ -143,7 +143,7 @@ function updateData() {
         console.log(_roomId);
         setInterval(function () {
             _getRoomState();
-        }, 10000);
+        }, 7000);
         }
     }
 }

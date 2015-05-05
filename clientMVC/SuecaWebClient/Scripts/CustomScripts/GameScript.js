@@ -252,11 +252,11 @@ function setPlayersState(playersState, state, id) {
 
 
 
-void updateGameBoardCard(id, card)
+/*void updateGameBoardCard(id, card)
 {
     if()
 
-}
+}*/
 
 
 //Handle played card
@@ -372,7 +372,7 @@ function drawCardsOnBoard(id, card) {
     if (cardsOnBoard[i] != null) {
         var c = cardsOnBoard[id];
         
-                if(c == null)
+                /*if(c == null)
                 {
                     if(card != null)
                     {
@@ -411,10 +411,10 @@ function drawCardsOnBoard(id, card) {
                 else
                 {
                     if(c.CardColor != card.CardColor)
-                }
+                }*/
                 
                 
-        }
+        
             
         
         
