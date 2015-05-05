@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using suecaWPFClient.ServiceReference1;
@@ -13,20 +14,18 @@ namespace suecaWPFClient.GamePanes
         public GameEndPane()
         {
             InitializeComponent();
-            ServiceManager.GetInstance().OnRoomUpdated += OnRoomUpdated;
+            ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
         }
 
-        private void OnRoomUpdated(Room room)
+        private void OnGameInfoUpdated(GameInfo gameInfo)
         {
-            if (room.listPlayers.Length == 4)
-            {
-                PlayerSouthScore.Content = room.listPlayers[0].Score;
-                PlayerWestScore.Content = room.listPlayers[1].Score;
-                PlayerNorthScore.Content = room.listPlayers[2].Score;
-                PlayerEastScore.Content = room.listPlayers[3].Score;
-            }
+            var listPlayer = gameInfo.ListPlayer;
+            if (listPlayer.Length != 4) return;
 
-            Console.WriteLine("room updated GameEndPane: " + room.RoomState);
+            PlayerSouthScore.Content = listPlayer[0].Score;
+            PlayerWestScore.Content = listPlayer[1].Score;
+            PlayerNorthScore.Content = listPlayer[2].Score;
+            PlayerEastScore.Content = listPlayer[3].Score;
         }
 
         protected override void Quit()
