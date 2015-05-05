@@ -9,7 +9,7 @@ namespace SuecaContracts
     class GameInfoServer
     {
         List<Card> listCard;
-        CardColor asset;
+        public CardColor Asset{get;set;}
         public Dictionary<string, Player> DictPlayers { get; set; }
         //0-3
         public int NumberPlayerTurn { get; set; }
@@ -49,7 +49,7 @@ namespace SuecaContracts
 
             //Choose the 
             Random rand = new Random();
-            asset = listColor[rand.Next(4)];
+            Asset = listColor[rand.Next(4)];
         }
 
 
@@ -183,11 +183,11 @@ namespace SuecaContracts
             foreach (Card card in ListCardsTurn)
             {
                 //If the card has not the same color and is not an asset, the card has no chance of win
-                if (card.Color == firstCard.Color || card.Color == asset)
+                if (card.Color == firstCard.Color || card.Color == Asset)
                 {
-                    if (card.Color == asset)
+                    if (card.Color == Asset)
                     {
-                        if (bestCard.Color == asset)
+                        if (bestCard.Color == Asset)
                         {
                             if (card.RealValue > bestCard.RealValue)
                             {
