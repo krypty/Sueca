@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using suecaWPFClient.ServiceReference1;
 
 namespace suecaWPFClient.GamePanes
@@ -30,7 +27,7 @@ namespace suecaWPFClient.GamePanes
 
         protected override void Quit()
         {
-            //throw new System.NotImplementedException();
+            //TODO...
         }
 
         private void BtnBackToRoomList_OnClick(object sender, RoutedEventArgs e)

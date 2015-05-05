@@ -29,15 +29,12 @@ namespace suecaWPFClient.Cards
             OriginalZIndex = (int)GetValue(Panel.ZIndexProperty);
         }
 
-
-
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
             var image = new BitmapImage(new Uri(_imagePath));
             drawingContext.DrawImage(image, new Rect(new Size(Width, Height)));
         }
-
 
         public override string ToString()
         {

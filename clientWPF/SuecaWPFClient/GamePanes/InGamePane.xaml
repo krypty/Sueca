@@ -53,7 +53,5 @@
 
             </Grid>
         </StackPanel>
-
-
     </DockPanel>
 </gamePanes:GameStatePaneA>

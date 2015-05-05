@@ -44,7 +44,7 @@ namespace suecaWPFClient.GamePanes
 
             foreach (var room in _rooms)
             {
-                this.RoomListView.Items.Add(room);
+                RoomListView.Items.Add(room);
             }
 
         }
@@ -66,12 +66,11 @@ namespace suecaWPFClient.GamePanes
 
             Console.WriteLine("joinRoom");
 
-            string roomPassword = "";
             CreateRoomWindow roomWindow = new CreateRoomWindow("Rejoindre une salle");
 
             if (roomWindow.ShowDialog() != true) return;
 
-            roomPassword = roomWindow.RoomPassword;
+            string roomPassword = roomWindow.RoomPassword;
 
             var playerID = ServiceManager.GetInstance().JoinRoom(room.Name, roomPassword);
             ServiceManager.GetInstance().PlayerToken = playerID;

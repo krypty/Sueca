@@ -26,14 +26,13 @@ namespace suecaWPFClient.GamePanes
 
             if (room.RoomState == Room.StateRoom.END_GAME)
             {
-                Console.WriteLine("yolo spaghetti");
                 ChangeState(GameState.EndGame);
             }
         }
 
         protected override void Quit()
         {
-            throw new System.NotImplementedException();
+            //TODO..
         }
 
         private void BtnQuit_OnClick(object sender, RoutedEventArgs e)
