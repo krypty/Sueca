@@ -76,7 +76,7 @@ namespace suecaWPFClient.GamePanes
 
             if (playerID == null)
             {
-                MessageBox.Show("Mot de passe invalide, essayez encore");
+                MessageBox.Show("Mot de passe invalide ou salle pleine. Réessayer ou créer une autre salle.");
                 return;
             }
 
