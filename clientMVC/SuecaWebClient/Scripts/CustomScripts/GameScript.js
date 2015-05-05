@@ -344,10 +344,9 @@ function clearCardsOnBoard() {
 
 function newCardsOnBoard(boardCards)
 {
+    clearCardsOnBoard();
     for (var i = 0; i < 4; i++) {
         if (boardCards[i] != null) {
-            if (cardsOnBoard[i] != null)
-                stage.removeChild(cardsOnBoard[i]);
             cardsOnBoard[i] = cardsColor[boardCards[i].color][boardCards[i].value];
         }
         else

@@ -256,9 +256,11 @@ namespace SuecaWebClient.Helper
             }
 
 
-            public void CheckConnection()
+
+
+            public bool CheckConnection()
             {
-                //throw new NotImplementedException();
+                return true;//throw new NotImplementedException();
             }
         }
 

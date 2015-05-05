@@ -554,8 +554,8 @@ namespace SuecaWebClient.SuecaService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/GameInfoUpdated")]
         void GameInfoUpdated(SuecaWebClient.SuecaService.GameInfo gameInfo);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/Sueca/CheckConnection")]
-        void CheckConnection();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/Sueca/CheckConnection", ReplyAction="http://tempuri.org/Sueca/CheckConnectionResponse")]
+        bool CheckConnection();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

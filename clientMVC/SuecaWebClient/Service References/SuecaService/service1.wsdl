@@ -80,6 +80,9 @@
   <wsdl:message name="Sueca_CheckConnection_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CheckConnection" />
   </wsdl:message>
+  <wsdl:message name="Sueca_CheckConnection_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CheckConnectionResponse" />
+  </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="Sueca">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateRoom">
       <wsdl:input wsaw:Action="http://tempuri.org/Sueca/CreateRoom" message="tns:Sueca_CreateRoom_InputMessage" />
@@ -124,6 +127,7 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CheckConnection">
       <wsdl:output wsaw:Action="http://tempuri.org/Sueca/CheckConnection" message="tns:Sueca_CheckConnection_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/Sueca/CheckConnectionResponse" message="tns:Sueca_CheckConnection_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_Sueca" type="tns:Sueca">
@@ -221,6 +225,9 @@
     </wsdl:operation>
     <wsdl:operation name="CheckConnection">
       <soap12:operation soapAction="http://tempuri.org/Sueca/CheckConnection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
