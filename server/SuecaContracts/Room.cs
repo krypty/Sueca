@@ -103,6 +103,11 @@ namespace SuecaContracts
         public void RemovePlayer(Player player)
         {
             listPlayers.Remove(player);
+
+            if (player.Callback != null)
+                gameUpdated -= player.Callback.RoomUpdated;
+
+            UpdateRoomForClient();
         }
 
         public void MakePlayerReady(string playerToken, bool isReady)

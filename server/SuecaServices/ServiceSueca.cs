@@ -23,6 +23,8 @@ namespace SuecaServices
         public delegate void CallbackDelegate<T>(T t);
         public static CallbackDelegate<string> gameStarted;
 
+        private int NB_CALL = 0;
+
         public ServiceSueca()
         {
             // this._listRooms = new List<Room>();
@@ -38,13 +40,15 @@ namespace SuecaServices
 
         void timerCheckRoom_Elapsed()
         {
-            lock (dictRoom)
+            var dictCopy = (from x in dictRoom
+                            select x).ToDictionary(x => x.Key, x => x.Value);
+
+            Console.WriteLine("[server] check if a room has to be killed " + NB_CALL);
+            foreach (Room r in dictCopy.Values)
             {
-
-
-                Console.WriteLine("[server] check if a room has to be killed");
-                foreach (Room r in dictRoom.Values)
+                lock (r)
                 {
+
                     foreach (Player p in r.ListPlayers)
                     {
                         if (p.TimeOutClientWeb.HasValue)
@@ -80,7 +84,7 @@ namespace SuecaServices
                         //Permit to another user to come in the room by removing the other user
                         foreach (Player p in r.ListPlayerDisconnectDuringParty)
                         {
-                            r.ListPlayers.Remove(p);
+                            r.RemovePlayer(p);
                             Console.WriteLine("[server] remove the player " + p.Token + " from the list players");
                         }
 
@@ -101,9 +105,13 @@ namespace SuecaServices
                             Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
                         }
 
+                       
                     }
                 }
             }
+
+            NB_CALL++;
+
         }
 
         public string CreateRoom(string password = "")
