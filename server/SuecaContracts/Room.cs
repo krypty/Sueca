@@ -138,17 +138,13 @@ namespace SuecaContracts
             }
             else if (!isReady)
             {
-                if (RoomState == StateRoom.GAME_IN_PROGRESS)
+                if (RoomState == StateRoom.WAITING_READY)
                 {
-                    RoomState = StateRoom.WAITING_READY;
-                    
-                    //If the user send not ready during a game, it means that he leaves the game
                     IEnumerable<Player> playerToRemove = listPlayers.Where<Player>(p => p.Token == playerToken);
                     Player player = playerToRemove.First();
                     listPlayers.Remove(player);
 
-                    gameInfo = null;
-                    gameUpdated = null;
+                    gameUpdated -= player.Callback.RoomUpdated;
                 }
             }
 
