@@ -28,6 +28,9 @@ namespace SuecaWebClient.Helper
         }
 
 
+
+
+
         public static string CardColorToString(CardColor c)
         {
             switch (c)
@@ -120,7 +123,10 @@ namespace SuecaWebClient.Helper
         }
 
 
-
+        public void SendEndGameReceived(string playerToken)
+        {
+            client.SendEndGameReceived(playerToken);
+        }
 
 
         public bool playCard(String playerToken, string color, string value)

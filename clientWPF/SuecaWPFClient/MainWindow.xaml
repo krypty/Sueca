@@ -29,7 +29,5 @@
 
             <local:BoardPane Grid.Column="0" Grid.Row="0" Margin="7" x:Name="MyBoard" />
         </Grid>
-
-        <Button Grid.Row="1" Name="TestButton" Content="click me" Click="TestButton_Click"></Button>
     </Grid>
 </Window>

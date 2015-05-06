@@ -12,7 +12,11 @@ namespace SuecaServices
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single, AddressFilterMode = AddressFilterMode.Any)]
     public class ServiceSueca : ISuecaContract
     {
+
         private const int CHECK_ROOM_TIME = 30000;
+        private const int CHECK_ROOM_TIMEOUT = 500000;
+        
+        private const int CHECK_WEB_CLIENT_TIME = 60000;
         private System.Timers.Timer timerCheckRoom;
 
         //private List<Room> _listRooms;
@@ -23,7 +27,6 @@ namespace SuecaServices
         public delegate void CallbackDelegate<T>(T t);
         public static CallbackDelegate<string> gameStarted;
 
-        private int NB_CALL = 0;
 
         public ServiceSueca()
         {
@@ -43,22 +46,28 @@ namespace SuecaServices
             var dictCopy = (from x in dictRoom
                             select x).ToDictionary(x => x.Key, x => x.Value);
 
-            Console.WriteLine("[server] check if a room has to be killed " + NB_CALL);
+            Console.WriteLine("[server] check if a room has to be killed ");
+            List<Room> deleteRooms = new List<Room>();
+
             foreach (Room r in dictCopy.Values)
             {
                 lock (r)
                 {
+                    if (DateTime.Now.Subtract(r.TimeOutRoom).TotalMilliseconds > CHECK_ROOM_TIMEOUT)
+                    {
+                        deleteRooms.Add(r);
+                    }
 
                     foreach (Player p in r.ListPlayers)
                     {
                         if (p.TimeOutClientWeb.HasValue)
                         {
                             Console.WriteLine("[server] check web client player " + p.Token);
-                            
-                            if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).TotalMilliseconds > 1000000)
+
+                            if (DateTime.Now.Subtract(p.TimeOutClientWeb.Value).TotalMilliseconds > CHECK_WEB_CLIENT_TIME)
+
                             {
                                 //A web client is deconnect
-                                r.IsPlayerDisconnectDuringParty = true;
                                 r.ListPlayerDisconnectDuringParty.Add(p);
                                 Console.WriteLine("[server] the player " + p.Token + " is disconnect");
                             }
@@ -102,16 +111,29 @@ namespace SuecaServices
 
                         if (r.RoomState == Room.StateRoom.GAME_IN_PROGRESS || r.RoomState == Room.StateRoom.END_GAME)
                         {
-                            r.ResetRoom();
-                            Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
+                            if(r.ListPlayers.Count <= 0)
+                            {
+                                deleteRooms.Add(r);
+                            }
+                            else
+                            { 
+                                r.ResetRoom();
+                                Console.WriteLine("[server] the room " + r.Name + " has to be relaunch ");
+                            }
                         }
-
-                       
                     }
                 }
+
             }
 
-            NB_CALL++;
+            if(deleteRooms.Count > 0)
+            {
+                foreach(Room r in deleteRooms)
+                {
+                    Console.WriteLine("[server] the room " + r.Name + " is deleted !!! ");
+                    dictRoom.Remove(r.Name);
+                }
+            }
 
         }
 

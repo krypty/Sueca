@@ -27,8 +27,7 @@ namespace suecaWPFClient.GamePanes
 
             string roomPassword = roomWindow.RoomPassword;
 
-            var roomName = ServiceManager.GetInstance().CreateRoom(roomPassword);
-            MessageBox.Show("Une salle a été créée avec le nom: " + roomName);
+            ServiceManager.GetInstance().CreateRoom(roomPassword);
             RefreshRoomList();
         }
 
@@ -44,7 +43,7 @@ namespace suecaWPFClient.GamePanes
 
             foreach (var room in _rooms)
             {
-                this.RoomListView.Items.Add(room);
+                RoomListView.Items.Add(room);
             }
 
         }
@@ -66,19 +65,18 @@ namespace suecaWPFClient.GamePanes
 
             Console.WriteLine("joinRoom");
 
-            string roomPassword = "";
             CreateRoomWindow roomWindow = new CreateRoomWindow("Rejoindre une salle");
 
             if (roomWindow.ShowDialog() != true) return;
 
-            roomPassword = roomWindow.RoomPassword;
+            string roomPassword = roomWindow.RoomPassword;
 
             var playerID = ServiceManager.GetInstance().JoinRoom(room.Name, roomPassword);
             ServiceManager.GetInstance().PlayerToken = playerID;
 
             if (playerID == null)
             {
-                MessageBox.Show("Mot de passe invalide, essayez encore");
+                MessageBox.Show("Mot de passe invalide ou salle pleine. Réessayer ou créer une autre salle.");
                 return;
             }
 

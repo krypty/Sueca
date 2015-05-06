@@ -6,7 +6,7 @@
     <DockPanel Margin="15">
         <WrapPanel DockPanel.Dock="Bottom"  HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button IsDefault="True" Name="OkButton" MinWidth="60" Margin="0,0,10,0" Click="OkButton_OnClick">_OK</Button>
-            <Button IsCancel="True" MinWidth="60">_Cancel</Button>
+            <Button IsCancel="True" MinWidth="60">Annuler</Button>
         </WrapPanel>
         <Grid>
             <Grid.ColumnDefinitions>

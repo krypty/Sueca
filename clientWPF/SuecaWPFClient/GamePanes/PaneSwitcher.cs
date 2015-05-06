@@ -6,10 +6,11 @@ namespace suecaWPFClient.GamePanes
 {
     internal class PaneSwitcher
     {
+        // static
+        private static readonly Dictionary<GameState, GameStatePaneA> DictUserControls = new Dictionary<GameState, GameStatePaneA>();
+
+        // members
         private readonly ContentControl _control;
-
-        private readonly Dictionary<GameState, GameStatePaneA> _dictUserControls = new Dictionary<GameState, GameStatePaneA>();
-
         public delegate void BoardEnabledEventHandler(bool isEnabled);
         public event BoardEnabledEventHandler BoardEnabled;
 
@@ -23,16 +24,9 @@ namespace suecaWPFClient.GamePanes
             StateChanged(GameState.ListRoom);
         }
 
-        // TODO: remove me !
-        [Obsolete]
-        public void IncrementPane()
-        {
-            StateChanged(GameState.EndGame);
-        }
-
         private void AddEventHandlers()
         {
-            foreach (var entry in _dictUserControls)
+            foreach (var entry in DictUserControls)
             {
                 entry.Value.OnStateChanged += StateChanged;
             }
@@ -40,21 +34,20 @@ namespace suecaWPFClient.GamePanes
 
         private void StateChanged(GameState state)
         {
-
             if (BoardEnabled != null)
             {
                 bool isBoardEnable = state.Equals(GameState.InGame);
                 BoardEnabled(isBoardEnable);
             }
-            _control.Content = _dictUserControls[state];
+            _control.Content = DictUserControls[state];
         }
 
-        private void PopulatePanes()
+        private static void PopulatePanes()
         {
-            _dictUserControls.Add(GameState.ListRoom, new RoomPane());
-            _dictUserControls.Add(GameState.WaitingRoom, new RoomSummaryPane());
-            _dictUserControls.Add(GameState.EndGame, new GameEndPane());
-            _dictUserControls.Add(GameState.InGame, new InGamePane());
+            DictUserControls.Add(GameState.ListRoom, new RoomPane());
+            DictUserControls.Add(GameState.WaitingRoom, new RoomSummaryPane());
+            DictUserControls.Add(GameState.EndGame, new GameEndPane());
+            DictUserControls.Add(GameState.InGame, new InGamePane());
         }
     }
 }

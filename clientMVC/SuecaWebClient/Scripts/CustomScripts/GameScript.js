@@ -364,7 +364,6 @@ function drawCardsOnBoard(id, card) {
                         cardsOnBoard[id].rotation = 180;
                         break;
                     case 3:
-                        cardsOnBoard[id].scaleX = cardsOnBoard[i].scaleY = 0.5;
                         cardsOnBoard[id].x = 3 * stage.canvas.width / 5 + cardsOnBoard[id].getBounds().width * 0.5 / 2;
                         cardsOnBoard[id].y = stage.canvas.height / 2 + cardsOnBoard[id].getBounds().width / 2 * 0.5;
                         cardsOnBoard[id].rotation = -90;

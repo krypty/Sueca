@@ -6,9 +6,12 @@ namespace suecaWPFClient.Cards
 {
     class CardImageFactory
     {
-        private const String RootImagesPath = @"pack://application:,,,/Images/Cartes/";
+        //static
         private static readonly Random random = new Random();
 
+        //members
+        private const String RootImagesPath = @"pack://application:,,,/Images/Cartes/";
+        
         public static Card CreateRandomCard()
         {
             Array values = Enum.GetValues(typeof(CardValue));

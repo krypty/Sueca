@@ -2,11 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using suecaWPFClient.ServiceReference1;
-using CheckBox = System.Windows.Controls.CheckBox;
-using MessageBox = System.Windows.MessageBox;
 
 namespace suecaWPFClient.GamePanes
 {
@@ -37,8 +35,6 @@ namespace suecaWPFClient.GamePanes
 
         private void ResetPane()
         {
-
-
             Thread th = new Thread(new ThreadStart(delegate
             {
                 Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate

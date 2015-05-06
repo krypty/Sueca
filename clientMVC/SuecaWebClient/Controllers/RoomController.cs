@@ -43,6 +43,15 @@ namespace SuecaWebClient.Controllers
 
         }
 
+
+        [HttpPost]
+        public void SendEndGameReceived(string playerToken)
+        {
+            SuecaServiceHelper serviceHelper = new SuecaServiceHelper();
+            serviceHelper.SendEndGameReceived(playerToken);
+
+        }
+
         [HttpPost]
         public void PlayCard(string color, string value, string playerToken, string roomId)
         {

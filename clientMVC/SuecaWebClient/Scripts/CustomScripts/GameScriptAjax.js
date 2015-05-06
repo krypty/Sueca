@@ -91,7 +91,7 @@ function setCouleur(color) {
 }
 
 
-
+var score = false;
 function _getRoomState()
 {
     $.ajax({
@@ -134,7 +134,7 @@ function _getRoomState()
                         player2Cards = dataRoom.nbCards[2];
                         player3Cards = dataRoom.nbCards[2];
 
-
+                        score = false;
                         _playerTurn = dataRoom.playerTurn;
 
                         //TODO ADD CARDS ON BOARD
@@ -180,9 +180,50 @@ function _getRoomState()
 
             }else if(_gameState == 2)
             {
+                if (!score)
+                {
+
+                
                 _roundColor = "";
                 setCouleur("");
-                alert("SCORE !");
+                $.ajax({
+                    url: getGameState,
+                    data: { roomId: _roomId, playerToken: _playerToken },
+                    type: 'POST',
+                    success: function (dataRoom) {
+
+
+                        var scores = [];
+                        for (var i = 0; i < 4;i++)
+                        {
+                            scores[i] = dataRoom.scorePlayers[i];
+
+                        }
+                        //alert("Votre score : " + score[i] + "\n" + "Joueur 1 :")
+                        $("#scoresArea").val("");
+                        $("#scoresArea").val("Voici les scores de la dernière partie : \nVotre score : " + score[0] + "\n" + "Joueur 1 : "+ score[1]+"\nJoueur 2 : " + score[2]+"\nJoueur 3 : "+score[3]);
+
+
+                        for (var i = i; i < 4; i++)
+                        {
+                            drawCardsOnBoard(i, null);
+                        }
+
+
+                        $.ajax({
+                            url: SendEndGameReceived,
+                            data: { playerToken: _playerToken },
+                            type: 'POST'
+
+                        });
+                        score = true;
+
+
+                    }
+                });
+
+                }
+
             }
             else {
                 for (var i = 0; i < 4; i++) {
@@ -194,10 +235,12 @@ function _getRoomState()
                 player3Cards = 0;
                 clearPlayerCards();
                 setCouleur("");
+                score = false;
             }
 
         }
     });
+
 }
 
 function updateData() {

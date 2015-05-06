@@ -34,7 +34,9 @@ namespace SuecaWebClient.Models
         public CardInfo[] listPlayerCards { get; set; }
 
         public int[] nbCards { get; set; }
-    
+
+
+        public int[] scorePlayers { get; set; }
 
 
 
@@ -43,6 +45,7 @@ namespace SuecaWebClient.Models
             playerTurn = gameInfo.IsMyTurn;
             colorGame = SuecaServiceHelper.CardColorToString(gameInfo.Asset);
             nbCards = new int[4];
+            scorePlayers = new int[4];
             listPlayedCards = new CardInfo[4];
             for (int i = 0; i < 4;i++)
             {
@@ -56,7 +59,8 @@ namespace SuecaWebClient.Models
                
                 Player p = gameInfo.ListPlayer[i];
                 nbCards[i] = p.HoldingCards;
-               
+                scorePlayers[i] = p.Score;
+
 
             }
            

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using suecaWPFClient.GamePanes;
 
 namespace suecaWPFClient
@@ -11,27 +8,18 @@ namespace suecaWPFClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly PaneSwitcher _paneSwitcher;
-
         public MainWindow()
         {
             InitializeComponent();
-            _paneSwitcher = new PaneSwitcher(SideMenuPaneExpander);
-            _paneSwitcher.BoardEnabled += PaneSwitcherOnBoardEnabled;
+            var paneSwitcher = new PaneSwitcher(SideMenuPaneExpander);
+            paneSwitcher.BoardEnabled += PaneSwitcherOnBoardEnabled;
 
             MyBoard.SetBoardEnabled(false);
-
         }
 
         private void PaneSwitcherOnBoardEnabled(bool isEnabled)
         {
             MyBoard.SetBoardEnabled(isEnabled);
-        }
-
-        //TODO: remove me 
-        private void TestButton_Click(object sender, RoutedEventArgs e)
-        {
-            _paneSwitcher.IncrementPane();
         }
 
         private void ExpanderChanged(object sender, RoutedEventArgs e)

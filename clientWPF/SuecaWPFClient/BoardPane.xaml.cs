@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using suecaWPFClient.Cards;
 using suecaWPFClient.ServiceReference1;
@@ -16,12 +13,8 @@ namespace suecaWPFClient
 {
     // callback freezes if true
     [CallbackBehavior(UseSynchronizationContext = false)]
-    public partial class BoardPane : UserControl//, SuecaCallback
+    public partial class BoardPane : UserControl
     {
-        //DuplexChannelFactory<ISuecaContract> _channelFactory;
-        //ISuecaContract _suecaClient;
-
-        //        private Sueca _suecaClient;
 
         private const int MaxCard = 10;
         private List<Card> _listCards = new List<Card>();
@@ -29,20 +22,17 @@ namespace suecaWPFClient
         private Card _firstCardPlayedThisTurn;
 
         private bool _canPlayerPlay;
-        private List<Canvas> _listLaidCardsCanvas;
-        private List<Canvas> _listPlayersCanvas;
+        private readonly List<Canvas> _listLaidCardsCanvas;
+        private readonly List<Canvas> _listPlayersCanvas;
 
         public BoardPane()
         {
             InitializeComponent();
-            //ResetCards();
-            //DrawAllPlayersCards();
 
             ServiceManager.GetInstance().OnGameInfoUpdated += OnGameInfoUpdated;
             _canPlayerPlay = false;
 
             _listLaidCardsCanvas = new List<Canvas> { LaidCardSouth, LaidCardWest, LaidCardNorth, LaidCardEast };
-
             _listPlayersCanvas = new List<Canvas> { EastPlayerCanvas, NorthPlayerCanvas, WestPlayerCanvas };
         }
 
@@ -95,13 +85,6 @@ namespace suecaWPFClient
 
         private void UpdateLaidCards(ServiceReference1.Card[] listCards)
         {
-            //foreach (var card in listCards.Where(card => card != null))
-            //{
-            //    Console.WriteLine("card played: " + card.Value + " of " + card.Color);
-            //}
-
-            //Console.Write("list played cards: " + listCards.Length);
-
             ClearLaidsCardCanvas();
 
             for (int i = 0; i < listCards.Length; i++)
@@ -185,7 +168,7 @@ namespace suecaWPFClient
             HighlightCard(card, false);
         }
 
-        private void DrawAllPlayersCards(Canvas playerCanvas, List<Card> listCards)
+        private static void DrawAllPlayersCards(Canvas playerCanvas, List<Card> listCards)
         {
             playerCanvas.Children.Clear();
             double canvasWidth = playerCanvas.Width;
@@ -206,8 +189,6 @@ namespace suecaWPFClient
                 x += cardWidth;
             }
         }
-
-
 
         private static void HighlightCard(Card card, bool isHighlighted)
         {

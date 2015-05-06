@@ -30,18 +30,6 @@
 
                 <Rectangle x:Name="DisablingRectangle" Canvas.Left="0" Canvas.Top="0" Width="{Binding ElementName=MonCanvas, Path=Width}" Height="{Binding ElementName=MonCanvas, Path=Height}" Fill="Gray" Opacity=".8" Visibility="Visible"></Rectangle>
 
-                <!--<Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="243" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="390" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="499" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="624" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="754" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="880" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="1023" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="1161" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="1266" Canvas.Top="1694"></Image>
-                <Image Source="Images/Cartes/DosCarte.png" Width="200" Canvas.Left="1404" Canvas.Top="1694"></Image>-->
-
-
                 <!-- PLAYERS HAND -->
                 <Canvas Width="1639" Height="{StaticResource cardHeight}" Canvas.Left="135" Canvas.Top="1714" x:Name="SouthPlayerCanvas">
                 </Canvas>
