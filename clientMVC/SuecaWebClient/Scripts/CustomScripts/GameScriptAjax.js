@@ -201,7 +201,7 @@ function _getRoomState()
                         }
                         //alert("Votre score : " + score[i] + "\n" + "Joueur 1 :")
                         $("#scoresArea").val("");
-                        $("#scoresArea").val("Voici les scores de la dernière partie : \nVotre score : " + score[0] + "\n" + "Joueur 1 : "+ score[1]+"\nJoueur 2 : " + score[2]+"\nJoueur 3 : "+score[3]);
+                        $("#scoresArea").val("Voici les scores de la dernière partie : \nVotre score : " + scores[0] + "\n" + "Joueur 1 : "+ scores[1]+"\nJoueur 2 : " + scores[2]+"\nJoueur 3 : "+scores[3]);
 
 
                         for (var i = i; i < 4; i++)
@@ -262,18 +262,18 @@ function updateData() {
         console.log(_roomId);
         setInterval(function () {
             _getRoomState();
-        }, 5000);
+        }, 10000);
         }
         else
         {
-            $("#c").addClass("hidden");
+            $("#gameRow").addClass("hidden");
             $("#gameFullRow").removeClass("hidden");
             
         }
     }
     else
     {
-        $("#c").addClass("hidden");
+        $("#gameRow").addClass("hidden");
         $("#noRoomRow").removeClass("hidden");
     }
 }
