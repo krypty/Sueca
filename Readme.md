@@ -16,3 +16,8 @@ Les règles du jeu ont été adaptées selon celles-ci: http://perso.numericable
 https://visualstudiogallery.msdn.microsoft.com/2d42d8dc-e085-45eb-a30b-3f7d50d55304
 2. Supprimer le dossier
 C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\
+
+## Lancer le serveur
+1. Ouvrir visual studio en mode administrateur et ouvrir le projet du serveur
+2. Clic droit sur le projet ConsoleHost -> Définir comme projet de démarrage
+3. Enjoy
