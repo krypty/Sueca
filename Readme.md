@@ -8,6 +8,8 @@ Un client WPF permet de jouer sur un ordinateur et un client MVC.NET permet d'y 
 
 L'objectif de ce projet de montrer et de proposer un jeu multiplateforme en utilisant des web services.
 
+Les règles du jeu ont été adaptées selon celles-ci: http://perso.numericable.fr/poissy.portugal/Reglement%20sueca.pdf
+
 ## Pré-requis pour MVC.net
 
 1. Installer Typescript 1.4
