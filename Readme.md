@@ -1,10 +1,10 @@
 # Sueca
 
-Sueca est un jeu développé avec des technologies .NET. Le projet est constitué en 3 axes.
+Sueca est un jeu développé avec des technologies .NET. Le projet est constitué de 3 axes.
 
 Un serveur WCF a été développé afin de fournir aux clients des méthodes permettant de jouer au jeu. Par exemple, jouer un carte, lister les salles disponibles,...
 
-Un client WPF permet de jouer sur un ordinateur et un client ASP.NET MVC permet d'y jouer depuis un navigateur web.
+Un client WPF permet de jouer sur un ordinateur et un client MVC.NET permet d'y jouer depuis un navigateur web.
 
 L'objectif de ce projet de montrer et de proposer un jeu multiplateforme en utilisant des web services.
 
